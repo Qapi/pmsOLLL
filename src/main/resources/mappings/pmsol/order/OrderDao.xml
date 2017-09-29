@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pmsol.order.dao.OrderDao">
+    
+	<sql id="orderColumns">
+		a.id AS "id",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		a.order_num AS "orderNum",
+		a.channel_id AS "channelId",
+		a.hotel_id AS "hotelId",
+		a.roomtype_id AS "roomTypeId",
+		a.lease_mode AS "leaseMode",
+		a.rent_months AS "rentMonths",
+		a.book_time AS "bookTime",
+		a.checkin_date AS "checkInDate",
+		a.contacts AS "contacts",
+		a.contacts_phone AS "contactsPhone",
+		a.member_id AS "memberId",
+		a.book_room_id AS "bookRoomId",
+		a.status AS "status"
+	</sql>
+	
+	<sql id="orderJoins">
+	</sql>
+	
+    
+	<select id="get" resultType="Order" >
+		SELECT 
+			<include refid="orderColumns"/>
+		FROM book_order a
+		<include refid="orderJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="Order" >
+		SELECT 
+			<include refid="orderColumns"/>
+		FROM book_order a
+		<include refid="orderJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="remarks != null and remarks != ''">
+				AND a.remarks LIKE 
+					<if test="dbName == 'oracle'">'%'||#{remarks}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{remarks}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{remarks},'%')</if>
+			</if>
+			<if test="orderNum != null and orderNum != ''">
+				AND a.order_num LIKE 
+					<if test="dbName == 'oracle'">'%'||#{orderNum}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{orderNum}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{orderNum},'%')</if>
+			</if>
+			<if test="channelId != null and channelId != ''">
+				AND a.channel_id = #{channelId}
+			</if>
+			<if test="hotelId != null and hotelId != ''">
+				AND a.hotel_id = #{hotelId}
+			</if>
+			<if test="roomTypeId != null and roomTypeId != ''">
+				AND a.roomtype_id = #{roomTypeId}
+			</if>
+			<if test="leaseMode != null and leaseMode != ''">
+				AND a.lease_mode = #{leaseMode}
+			</if>
+			<if test="rentMonths != null and rentMonths != ''">
+				AND a.rent_months = #{rentMonths}
+			</if>
+			<if test="bookTime != null and bookTime != ''">
+				AND a.book_time LIKE 
+					<if test="dbName == 'oracle'">'%'||#{bookTime}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{bookTime}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{bookTime},'%')</if>
+			</if>
+			<if test="beginCheckInDate != null and endCheckInDate != null and beginCheckInDate != '' and endCheckInDate != ''">
+				AND a.checkin_date BETWEEN #{beginCheckInDate} AND #{endCheckInDate}
+			</if>
+			<if test="contacts != null and contacts != ''">
+				AND a.contacts LIKE 
+					<if test="dbName == 'oracle'">'%'||#{contacts}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{contacts}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{contacts},'%')</if>
+			</if>
+			<if test="contactsPhone != null and contactsPhone != ''">
+				AND a.contacts_phone LIKE 
+					<if test="dbName == 'oracle'">'%'||#{contactsPhone}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{contactsPhone}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{contactsPhone},'%')</if>
+			</if>
+			<if test="bookRoomId != null and bookRoomId != ''">
+				AND a.book_room_id = #{bookRoomId}
+			</if>
+			<if test="status != null and status != ''">
+				AND a.status = #{status}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="Order" >
+		SELECT 
+			<include refid="orderColumns"/>
+		FROM book_order a
+		<include refid="orderJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO book_order(
+			id,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag,
+			order_num,
+			channel_id,
+			hotel_id,
+			roomtype_id,
+			lease_mode,
+			rent_months,
+			book_time,
+			checkin_date,
+			contacts,
+			contacts_phone,
+			member_id,
+			book_room_id,
+			status
+		) VALUES (
+			#{id},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag},
+			#{orderNum},
+			#{channelId},
+			#{hotelId},
+			#{roomTypeId},
+			#{leaseMode},
+			#{rentMonths},
+			#{bookTime},
+			#{checkInDate},
+			#{contacts},
+			#{contactsPhone},
+			#{memberId},
+			#{bookRoomId},
+			#{status}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE book_order SET 	
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks},
+			order_num = #{orderNum},
+			channel_id = #{channelId},
+			hotel_id = #{hotelId},
+			roomtype_id = #{roomTypeId},
+			lease_mode = #{leaseMode},
+			rent_months = #{rentMonths},
+			book_time = #{bookTime},
+			checkin_date = #{checkInDate},
+			contacts = #{contacts},
+			contacts_phone = #{contactsPhone},
+			member_id = #{memberId},
+			book_room_id = #{bookRoomId},
+			status = #{status}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!--物理删除-->
+	<update id="delete">
+		DELETE FROM book_order
+		WHERE id = #{id}
+	</update>
+	
+	<!--逻辑删除-->
+	<update id="deleteByLogic">
+		UPDATE book_order SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
+	<select id="findUniqueByProperty" resultType="Order" statementType="STATEMENT">
+		select * FROM book_order  where ${propertyName} = '${value}'
+	</select>
+	
+</mapper>

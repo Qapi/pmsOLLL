@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pmsol.staff.dao.StaffDao">
+    
+	<sql id="staffColumns">
+		a.id AS "id",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		a.name AS "name",
+		a.phone AS "phone",
+		a.hotel_id AS "hotelId",
+		a.id_num AS "idNum",
+		a.birthday AS "birthday",
+		a.gender AS "gender",
+		a.home_address AS "homeAddress",
+		a.department_id AS "departmentId",
+		a.post_id AS "postId",
+		a.contract_period AS "contractPeriod",
+		a.status AS "status",
+		a.user_id AS "userId"
+	</sql>
+	
+	<sql id="staffJoins">
+		LEFT JOIN sys_office departmentId ON departmentId.id = a.department_id
+	</sql>
+	
+    
+	<select id="get" resultType="Staff" >
+		SELECT 
+			<include refid="staffColumns"/>
+		FROM staff a
+		<include refid="staffJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="Staff" >
+		SELECT 
+			<include refid="staffColumns"/>
+		FROM staff a
+		<include refid="staffJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="remarks != null and remarks != ''">
+				AND a.remarks LIKE 
+					<if test="dbName == 'oracle'">'%'||#{remarks}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{remarks}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{remarks},'%')</if>
+			</if>
+			<if test="name != null and name != ''">
+				AND a.name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+			</if>
+			<if test="phone != null and phone != ''">
+				AND a.phone LIKE 
+					<if test="dbName == 'oracle'">'%'||#{phone}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{phone}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{phone},'%')</if>
+			</if>
+			<if test="hotelId != null and hotelId != ''">
+				AND a.hotel_id = #{hotelId}
+			</if>
+			<if test="idNum != null and idNum != ''">
+				AND a.id_num LIKE 
+					<if test="dbName == 'oracle'">'%'||#{idNum}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{idNum}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{idNum},'%')</if>
+			</if>
+			<if test="birthday != null and birthday != ''">
+				AND a.birthday = #{birthday}
+			</if>
+			<if test="gender != null and gender != ''">
+				AND a.gender = #{gender}
+			</if>
+			<if test="homeAddress != null and homeAddress != ''">
+				AND a.home_address LIKE 
+					<if test="dbName == 'oracle'">'%'||#{homeAddress}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{homeAddress}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{homeAddress},'%')</if>
+			</if>
+			<if test="departmentId != null and departmentId != ''">
+				AND a.department_id = #{departmentId}
+			</if>
+			<if test="postId != null and postId != ''">
+				AND a.post_id = #{postId}
+			</if>
+			<if test="beginContractPeriod != null and endContractPeriod != null and beginContractPeriod != '' and endContractPeriod != ''">
+				AND a.contract_period BETWEEN #{beginContractPeriod} AND #{endContractPeriod}
+			</if>
+			<if test="status != null and status != ''">
+				AND a.status = #{status}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="Staff" >
+		SELECT 
+			<include refid="staffColumns"/>
+		FROM staff a
+		<include refid="staffJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO staff(
+			id,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag,
+			name,
+			phone,
+			hotel_id,
+			id_num,
+			birthday,
+			gender,
+			home_address,
+			department_id,
+			post_id,
+			contract_period,
+			status,
+			user_id
+		) VALUES (
+			#{id},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag},
+			#{name},
+			#{phone},
+			#{hotelId},
+			#{idNum},
+			#{birthday},
+			#{gender},
+			#{homeAddress},
+			#{departmentId},
+			#{postId},
+			#{contractPeriod},
+			#{status},
+			#{userId}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE staff SET 	
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks},
+			name = #{name},
+			phone = #{phone},
+			hotel_id = #{hotelId},
+			id_num = #{idNum},
+			birthday = #{birthday},
+			gender = #{gender},
+			home_address = #{homeAddress},
+			department_id = #{departmentId},
+			post_id = #{postId},
+			contract_period = #{contractPeriod},
+			status = #{status},
+			user_id = #{userId}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!--物理删除-->
+	<update id="delete">
+		DELETE FROM staff
+		WHERE id = #{id}
+	</update>
+	
+	<!--逻辑删除-->
+	<update id="deleteByLogic">
+		UPDATE staff SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
+	<select id="findUniqueByProperty" resultType="Staff" statementType="STATEMENT">
+		select * FROM staff  where ${propertyName} = '${value}'
+	</select>
+	
+</mapper>

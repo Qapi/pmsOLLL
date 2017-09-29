@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pms.room.dao.RoomDao">
+    
+	<sql id="roomColumns">
+		a.id AS "id",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		a.room_num AS "roomNum",
+		a.topic_name AS "topicName",
+		a.hotel_id AS "hotelId",
+		a.floor_num AS "floorNum",
+		a.layout AS "layout",
+		a.roomtype_id AS "roomTypeId",
+		a.bed_type AS "bedType",
+		a.status AS "status"
+	</sql>
+	
+	<sql id="roomJoins">
+	</sql>
+	
+    
+	<select id="get" resultType="Room" >
+		SELECT 
+			<include refid="roomColumns"/>
+		FROM room a
+		<include refid="roomJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="Room" >
+		SELECT 
+			<include refid="roomColumns"/>
+		FROM room a
+		<include refid="roomJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="remarks != null and remarks != ''">
+				AND a.remarks LIKE 
+					<if test="dbName == 'oracle'">'%'||#{remarks}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{remarks}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{remarks},'%')</if>
+			</if>
+			<if test="roomNum != null and roomNum != ''">
+				AND a.room_num = #{roomNum}
+			</if>
+			<if test="topicName != null and topicName != ''">
+				AND a.topic_name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{topicName}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{topicName}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{topicName},'%')</if>
+			</if>
+			<if test="hotelId != null and hotelId != ''">
+				AND a.hotel_id = #{hotelId}
+			</if>
+			<if test="floorNum != null and floorNum != ''">
+				AND a.floor_num = #{floorNum}
+			</if>
+			<if test="layout != null and layout != ''">
+				AND a.layout LIKE 
+					<if test="dbName == 'oracle'">'%'||#{layout}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{layout}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{layout},'%')</if>
+			</if>
+			<if test="roomTypeId != null and roomTypeId != ''">
+				AND a.roomtype_id = #{roomTypeId}
+			</if>
+			<if test="status != null and status != ''">
+				AND a.status = #{status}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="Room" >
+		SELECT 
+			<include refid="roomColumns"/>
+		FROM room a
+		<include refid="roomJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO room(
+			id,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag,
+			room_num,
+			topic_name,
+			hotel_id,
+			floor_num,
+			layout,
+			roomtype_id,
+			bed_type,
+			status
+		) VALUES (
+			#{id},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag},
+			#{roomNum},
+			#{topicName},
+			#{hotelId},
+			#{floorNum},
+			#{layout},
+			#{roomTypeId},
+			#{bedType},
+			#{status}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE room SET 	
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks},
+			room_num = #{roomNum},
+			topic_name = #{topicName},
+			hotel_id = #{hotelId},
+			floor_num = #{floorNum},
+			layout = #{layout},
+			roomtype_id = #{roomTypeId},
+			bed_type = #{bedType},
+			status = #{status}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!--物理删除-->
+	<update id="delete">
+		DELETE FROM room
+		WHERE id = #{id}
+	</update>
+	
+	<!--逻辑删除-->
+	<update id="deleteByLogic">
+		UPDATE room SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
+	<select id="findUniqueByProperty" resultType="Room" statementType="STATEMENT">
+		select * FROM room  where ${propertyName} = '${value}'
+	</select>
+	
+</mapper>

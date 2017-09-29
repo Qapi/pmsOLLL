@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pmsol.roomtype.dao.RoomTypeDao">
+    
+	<sql id="roomTypeColumns">
+		a.id AS "id",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		a.name AS "name",
+		a.capacity AS "capacity",
+		a.daily_price AS "dailyPrice",
+		a.holiday_price AS "holidayPrice",
+		a.hour_price AS "hourPrice",
+		a.monthly_rent AS "monthlyRent",
+		a.bed_num AS "bedNum",
+		a.hotel_id AS "hotelId"
+	</sql>
+	
+	<sql id="roomTypeJoins">
+	</sql>
+	
+    
+	<select id="get" resultType="RoomType" >
+		SELECT 
+			<include refid="roomTypeColumns"/>
+		FROM room_type a
+		<include refid="roomTypeJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="RoomType" >
+		SELECT 
+			<include refid="roomTypeColumns"/>
+		FROM room_type a
+		<include refid="roomTypeJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="name != null and name != ''">
+				AND a.name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+			</if>
+			<if test="capacity != null and capacity != ''">
+				AND a.capacity = #{capacity}
+			</if>
+			<if test="beginDailyPrice != null and endDailyPrice != null and beginDailyPrice != '' and endDailyPrice != ''">
+				AND a.daily_price BETWEEN #{beginDailyPrice} AND #{endDailyPrice}
+			</if>
+			<if test="beginHolidayPrice != null and endHolidayPrice != null and beginHolidayPrice != '' and endHolidayPrice != ''">
+				AND a.holiday_price BETWEEN #{beginHolidayPrice} AND #{endHolidayPrice}
+			</if>
+			<if test="beginHourPrice != null and endHourPrice != null and beginHourPrice != '' and endHourPrice != ''">
+				AND a.hour_price BETWEEN #{beginHourPrice} AND #{endHourPrice}
+			</if>
+			<if test="beginMonthlyRent != null and endMonthlyRent != null and beginMonthlyRent != '' and endMonthlyRent != ''">
+				AND a.monthly_rent BETWEEN #{beginMonthlyRent} AND #{endMonthlyRent}
+			</if>
+			<if test="bedNum != null and bedNum != ''">
+				AND a.bed_num = #{bedNum}
+			</if>
+			<if test="hotelId != null and hotelId != ''">
+				AND a.hotel_id = #{hotelId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="RoomType" >
+		SELECT 
+			<include refid="roomTypeColumns"/>
+		FROM room_type a
+		<include refid="roomTypeJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO room_type(
+			id,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag,
+			name,
+			capacity,
+			daily_price,
+			holiday_price,
+			hour_price,
+			monthly_rent,
+			bed_num,
+			hotel_id
+		) VALUES (
+			#{id},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag},
+			#{name},
+			#{capacity},
+			#{dailyPrice},
+			#{holidayPrice},
+			#{hourPrice},
+			#{monthlyRent},
+			#{bedNum},
+			#{hotelId}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE room_type SET 	
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks},
+			name = #{name},
+			capacity = #{capacity},
+			daily_price = #{dailyPrice},
+			holiday_price = #{holidayPrice},
+			hour_price = #{hourPrice},
+			monthly_rent = #{monthlyRent},
+			bed_num = #{bedNum},
+			hotel_id = #{hotelId}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!--物理删除-->
+	<update id="delete">
+		DELETE FROM room_type
+		WHERE id = #{id}
+	</update>
+	
+	<!--逻辑删除-->
+	<update id="deleteByLogic">
+		UPDATE room_type SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
+	<select id="findUniqueByProperty" resultType="RoomType" statementType="STATEMENT">
+		select * FROM room_type  where ${propertyName} = '${value}'
+	</select>
+	
+</mapper>

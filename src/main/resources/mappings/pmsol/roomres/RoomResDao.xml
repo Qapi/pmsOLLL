@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pmsol.roomres.dao.RoomResDao">
+    
+	<sql id="roomResColumns">
+		a.id AS "id",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		a.room_num AS "roomNum",
+		a.room_id AS "roomId",
+		a.hotel_id AS "hotelId",
+		a.roomtype_id AS "roomTypeId",
+		a.res_date AS "resDate",
+		a.status AS "status"
+	</sql>
+	
+	<sql id="roomResJoins">
+	</sql>
+	
+    
+	<select id="get" resultType="RoomRes" >
+		SELECT 
+			<include refid="roomResColumns"/>
+		FROM room_res a
+		<include refid="roomResJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="RoomRes" >
+		SELECT 
+			<include refid="roomResColumns"/>
+		FROM room_res a
+		<include refid="roomResJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="remarks != null and remarks != ''">
+				AND a.remarks LIKE 
+					<if test="dbName == 'oracle'">'%'||#{remarks}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{remarks}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{remarks},'%')</if>
+			</if>
+			<if test="roomNum != null and roomNum != ''">
+				AND a.room_num = #{roomNum}
+			</if>
+			<if test="roomId != null and roomId != ''">
+				AND a.room_id = #{roomId}
+			</if>
+			<if test="hotelId != null and hotelId != ''">
+				AND a.hotel_id = #{hotelId}
+			</if>
+			<if test="roomTypeId != null and roomTypeId != ''">
+				AND a.roomtype_id = #{roomTypeId}
+			</if>
+			<if test="beginResDate != null and endResDate != null and beginResDate != '' and endResDate != ''">
+				AND a.res_date BETWEEN #{beginResDate} AND #{endResDate}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="RoomRes" >
+		SELECT 
+			<include refid="roomResColumns"/>
+		FROM room_res a
+		<include refid="roomResJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO room_res(
+			id,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag,
+			room_num,
+			room_id,
+			hotel_id,
+			roomtype_id,
+			res_date,
+			status
+		) VALUES (
+			#{id},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag},
+			#{roomNum},
+			#{roomId},
+			#{hotelId},
+			#{roomTypeId},
+			#{resDate},
+			#{status}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE room_res SET 	
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks},
+			room_num = #{roomNum},
+			room_id = #{roomId},
+			hotel_id = #{hotelId},
+			roomtype_id = #{roomTypeId},
+			res_date = #{resDate},
+			status = #{status}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!--物理删除-->
+	<update id="delete">
+		DELETE FROM room_res
+		WHERE id = #{id}
+	</update>
+	
+	<!--逻辑删除-->
+	<update id="deleteByLogic">
+		UPDATE room_res SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
+	<select id="findUniqueByProperty" resultType="RoomRes" statementType="STATEMENT">
+		select * FROM room_res  where ${propertyName} = '${value}'
+	</select>
+	
+</mapper>

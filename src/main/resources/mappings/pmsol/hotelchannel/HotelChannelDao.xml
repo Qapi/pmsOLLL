@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pmsol.hotelchannel.dao.HotelChannelDao">
+    
+	<sql id="hotelChannelColumns">
+		a.id AS "id",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		a.name AS "name",
+		a.hotel_id AS "hotelId",
+		a.contacts AS "contacts",
+		a.contacts_phone AS "contactsPhone",
+		a.contract_period AS "contractPeriod",
+		a.status AS "status"
+	</sql>
+	
+	<sql id="hotelChannelJoins">
+		LEFT JOIN sys_office hotelId ON hotelId.id = a.hotel_id
+	</sql>
+	
+    
+	<select id="get" resultType="HotelChannel" >
+		SELECT 
+			<include refid="hotelChannelColumns"/>
+		FROM hotel_channel a
+		<include refid="hotelChannelJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="HotelChannel" >
+		SELECT 
+			<include refid="hotelChannelColumns"/>
+		FROM hotel_channel a
+		<include refid="hotelChannelJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="remarks != null and remarks != ''">
+				AND a.remarks LIKE 
+					<if test="dbName == 'oracle'">'%'||#{remarks}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{remarks}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{remarks},'%')</if>
+			</if>
+			<if test="name != null and name != ''">
+				AND a.name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+			</if>
+			<if test="hotelId != null and hotelId != ''">
+				AND a.hotel_id = #{hotelId}
+			</if>
+			<if test="contacts != null and contacts != ''">
+				AND a.contacts LIKE 
+					<if test="dbName == 'oracle'">'%'||#{contacts}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{contacts}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{contacts},'%')</if>
+			</if>
+			<if test="contactsPhone != null and contactsPhone != ''">
+				AND a.contacts_phone LIKE 
+					<if test="dbName == 'oracle'">'%'||#{contactsPhone}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{contactsPhone}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{contactsPhone},'%')</if>
+			</if>
+			<if test="beginContractPeriod != null and endContractPeriod != null and beginContractPeriod != '' and endContractPeriod != ''">
+				AND a.contract_period BETWEEN #{beginContractPeriod} AND #{endContractPeriod}
+			</if>
+			<if test="status != null and status != ''">
+				AND a.status = #{status}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="HotelChannel" >
+		SELECT 
+			<include refid="hotelChannelColumns"/>
+		FROM hotel_channel a
+		<include refid="hotelChannelJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO hotel_channel(
+			id,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag,
+			name,
+			hotel_id,
+			contacts,
+			contacts_phone,
+			contract_period,
+			status
+		) VALUES (
+			#{id},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag},
+			#{name},
+			#{hotelId},
+			#{contacts},
+			#{contactsPhone},
+			#{contractPeriod},
+			#{status}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE hotel_channel SET 	
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks},
+			name = #{name},
+			hotel_id = #{hotelId},
+			contacts = #{contacts},
+			contacts_phone = #{contactsPhone},
+			contract_period = #{contractPeriod},
+			status = #{status}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!--物理删除-->
+	<update id="delete">
+		DELETE FROM hotel_channel
+		WHERE id = #{id}
+	</update>
+	
+	<!--逻辑删除-->
+	<update id="deleteByLogic">
+		UPDATE hotel_channel SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
+	<select id="findUniqueByProperty" resultType="HotelChannel" statementType="STATEMENT">
+		select * FROM hotel_channel  where ${propertyName} = '${value}'
+	</select>
+	
+</mapper>

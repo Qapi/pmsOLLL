@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pmsol.hotel.dao.HotelDao">
+    
+	<sql id="hotelColumns">
+		a.id AS "id",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.del_flag AS "delFlag",
+		a.address AS "address",
+		a.landline AS "landline",
+		a.contacts AS "contacts",
+		a.contact_phone AS "contactPhone",
+		a.property_owner AS "propertyOwner",
+		a.property_phone AS "propertyPhone",
+		a.contract_period AS "contractPeriod",
+		a.status AS "status",
+		a.office_id AS "officeId"
+	</sql>
+	
+	<sql id="hotelJoins">
+	</sql>
+	
+    
+	<select id="get" resultType="Hotel" >
+		SELECT 
+			<include refid="hotelColumns"/>
+		FROM hotel a
+		<include refid="hotelJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="Hotel" >
+		SELECT 
+			<include refid="hotelColumns"/>
+		FROM hotel a
+		<include refid="hotelJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="landline != null and landline != ''">
+				AND a.landline LIKE 
+					<if test="dbName == 'oracle'">'%'||#{landline}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{landline}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{landline},'%')</if>
+			</if>
+			<if test="contacts != null and contacts != ''">
+				AND a.contacts LIKE 
+					<if test="dbName == 'oracle'">'%'||#{contacts}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{contacts}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{contacts},'%')</if>
+			</if>
+			<if test="contactPhone != null and contactPhone != ''">
+				AND a.contact_phone LIKE 
+					<if test="dbName == 'oracle'">'%'||#{contactPhone}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{contactPhone}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{contactPhone},'%')</if>
+			</if>
+			<if test="propertyOwner != null and propertyOwner != ''">
+				AND a.property_owner LIKE 
+					<if test="dbName == 'oracle'">'%'||#{propertyOwner}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{propertyOwner}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{propertyOwner},'%')</if>
+			</if>
+			<if test="propertyPhone != null and propertyPhone != ''">
+				AND a.property_phone LIKE 
+					<if test="dbName == 'oracle'">'%'||#{propertyPhone}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{propertyPhone}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{propertyPhone},'%')</if>
+			</if>
+			<if test="status != null and status != ''">
+				AND a.status = #{status}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="Hotel" >
+		SELECT 
+			<include refid="hotelColumns"/>
+		FROM hotel a
+		<include refid="hotelJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO hotel(
+			id,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			del_flag,
+			address,
+			landline,
+			contacts,
+			contact_phone,
+			property_owner,
+			property_phone,
+			contract_period,
+			status,
+			office_id
+		) VALUES (
+			#{id},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{delFlag},
+			#{address},
+			#{landline},
+			#{contacts},
+			#{contactPhone},
+			#{propertyOwner},
+			#{propertyPhone},
+			#{contractPeriod},
+			#{status},
+			#{officeId}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE hotel SET 	
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			address = #{address},
+			landline = #{landline},
+			contacts = #{contacts},
+			contact_phone = #{contactPhone},
+			property_owner = #{propertyOwner},
+			property_phone = #{propertyPhone},
+			contract_period = #{contractPeriod},
+			status = #{status},
+			office_id = #{officeId}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!--物理删除-->
+	<update id="delete">
+		DELETE FROM hotel
+		WHERE id = #{id}
+	</update>
+	
+	<!--逻辑删除-->
+	<update id="deleteByLogic">
+		UPDATE hotel SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
+	<select id="findUniqueByProperty" resultType="Hotel" statementType="STATEMENT">
+		select * FROM hotel  where ${propertyName} = '${value}'
+	</select>
+	
+</mapper>
