@@ -20,7 +20,7 @@
 	</sql>
 	
     
-	<select id="get" resultType="Department" >
+	<select id="get" resultMap="Department" >
 		SELECT 
 			<include refid="departmentColumns"/>
 		FROM department a
@@ -28,7 +28,7 @@
 		WHERE a.id = #{id}
 	</select>
 	
-	<select id="findList" resultType="Department" >
+	<select id="findList" resultMap="Department" >
 		SELECT 
 			<include refid="departmentColumns"/>
 		FROM department a
@@ -55,7 +55,7 @@
 		</choose>
 	</select>
 	
-	<select id="findAllList" resultType="Department" >
+	<select id="findAllList" resultMap="Department" >
 		SELECT 
 			<include refid="departmentColumns"/>
 		FROM department a
@@ -126,7 +126,7 @@
 	
 	
 	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
-	<select id="findUniqueByProperty" resultType="Department" statementType="STATEMENT">
+	<select id="findUniqueByProperty" resultMap="Department" statementType="STATEMENT">
 		select * FROM department  where ${propertyName} = '${value}'
 	</select>
 	

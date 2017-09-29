@@ -27,7 +27,7 @@
 	</sql>
 	
     
-	<select id="get" resultType="Member" >
+	<select id="get" resultMap="Member" >
 		SELECT 
 			<include refid="memberColumns"/>
 		FROM member a
@@ -35,7 +35,7 @@
 		WHERE a.id = #{id}
 	</select>
 	
-	<select id="findList" resultType="Member" >
+	<select id="findList" resultMap="Member" >
 		SELECT 
 			<include refid="memberColumns"/>
 		FROM member a
@@ -95,7 +95,7 @@
 		</choose>
 	</select>
 	
-	<select id="findAllList" resultType="Member" >
+	<select id="findAllList" resultMap="Member" >
 		SELECT 
 			<include refid="memberColumns"/>
 		FROM member a
@@ -190,7 +190,7 @@
 	
 	
 	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
-	<select id="findUniqueByProperty" resultType="Member" statementType="STATEMENT">
+	<select id="findUniqueByProperty" resultMap="Member" statementType="STATEMENT">
 		select * FROM member  where ${propertyName} = '${value}'
 	</select>
 	

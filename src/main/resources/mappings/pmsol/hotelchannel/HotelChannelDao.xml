@@ -23,7 +23,7 @@
 	</sql>
 	
     
-	<select id="get" resultType="HotelChannel" >
+	<select id="get" resultMap="HotelChannel" >
 		SELECT 
 			<include refid="hotelChannelColumns"/>
 		FROM hotel_channel a
@@ -31,7 +31,7 @@
 		WHERE a.id = #{id}
 	</select>
 	
-	<select id="findList" resultType="HotelChannel" >
+	<select id="findList" resultMap="HotelChannel" >
 		SELECT 
 			<include refid="hotelChannelColumns"/>
 		FROM hotel_channel a
@@ -82,7 +82,7 @@
 		</choose>
 	</select>
 	
-	<select id="findAllList" resultType="HotelChannel" >
+	<select id="findAllList" resultMap="HotelChannel" >
 		SELECT 
 			<include refid="hotelChannelColumns"/>
 		FROM hotel_channel a
@@ -162,7 +162,7 @@
 	
 	
 	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
-	<select id="findUniqueByProperty" resultType="HotelChannel" statementType="STATEMENT">
+	<select id="findUniqueByProperty" resultMap="HotelChannel" statementType="STATEMENT">
 		select * FROM hotel_channel  where ${propertyName} = '${value}'
 	</select>
 	

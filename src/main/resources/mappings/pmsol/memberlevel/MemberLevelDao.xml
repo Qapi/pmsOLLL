@@ -22,7 +22,7 @@
 	</sql>
 	
     
-	<select id="get" resultType="MemberLevel" >
+	<select id="get" resultMap="MemberLevel" >
 		SELECT 
 			<include refid="memberLevelColumns"/>
 		FROM member_level a
@@ -30,7 +30,7 @@
 		WHERE a.id = #{id}
 	</select>
 	
-	<select id="findList" resultType="MemberLevel" >
+	<select id="findList" resultMap="MemberLevel" >
 		SELECT 
 			<include refid="memberLevelColumns"/>
 		FROM member_level a
@@ -69,7 +69,7 @@
 		</choose>
 	</select>
 	
-	<select id="findAllList" resultType="MemberLevel" >
+	<select id="findAllList" resultMap="MemberLevel" >
 		SELECT 
 			<include refid="memberLevelColumns"/>
 		FROM member_level a
@@ -149,7 +149,7 @@
 	
 	
 	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
-	<select id="findUniqueByProperty" resultType="MemberLevel" statementType="STATEMENT">
+	<select id="findUniqueByProperty" resultMap="MemberLevel" statementType="STATEMENT">
 		select * FROM member_level  where ${propertyName} = '${value}'
 	</select>
 	

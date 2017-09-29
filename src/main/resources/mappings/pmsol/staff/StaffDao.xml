@@ -29,7 +29,7 @@
 	</sql>
 	
     
-	<select id="get" resultType="Staff" >
+	<select id="get" resultMap="Staff" >
 		SELECT 
 			<include refid="staffColumns"/>
 		FROM staff a
@@ -37,7 +37,7 @@
 		WHERE a.id = #{id}
 	</select>
 	
-	<select id="findList" resultType="Staff" >
+	<select id="findList" resultMap="Staff" >
 		SELECT 
 			<include refid="staffColumns"/>
 		FROM staff a
@@ -106,7 +106,7 @@
 		</choose>
 	</select>
 	
-	<select id="findAllList" resultType="Staff" >
+	<select id="findAllList" resultMap="Staff" >
 		SELECT 
 			<include refid="staffColumns"/>
 		FROM staff a
@@ -204,7 +204,7 @@
 	
 	
 	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
-	<select id="findUniqueByProperty" resultType="Staff" statementType="STATEMENT">
+	<select id="findUniqueByProperty" resultMap="Staff" statementType="STATEMENT">
 		select * FROM staff  where ${propertyName} = '${value}'
 	</select>
 	

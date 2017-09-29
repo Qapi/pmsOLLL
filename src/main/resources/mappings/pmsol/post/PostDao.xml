@@ -20,7 +20,7 @@
 	</sql>
 	
     
-	<select id="get" resultType="Post" >
+	<select id="get" resultMap="Post" >
 		SELECT 
 			<include refid="postColumns"/>
 		FROM post a
@@ -28,7 +28,7 @@
 		WHERE a.id = #{id}
 	</select>
 	
-	<select id="findList" resultType="Post" >
+	<select id="findList" resultMap="Post" >
 		SELECT 
 			<include refid="postColumns"/>
 		FROM post a
@@ -46,7 +46,7 @@
 		</choose>
 	</select>
 	
-	<select id="findAllList" resultType="Post" >
+	<select id="findAllList" resultMap="Post" >
 		SELECT 
 			<include refid="postColumns"/>
 		FROM post a
@@ -120,7 +120,7 @@
 	
 	
 	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
-	<select id="findUniqueByProperty" resultType="Post" statementType="STATEMENT">
+	<select id="findUniqueByProperty" resultMap="Post" statementType="STATEMENT">
 		select * FROM post  where ${propertyName} = '${value}'
 	</select>
 	

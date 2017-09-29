@@ -29,7 +29,7 @@
 	</sql>
 	
     
-	<select id="get" resultType="Order" >
+	<select id="get" resultMap="Order" >
 		SELECT 
 			<include refid="orderColumns"/>
 		FROM book_order a
@@ -37,7 +37,7 @@
 		WHERE a.id = #{id}
 	</select>
 	
-	<select id="findList" resultType="Order" >
+	<select id="findList" resultMap="Order" >
 		SELECT 
 			<include refid="orderColumns"/>
 		FROM book_order a
@@ -109,7 +109,7 @@
 		</choose>
 	</select>
 	
-	<select id="findAllList" resultType="Order" >
+	<select id="findAllList" resultMap="Order" >
 		SELECT 
 			<include refid="orderColumns"/>
 		FROM book_order a
@@ -210,7 +210,7 @@
 	
 	
 	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
-	<select id="findUniqueByProperty" resultType="Order" statementType="STATEMENT">
+	<select id="findUniqueByProperty" resultMap="Order" statementType="STATEMENT">
 		select * FROM book_order  where ${propertyName} = '${value}'
 	</select>
 	

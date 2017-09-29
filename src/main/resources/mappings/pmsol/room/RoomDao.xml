@@ -24,7 +24,7 @@
 	</sql>
 	
     
-	<select id="get" resultType="Room" >
+	<select id="get" resultMap="Room" >
 		SELECT 
 			<include refid="roomColumns"/>
 		FROM room a
@@ -32,7 +32,7 @@
 		WHERE a.id = #{id}
 	</select>
 	
-	<select id="findList" resultType="Room" >
+	<select id="findList" resultMap="Room" >
 		SELECT 
 			<include refid="roomColumns"/>
 		FROM room a
@@ -83,7 +83,7 @@
 		</choose>
 	</select>
 	
-	<select id="findAllList" resultType="Room" >
+	<select id="findAllList" resultMap="Room" >
 		SELECT 
 			<include refid="roomColumns"/>
 		FROM room a
@@ -169,7 +169,7 @@
 	
 	
 	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
-	<select id="findUniqueByProperty" resultType="Room" statementType="STATEMENT">
+	<select id="findUniqueByProperty" resultMap="Room" statementType="STATEMENT">
 		select * FROM room  where ${propertyName} = '${value}'
 	</select>
 	
