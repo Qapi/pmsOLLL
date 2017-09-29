@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.pmsol.department.dao.DepartmentDao">
-    
+<mapper namespace="com.wangp.pmsol.department.dao.DepartmentDao">
+
 	<sql id="departmentColumns">
 		a.id AS "id",
 		a.create_by AS "createBy.id",
@@ -14,22 +14,22 @@
 		a.status AS "status",
 		a.office_id AS "officeId"
 	</sql>
-	
+
 	<sql id="departmentJoins">
 		LEFT JOIN sys_office officeId ON officeId.id = a.office_id
 	</sql>
-	
-    
-	<select id="get" resultMap="Department" >
-		SELECT 
+
+
+	<select id="get" resultType="com.wangp.pmsol.department.entity.Department" >
+		SELECT
 			<include refid="departmentColumns"/>
 		FROM department a
 		<include refid="departmentJoins"/>
 		WHERE a.id = #{id}
 	</select>
-	
-	<select id="findList" resultMap="Department" >
-		SELECT 
+
+	<select id="findList" resultType="com.wangp.pmsol.department.entity.Department" >
+		SELECT
 			<include refid="departmentColumns"/>
 		FROM department a
 		<include refid="departmentJoins"/>
@@ -54,15 +54,15 @@
 			</otherwise>
 		</choose>
 	</select>
-	
-	<select id="findAllList" resultMap="Department" >
-		SELECT 
+
+	<select id="findAllList" resultType="com.wangp.pmsol.department.entity.Department" >
+		SELECT
 			<include refid="departmentColumns"/>
 		FROM department a
 		<include refid="departmentJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
-		</where>		
+		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
 				ORDER BY ${page.orderBy}
@@ -72,7 +72,7 @@
 			</otherwise>
 		</choose>
 	</select>
-	
+
 	<insert id="insert">
 		INSERT INTO department(
 			id,
@@ -98,9 +98,9 @@
 			#{officeId}
 		)
 	</insert>
-	
+
 	<update id="update">
-		UPDATE department SET 	
+		UPDATE department SET
 			update_by = #{updateBy.id},
 			update_date = #{updateDate},
 			flag = #{flag},
@@ -109,24 +109,24 @@
 			office_id = #{officeId}
 		WHERE id = #{id}
 	</update>
-	
-	
+
+
 	<!--物理删除-->
 	<update id="delete">
 		DELETE FROM department
 		WHERE id = #{id}
 	</update>
-	
+
 	<!--逻辑删除-->
 	<update id="deleteByLogic">
-		UPDATE department SET 
+		UPDATE department SET
 			del_flag = #{DEL_FLAG_DELETE}
 		WHERE id = #{id}
 	</update>
-	
-	
+
+
 	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
-	<select id="findUniqueByProperty" resultMap="Department" statementType="STATEMENT">
+	<select id="findUniqueByProperty" resultType="com.wangp.pmsol.department.entity.Department" statementType="STATEMENT">
 		select * FROM department  where ${propertyName} = '${value}'
 	</select>
 	

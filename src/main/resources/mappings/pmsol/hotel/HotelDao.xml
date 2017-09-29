@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.pmsol.hotel.dao.HotelDao">
+<mapper namespace="com.wangp.pmsol.hotel.dao.HotelDao">
     
 	<sql id="hotelColumns">
 		a.id AS "id",
@@ -24,7 +24,7 @@
 	</sql>
 	
     
-	<select id="get" resultMap="Hotel" >
+	<select id="get" resultType="com.wangp.pmsol.hotel.entity.Hotel" >
 		SELECT 
 			<include refid="hotelColumns"/>
 		FROM hotel a
@@ -32,7 +32,7 @@
 		WHERE a.id = #{id}
 	</select>
 	
-	<select id="findList" resultMap="Hotel" >
+	<select id="findList" resultType="com.wangp.pmsol.hotel.entity.Hotel" >
 		SELECT 
 			<include refid="hotelColumns"/>
 		FROM hotel a
@@ -83,7 +83,7 @@
 		</choose>
 	</select>
 	
-	<select id="findAllList" resultMap="Hotel" >
+	<select id="findAllList" resultType="com.wangp.pmsol.hotel.entity.Hotel" >
 		SELECT 
 			<include refid="hotelColumns"/>
 		FROM hotel a
@@ -169,7 +169,7 @@
 	
 	
 	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
-	<select id="findUniqueByProperty" resultMap="Hotel" statementType="STATEMENT">
+	<select id="findUniqueByProperty" resultType="com.wangp.pmsol.hotel.entity.Hotel" statementType="STATEMENT">
 		select * FROM hotel  where ${propertyName} = '${value}'
 	</select>
 	

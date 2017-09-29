@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.pmsol.staff.dao.StaffDao">
+<mapper namespace="com.wangp.pmsol.staff.dao.StaffDao">
     
 	<sql id="staffColumns">
 		a.id AS "id",
@@ -29,7 +29,7 @@
 	</sql>
 	
     
-	<select id="get" resultMap="Staff" >
+	<select id="get" resultType="com.wangp.pmsol.staff.entity.Staff" >
 		SELECT 
 			<include refid="staffColumns"/>
 		FROM staff a
@@ -37,7 +37,7 @@
 		WHERE a.id = #{id}
 	</select>
 	
-	<select id="findList" resultMap="Staff" >
+	<select id="findList" resultType="com.wangp.pmsol.staff.entity.Staff" >
 		SELECT 
 			<include refid="staffColumns"/>
 		FROM staff a
@@ -106,7 +106,7 @@
 		</choose>
 	</select>
 	
-	<select id="findAllList" resultMap="Staff" >
+	<select id="findAllList" resultType="com.wangp.pmsol.staff.entity.Staff" >
 		SELECT 
 			<include refid="staffColumns"/>
 		FROM staff a
@@ -204,7 +204,7 @@
 	
 	
 	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
-	<select id="findUniqueByProperty" resultMap="Staff" statementType="STATEMENT">
+	<select id="findUniqueByProperty" resultType="com.wangp.pmsol.staff.entity.Staff" statementType="STATEMENT">
 		select * FROM staff  where ${propertyName} = '${value}'
 	</select>
 	

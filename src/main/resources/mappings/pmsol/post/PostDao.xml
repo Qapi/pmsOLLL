@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.pmsol.post.dao.PostDao">
+<mapper namespace="com.wangp.pmsol.post.dao.PostDao">
     
 	<sql id="postColumns">
 		a.id AS "id",
@@ -20,7 +20,7 @@
 	</sql>
 	
     
-	<select id="get" resultMap="Post" >
+	<select id="get" resultType="com.wangp.pmsol.post.entity.Post" >
 		SELECT 
 			<include refid="postColumns"/>
 		FROM post a
@@ -28,7 +28,7 @@
 		WHERE a.id = #{id}
 	</select>
 	
-	<select id="findList" resultMap="Post" >
+	<select id="findList" resultType="com.wangp.pmsol.post.entity.Post" >
 		SELECT 
 			<include refid="postColumns"/>
 		FROM post a
@@ -46,7 +46,7 @@
 		</choose>
 	</select>
 	
-	<select id="findAllList" resultMap="Post" >
+	<select id="findAllList" resultType="com.wangp.pmsol.post.entity.Post" >
 		SELECT 
 			<include refid="postColumns"/>
 		FROM post a
@@ -120,7 +120,7 @@
 	
 	
 	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
-	<select id="findUniqueByProperty" resultMap="Post" statementType="STATEMENT">
+	<select id="findUniqueByProperty" resultType="com.wangp.pmsol.post.entity.Post" statementType="STATEMENT">
 		select * FROM post  where ${propertyName} = '${value}'
 	</select>
 	

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.pmsol.hotelchannel.dao.HotelChannelDao">
+<mapper namespace="com.wangp.pmsol.hotelchannel.dao.HotelChannelDao">
     
 	<sql id="hotelChannelColumns">
 		a.id AS "id",
@@ -19,11 +19,10 @@
 	</sql>
 	
 	<sql id="hotelChannelJoins">
-		LEFT JOIN sys_office hotelId ON hotelId.id = a.hotel_id
 	</sql>
 	
     
-	<select id="get" resultMap="HotelChannel" >
+	<select id="get" resultType="com.wangp.pmsol.hotelchannel.entity.HotelChannel" >
 		SELECT 
 			<include refid="hotelChannelColumns"/>
 		FROM hotel_channel a
@@ -31,7 +30,7 @@
 		WHERE a.id = #{id}
 	</select>
 	
-	<select id="findList" resultMap="HotelChannel" >
+	<select id="findList" resultType="com.wangp.pmsol.hotelchannel.entity.HotelChannel" >
 		SELECT 
 			<include refid="hotelChannelColumns"/>
 		FROM hotel_channel a
@@ -82,7 +81,7 @@
 		</choose>
 	</select>
 	
-	<select id="findAllList" resultMap="HotelChannel" >
+	<select id="findAllList" resultType="com.wangp.pmsol.hotelchannel.entity.HotelChannel" >
 		SELECT 
 			<include refid="hotelChannelColumns"/>
 		FROM hotel_channel a
@@ -162,7 +161,7 @@
 	
 	
 	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
-	<select id="findUniqueByProperty" resultMap="HotelChannel" statementType="STATEMENT">
+	<select id="findUniqueByProperty" resultType="com.wangp.pmsol.hotelchannel.entity.HotelChannel" statementType="STATEMENT">
 		select * FROM hotel_channel  where ${propertyName} = '${value}'
 	</select>
 	
