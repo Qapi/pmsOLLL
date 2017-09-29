@@ -1,7 +1,7 @@
 /**
  * Copyright &copy; 2015-2020 <a href="http://www.jeeplus.org/">JeePlus</a> All rights reserved.
  */
-package com.pms.room.service;
+package com.pmsol.room.service;
 
 import java.util.List;
 
@@ -10,8 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.jeeplus.common.persistence.Page;
 import com.jeeplus.common.service.CrudService;
-import com.pms.room.entity.Room;
-import com.pms.room.dao.RoomDao;
+import com.pmsol.room.entity.Room;
+import com.pmsol.room.dao.RoomDao;
 
 /**
  * 房间配置Service

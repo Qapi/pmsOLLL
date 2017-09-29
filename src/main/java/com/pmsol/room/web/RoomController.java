@@ -1,7 +1,7 @@
 /**
  * Copyright &copy; 2015-2020 <a href="http://www.jeeplus.org/">JeePlus</a> All rights reserved.
  */
-package com.pms.room.web;
+package com.pmsol.room.web;
 
 import java.util.List;
 
@@ -30,8 +30,8 @@ import com.jeeplus.common.web.BaseController;
 import com.jeeplus.common.utils.StringUtils;
 import com.jeeplus.common.utils.excel.ExportExcel;
 import com.jeeplus.common.utils.excel.ImportExcel;
-import com.pms.room.entity.Room;
-import com.pms.room.service.RoomService;
+import com.pmsol.room.entity.Room;
+import com.pmsol.room.service.RoomService;
 
 /**
  * 房间配置Controller
