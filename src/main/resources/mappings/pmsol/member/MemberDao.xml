@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.wangp.pmsol.member.dao.MemberDao">
+<mapper namespace="com.jeeplus.pmsol.member.dao.MemberDao">
     
 	<sql id="memberColumns">
 		a.id AS "id",
@@ -27,7 +27,7 @@
 	</sql>
 	
     
-	<select id="get" resultType="com.wangp.pmsol.member.entity.Member" >
+	<select id="get" resultType="com.jeeplus.pmsol.member.entity.Member" >
 		SELECT 
 			<include refid="memberColumns"/>
 		FROM member a
@@ -35,7 +35,7 @@
 		WHERE a.id = #{id}
 	</select>
 	
-	<select id="findList" resultType="com.wangp.pmsol.member.entity.Member" >
+	<select id="findList" resultType="com.jeeplus.pmsol.member.entity.Member" >
 		SELECT 
 			<include refid="memberColumns"/>
 		FROM member a
@@ -95,7 +95,7 @@
 		</choose>
 	</select>
 	
-	<select id="findAllList" resultType="com.wangp.pmsol.member.entity.Member" >
+	<select id="findAllList" resultType="com.jeeplus.pmsol.member.entity.Member" >
 		SELECT 
 			<include refid="memberColumns"/>
 		FROM member a
@@ -190,7 +190,7 @@
 	
 	
 	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
-	<select id="findUniqueByProperty" resultType="com.wangp.pmsol.member.entity.Member" statementType="STATEMENT">
+	<select id="findUniqueByProperty" resultType="com.jeeplus.pmsol.member.entity.Member" statementType="STATEMENT">
 		select * FROM member  where ${propertyName} = '${value}'
 	</select>
 	

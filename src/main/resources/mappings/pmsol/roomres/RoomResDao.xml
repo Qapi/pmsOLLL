@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.wangp.pmsol.roomres.dao.RoomResDao">
+<mapper namespace="com.jeeplus.pmsol.roomres.dao.RoomResDao">
     
 	<sql id="roomResColumns">
 		a.id AS "id",
@@ -22,7 +22,7 @@
 	</sql>
 	
     
-	<select id="get" resultType="com.wangp.pmsol.roomres.entity.RoomRes" >
+	<select id="get" resultType="com.jeeplus.pmsol.roomres.entity.RoomRes" >
 		SELECT 
 			<include refid="roomResColumns"/>
 		FROM room_res a
@@ -30,7 +30,7 @@
 		WHERE a.id = #{id}
 	</select>
 	
-	<select id="findList" resultType="com.wangp.pmsol.roomres.entity.RoomRes" >
+	<select id="findList" resultType="com.jeeplus.pmsol.roomres.entity.RoomRes" >
 		SELECT 
 			<include refid="roomResColumns"/>
 		FROM room_res a
@@ -69,7 +69,7 @@
 		</choose>
 	</select>
 	
-	<select id="findAllList" resultType="com.wangp.pmsol.roomres.entity.RoomRes" >
+	<select id="findAllList" resultType="com.jeeplus.pmsol.roomres.entity.RoomRes" >
 		SELECT 
 			<include refid="roomResColumns"/>
 		FROM room_res a
@@ -149,7 +149,7 @@
 	
 	
 	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
-	<select id="findUniqueByProperty" resultType="com.wangp.pmsol.roomres.entity.RoomRes" statementType="STATEMENT">
+	<select id="findUniqueByProperty" resultType="com.jeeplus.pmsol.roomres.entity.RoomRes" statementType="STATEMENT">
 		select * FROM room_res  where ${propertyName} = '${value}'
 	</select>
 	

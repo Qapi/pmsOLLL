@@ -76,7 +76,7 @@
 			<span>家庭地址：</span>
 				<form:input path="homeAddress" htmlEscape="false" maxlength="64"  class=" form-control input-sm"/>
 			<span>所属部门：</span>
-				<sys:treeselect id="departmentId" name="departmentId" value="${staff.departmentId}" labelName="" labelValue="${staff.}"
+				<sys:treeselect id="departmentId" name="departmentId" value="${staff.departmentId}" labelName="" labelValue="${staff.departmentId}"
 					title="部门" url="/sys/office/treeData?type=2" cssClass="form-control input-sm" allowClear="true" notAllowSelectParent="true"/>
 			<span>所属岗位：</span>
 				<form:input path="postId" htmlEscape="false" maxlength="64"  class=" form-control input-sm"/>
