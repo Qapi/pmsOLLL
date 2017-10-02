@@ -114,8 +114,8 @@
 				<%--<th  class="sort-column capacity">可入住人数</th>--%>
 				<th  class="sort-column dailyPrice">平日价</th>
 				<th  class="sort-column weekendPrice">周末价</th>
-				<th  class="sort-column holidayPrice">节假日价</th>
-				<th  class="sort-column hourPrice">钟点房价</th>
+				<th  class="sort-column holidayPrice">节日价</th>
+				<th  class="sort-column hourPrice">钟点价</th>
 				<th  class="sort-column monthlyRent">月租价</th>
 				<th  class="sort-column bedNum">床位数</th>
 				<th  class="sort-column hotel_id">所属酒店</th>

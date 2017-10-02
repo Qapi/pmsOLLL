@@ -20,8 +20,8 @@ public class RoomType extends DataEntity<RoomType> {
 	private String capacity;		// 可入住人数
 	private String dailyPrice;		// 平日价
 	private String weekendPrice;		// 周末价
-	private String holidayPrice;		// 节假日价
-	private String hourPrice;		// 钟点房价
+	private String holidayPrice;		// 节日价
+	private String hourPrice;		// 钟点价
 	private String hourNum; 			// 钟点房小时数
 	private String monthlyRent;		// 月租价
 	private String bedNum;		// 床位数
