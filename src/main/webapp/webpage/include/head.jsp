@@ -25,7 +25,10 @@
 <link href="${ctxStatic}/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
 <script src="${ctxStatic}/dataTables/jquery.dataTables.js"></script>
 <script src="${ctxStatic}/dataTables/dataTables.bootstrap.js"></script>
-
+<!-- vue插件 -->
+<script src="${ctxStatic}/vue/vue.min.js"></script>
+<script src="${ctxStatic}/vue/axios.js"></script>
+<!-- vue插件 -->
 
 
 

@@ -6,6 +6,7 @@ package com.jeeplus.pmsol.roomtype.entity;
 
 import com.jeeplus.common.persistence.DataEntity;
 import com.jeeplus.common.utils.excel.annotation.ExcelField;
+import com.jeeplus.pmsol.hotel.entity.Hotel;
 
 /**
  * 房型配置Entity
@@ -18,11 +19,14 @@ public class RoomType extends DataEntity<RoomType> {
 	private String name;		// 房型名称
 	private String capacity;		// 可入住人数
 	private String dailyPrice;		// 平日价
+	private String weekendPrice;		// 周末价
 	private String holidayPrice;		// 节假日价
 	private String hourPrice;		// 钟点房价
+	private String hourNum; 			// 钟点房小时数
 	private String monthlyRent;		// 月租价
 	private String bedNum;		// 床位数
-	private String hotelId;		// 所属酒店Id
+	private String bedType;		// 床型
+	private Hotel hotel;		// 所属酒店
 	private String beginDailyPrice;		// 开始 平日价
 	private String endDailyPrice;		// 结束 平日价
 	private String beginHolidayPrice;		// 开始 节假日价
@@ -102,16 +106,7 @@ public class RoomType extends DataEntity<RoomType> {
 	public void setBedNum(String bedNum) {
 		this.bedNum = bedNum;
 	}
-	
-	@ExcelField(title="所属酒店Id", align=2, sort=14)
-	public String getHotelId() {
-		return hotelId;
-	}
 
-	public void setHotelId(String hotelId) {
-		this.hotelId = hotelId;
-	}
-	
 	public String getBeginDailyPrice() {
 		return beginDailyPrice;
 	}
@@ -175,5 +170,38 @@ public class RoomType extends DataEntity<RoomType> {
 	public void setEndMonthlyRent(String endMonthlyRent) {
 		this.endMonthlyRent = endMonthlyRent;
 	}
-		
+
+	@ExcelField(title="钟点房小时数", align=2, sort=15)
+	public String getHourNum() {
+		return hourNum;
+	}
+
+	public void setHourNum(String hourNum) {
+		this.hourNum = hourNum;
+	}
+
+	@ExcelField(title="所属酒店Id", align=2, sort=14)
+	public Hotel getHotel() {
+		return hotel;
+	}
+
+	public void setHotel(Hotel hotel) {
+		this.hotel = hotel;
+	}
+
+	public String getWeekendPrice() {
+		return weekendPrice;
+	}
+
+	public void setWeekendPrice(String weekendPrice) {
+		this.weekendPrice = weekendPrice;
+	}
+
+	public String getBedType() {
+		return bedType;
+	}
+
+	public void setBedType(String bedType) {
+		this.bedType = bedType;
+	}
 }

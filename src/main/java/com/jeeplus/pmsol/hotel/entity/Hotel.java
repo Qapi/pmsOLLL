@@ -6,6 +6,7 @@ package com.jeeplus.pmsol.hotel.entity;
 
 import com.jeeplus.common.persistence.DataEntity;
 import com.jeeplus.common.utils.excel.annotation.ExcelField;
+import com.jeeplus.modules.sys.entity.Office;
 
 /**
  * 酒店物业配置Entity
@@ -23,7 +24,7 @@ public class Hotel extends DataEntity<Hotel> {
 	private String propertyPhone;		// 物业持有人联系电话
 	private String contractPeriod;		// 有效合同期
 	private String status;		// 物业状态
-	private String officeId;		// 系统officeId
+	private Office office;		// 系统office
 	
 	public Hotel() {
 		super();
@@ -105,13 +106,13 @@ public class Hotel extends DataEntity<Hotel> {
 		this.status = status;
 	}
 	
-	@ExcelField(title="系统officeId", align=2, sort=14)
-	public String getOfficeId() {
-		return officeId;
+	@ExcelField(title="系统office", align=2, sort=14)
+	public Office getOffice() {
+		return office;
 	}
 
-	public void setOfficeId(String officeId) {
-		this.officeId = officeId;
+	public void setOffice(Office office) {
+		this.office = office;
 	}
 	
 }

@@ -23,6 +23,9 @@ public class Order extends DataEntity<Order> {
 	private String rentMonths;		// 长租月数
 	private String bookTime;		// 预订时间
 	private String checkInDate;		// 入住日期
+	private String checkOutDate;		// 离店日期
+	private String liveDays;		// 入住天数
+	private String totalAmount;		// 订单总额
 	private String contacts;		// 联系人
 	private String contactsPhone;		// 联系人电话
 	private String memberId;		// 预订人id
@@ -171,5 +174,28 @@ public class Order extends DataEntity<Order> {
 	public void setEndCheckInDate(String endCheckInDate) {
 		this.endCheckInDate = endCheckInDate;
 	}
-		
+
+	public String getLiveDays() {
+		return liveDays;
+	}
+
+	public void setLiveDays(String liveDays) {
+		this.liveDays = liveDays;
+	}
+
+	public String getTotalAmount() {
+		return totalAmount;
+	}
+
+	public void setTotalAmount(String totalAmount) {
+		this.totalAmount = totalAmount;
+	}
+
+	public String getCheckOutDate() {
+		return checkOutDate;
+	}
+
+	public void setCheckOutDate(String checkOutDate) {
+		this.checkOutDate = checkOutDate;
+	}
 }

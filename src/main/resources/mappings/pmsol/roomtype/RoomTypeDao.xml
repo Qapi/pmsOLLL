@@ -1,7 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jeeplus.pmsol.roomtype.dao.RoomTypeDao">
-    
+
+
+	<!-- 自定义resultMap,主要用于复杂关联查询 -->
+	<resultMap id="roomTypeMap" type="RoomType">
+		<id property="id" column="id"/>
+		<result property="name" column="name"/>
+		<result property="capacity" column="capacity"/>
+		<result property="dailyPrice" column="daily_price"/>
+		<result property="weekendPrice" column="weekend_price"/>
+		<result property="holidayPrice" column="holiday_price"/>
+		<result property="hourPrice" column="hour_price"/>
+		<result property="hourNum" column="hour_num"/>
+		<result property="monthlyRent" column="monthly_rent"/>
+		<result property="bedNum" column="bed_num"/>
+		<result property="bedType" column="bed_type"/>
+		<association property="hotel" column="{id=hotel.id}"
+					 javaType="com.jeeplus.pmsol.hotel.entity.Hotel"
+					 select="com.jeeplus.pmsol.hotel.dao.HotelDao.get">
+		</association>
+	</resultMap>
+
 	<sql id="roomTypeColumns">
 		a.id AS "id",
 		a.create_by AS "createBy.id",
@@ -13,18 +33,21 @@
 		a.name AS "name",
 		a.capacity AS "capacity",
 		a.daily_price AS "dailyPrice",
+		a.weekend_price AS "weekendPrice",
 		a.holiday_price AS "holidayPrice",
 		a.hour_price AS "hourPrice",
+		a.hour_num AS "hourNum",
 		a.monthly_rent AS "monthlyRent",
 		a.bed_num AS "bedNum",
-		a.hotel_id AS "hotelId"
+		a.bed_type AS "bedType",
+		a.hotel_id AS "hotel.id"
 	</sql>
 	
 	<sql id="roomTypeJoins">
 	</sql>
 	
     
-	<select id="get" resultType="com.jeeplus.pmsol.roomtype.entity.RoomType" >
+	<select id="get" resultMap="roomTypeMap" >
 		SELECT 
 			<include refid="roomTypeColumns"/>
 		FROM room_type a
@@ -32,7 +55,7 @@
 		WHERE a.id = #{id}
 	</select>
 	
-	<select id="findList" resultType="com.jeeplus.pmsol.roomtype.entity.RoomType" >
+	<select id="findList" resultMap="roomTypeMap" >
 		SELECT 
 			<include refid="roomTypeColumns"/>
 		FROM room_type a
@@ -63,8 +86,11 @@
 			<if test="bedNum != null and bedNum != ''">
 				AND a.bed_num = #{bedNum}
 			</if>
-			<if test="hotelId != null and hotelId != ''">
-				AND a.hotel_id = #{hotelId}
+			<if test="bedType != null and bedType != ''">
+				AND a.bed_type = #{bedType}
+			</if>
+			<if test="hotel != null and hotel.id != ''">
+				AND a.hotel_id = #{hotel.id}
 			</if>
 		</where>
 		<choose>
@@ -77,7 +103,7 @@
 		</choose>
 	</select>
 	
-	<select id="findAllList" resultType="com.jeeplus.pmsol.roomtype.entity.RoomType" >
+	<select id="findAllList" resultMap="roomTypeMap" >
 		SELECT 
 			<include refid="roomTypeColumns"/>
 		FROM room_type a
@@ -107,10 +133,13 @@
 			name,
 			capacity,
 			daily_price,
+			weekend_price,
 			holiday_price,
 			hour_price,
+			hour_num,
 			monthly_rent,
 			bed_num,
+			bed_type,
 			hotel_id
 		) VALUES (
 			#{id},
@@ -123,11 +152,14 @@
 			#{name},
 			#{capacity},
 			#{dailyPrice},
+			#{weekendPrice},
 			#{holidayPrice},
 			#{hourPrice},
+			#{hourNum},
 			#{monthlyRent},
 			#{bedNum},
-			#{hotelId}
+			#{bedType},
+			#{hotel.id}
 		)
 	</insert>
 	
@@ -139,11 +171,14 @@
 			name = #{name},
 			capacity = #{capacity},
 			daily_price = #{dailyPrice},
+			weekend_price = #{weekendPrice},
 			holiday_price = #{holidayPrice},
 			hour_price = #{hourPrice},
+			hour_num = #{hourNum},
 			monthly_rent = #{monthlyRent},
 			bed_num = #{bedNum},
-			hotel_id = #{hotelId}
+			bed_type = #{bedType},
+			hotel_id = #{hotel.id}
 		WHERE id = #{id}
 	</update>
 	

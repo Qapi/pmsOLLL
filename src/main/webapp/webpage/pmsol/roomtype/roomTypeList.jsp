@@ -45,21 +45,30 @@
 		<table:sortColumn id="orderBy" name="orderBy" value="${page.orderBy}" callback="sortOrRefresh();"/><!-- 支持排序 -->
 		<div class="form-group">
 			<span>房型名称：</span>
-				<form:input path="name" htmlEscape="false" maxlength="64"  class=" form-control input-sm"/>
-			<span>可入住人数：</span>
-				<form:input path="capacity" htmlEscape="false" maxlength="8"  class=" form-control input-sm"/>
-			<span>平日价：</span>
-				<form:input path="dailyPrice" htmlEscape="false" maxlength="32"  class=" form-control input-sm"/>
-			<span>节假日价：</span>
-				<form:input path="holidayPrice" htmlEscape="false" maxlength="32"  class=" form-control input-sm"/>
-			<span>钟点房价：</span>
-				<form:input path="hourPrice" htmlEscape="false" maxlength="32"  class=" form-control input-sm"/>
-			<span>月租价：</span>
-				<form:input path="monthlyRent" htmlEscape="false" maxlength="32"  class=" form-control input-sm"/>
+				<form:input path="name" htmlEscape="false" maxlength="32"  class=" form-control input-sm"/>
+			<span>床型：</span>
+			<form:select path="bedType" class="form-control ">
+				<form:option value=""></form:option>
+				<form:options items="${fns:getDictList('bed_type')}"
+						  itemLabel="description" itemValue="value" htmlEscape="false" />
+			</form:select>
+		    <%--<span>可入住人数：</span>--%>
+				<%--<form:input path="capacity" htmlEscape="false" maxlength="8"  class=" form-control input-sm"/>--%>
+			<%--<span>平日价：</span>--%>
+				<%--<form:input path="dailyPrice" htmlEscape="false" maxlength="32"  class=" form-control input-sm"/>--%>
+			<%--<span>节假日价：</span>--%>
+				<%--<form:input path="holidayPrice" htmlEscape="false" maxlength="32"  class=" form-control input-sm"/>--%>
+			<%--<span>钟点房价：</span>--%>
+				<%--<form:input path="hourPrice" htmlEscape="false" maxlength="32"  class=" form-control input-sm"/>--%>
+			<%--<span>月租价：</span>--%>
+				<%--<form:input path="monthlyRent" htmlEscape="false" maxlength="32"  class=" form-control input-sm"/>--%>
 			<span>床位数：</span>
 				<form:input path="bedNum" htmlEscape="false" maxlength="8"  class=" form-control input-sm"/>
-			<span>所属酒店Id：</span>
-				<form:input path="hotelId" htmlEscape="false" maxlength="64"  class=" form-control input-sm"/>
+			<span>所属酒店：</span>
+			<form:select path="hotel.id" class="form-control ">
+				<form:options items="${hotels}"
+							  itemLabel="office.name" itemValue="id" htmlEscape="false" />
+			</form:select>
 		 </div>	
 	</form:form>
 	<br/>
@@ -100,15 +109,16 @@
 		<thead>
 			<tr>
 				<th> <input type="checkbox" class="i-checks"></th>
-				<th  class="sort-column remarks">备注信息</th>
+				<%--<th  class="sort-column remarks">备注信息</th>--%>
 				<th  class="sort-column name">房型名称</th>
-				<th  class="sort-column capacity">可入住人数</th>
+				<%--<th  class="sort-column capacity">可入住人数</th>--%>
 				<th  class="sort-column dailyPrice">平日价</th>
+				<th  class="sort-column weekendPrice">周末价</th>
 				<th  class="sort-column holidayPrice">节假日价</th>
 				<th  class="sort-column hourPrice">钟点房价</th>
 				<th  class="sort-column monthlyRent">月租价</th>
 				<th  class="sort-column bedNum">床位数</th>
-				<th  class="sort-column hotelId">所属酒店Id</th>
+				<th  class="sort-column hotel_id">所属酒店</th>
 				<th>操作</th>
 			</tr>
 		</thead>
@@ -116,17 +126,20 @@
 		<c:forEach items="${page.list}" var="roomType">
 			<tr>
 				<td> <input type="checkbox" id="${roomType.id}" class="i-checks"></td>
-				<td><a  href="#" onclick="openDialogView('查看房型', '${ctx}/roomtype/roomType/form?id=${roomType.id}','800px', '500px')">
-					${roomType.remarks}
-				</a></td>
+				<%--<td><a  href="#" onclick="openDialogView('查看房型', '${ctx}/roomtype/roomType/form?id=${roomType.id}','800px', '500px')">--%>
+					<%--${roomType.remarks}--%>
+				<%--</a></td>--%>
 				<td>
 					${roomType.name}
 				</td>
-				<td>
-					${roomType.capacity}
-				</td>
+				<%--<td>--%>
+					<%--${roomType.capacity}--%>
+				<%--</td>--%>
 				<td>
 					${roomType.dailyPrice}
+				</td>
+				<td>
+					${roomType.weekendPrice}
 				</td>
 				<td>
 					${roomType.holidayPrice}
@@ -141,7 +154,7 @@
 					${roomType.bedNum}
 				</td>
 				<td>
-					${roomType.hotelId}
+					${roomType.hotel.office.name}
 				</td>
 				<td>
 					<shiro:hasPermission name="roomtype:roomType:view">

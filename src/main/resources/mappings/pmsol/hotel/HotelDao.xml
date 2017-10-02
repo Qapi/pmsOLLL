@@ -1,7 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jeeplus.pmsol.hotel.dao.HotelDao">
-    
+
+
+	<!-- 自定义resultMap,主要用于复杂关联查询 -->
+	<resultMap id="hotelMap" type="Hotel">
+		<id property="id" column="id"/>
+		<result property="address" column="address"/>
+		<result property="landline" column="landline"/>
+		<result property="contacts" column="contacts"/>
+		<result property="contactPhone" column="contact_phone"/>
+		<result property="propertyOwner" column="property_owner"/>
+		<result property="propertyPhone" column="property_phone"/>
+		<result property="contractPeriod" column="contract_period"/>
+		<result property="status" column="status"/>
+		<association property="office" column="{id=office.id}"
+					 javaType="com.jeeplus.modules.sys.entity.Office"
+					 select="com.jeeplus.modules.sys.dao.OfficeDao.get">
+		</association>
+	</resultMap>
+
 	<sql id="hotelColumns">
 		a.id AS "id",
 		a.create_by AS "createBy.id",
@@ -17,14 +35,14 @@
 		a.property_phone AS "propertyPhone",
 		a.contract_period AS "contractPeriod",
 		a.status AS "status",
-		a.office_id AS "officeId"
+		a.office_id AS "office.id"
 	</sql>
 	
 	<sql id="hotelJoins">
 	</sql>
 	
     
-	<select id="get" resultType="com.jeeplus.pmsol.hotel.entity.Hotel" >
+	<select id="get" resultMap="hotelMap" >
 		SELECT 
 			<include refid="hotelColumns"/>
 		FROM hotel a
@@ -32,7 +50,7 @@
 		WHERE a.id = #{id}
 	</select>
 	
-	<select id="findList" resultType="com.jeeplus.pmsol.hotel.entity.Hotel" >
+	<select id="findList" resultMap="hotelMap" >
 		SELECT 
 			<include refid="hotelColumns"/>
 		FROM hotel a
@@ -83,7 +101,7 @@
 		</choose>
 	</select>
 	
-	<select id="findAllList" resultType="com.jeeplus.pmsol.hotel.entity.Hotel" >
+	<select id="findAllList" resultMap="hotelMap" >
 		SELECT 
 			<include refid="hotelColumns"/>
 		FROM hotel a
@@ -133,7 +151,7 @@
 			#{propertyPhone},
 			#{contractPeriod},
 			#{status},
-			#{officeId}
+			#{office.id}
 		)
 	</insert>
 	
@@ -149,7 +167,7 @@
 			property_phone = #{propertyPhone},
 			contract_period = #{contractPeriod},
 			status = #{status},
-			office_id = #{officeId}
+			office_id = #{office.id}
 		WHERE id = #{id}
 	</update>
 	

@@ -11,7 +11,6 @@
 			  $("#inputForm").submit();
 			  return true;
 		  }
-	
 		  return false;
 		}
 		$(document).ready(function() {
@@ -35,61 +34,84 @@
 	</script>
 </head>
 <body class="hideScroll">
-		<form:form id="inputForm" modelAttribute="roomType" action="${ctx}/roomtype/roomType/save" method="post" class="form-horizontal">
-		<form:hidden path="id"/>
-		<sys:message content="${message}"/>	
-		<table class="table table-bordered  table-condensed dataTables-example dataTable no-footer">
-		   <tbody>
-				<tr>
-					<td class="width-15 active"><label class="pull-right">备注信息：</label></td>
-					<td class="width-35">
-						<form:textarea path="remarks" htmlEscape="false" rows="4"    class="form-control "/>
-					</td>
-					<td class="width-15 active"><label class="pull-right"><font color="red">*</font>房型名称：</label></td>
-					<td class="width-35">
-						<form:input path="name" htmlEscape="false"    class="form-control required"/>
-					</td>
-				</tr>
-				<tr>
-					<td class="width-15 active"><label class="pull-right">可入住人数：</label></td>
-					<td class="width-35">
-						<form:input path="capacity" htmlEscape="false"    class="form-control  digits"/>
-					</td>
-					<td class="width-15 active"><label class="pull-right"><font color="red">*</font>平日价：</label></td>
-					<td class="width-35">
-						<form:input path="dailyPrice" htmlEscape="false"    class="form-control required number"/>
-					</td>
-				</tr>
-				<tr>
-					<td class="width-15 active"><label class="pull-right"><font color="red">*</font>节假日价：</label></td>
-					<td class="width-35">
-						<form:input path="holidayPrice" htmlEscape="false"    class="form-control required number"/>
-					</td>
-					<td class="width-15 active"><label class="pull-right"><font color="red">*</font>钟点房价：</label></td>
-					<td class="width-35">
-						<form:input path="hourPrice" htmlEscape="false"    class="form-control required number"/>
-					</td>
-				</tr>
-				<tr>
-					<td class="width-15 active"><label class="pull-right"><font color="red">*</font>月租价：</label></td>
-					<td class="width-35">
-						<form:input path="monthlyRent" htmlEscape="false"    class="form-control required number"/>
-					</td>
-					<td class="width-15 active"><label class="pull-right"><font color="red">*</font>床位数：</label></td>
-					<td class="width-35">
-						<form:input path="bedNum" htmlEscape="false"    class="form-control required digits"/>
-					</td>
-				</tr>
-				<tr>
-					<td class="width-15 active"><label class="pull-right"><font color="red">*</font>所属酒店Id：</label></td>
-					<td class="width-35">
-						<form:input path="hotelId" htmlEscape="false"    class="form-control required"/>
-					</td>
-					<td class="width-15 active"></td>
-		   			<td class="width-35" ></td>
-		  		</tr>
-		 	</tbody>
-		</table>
-	</form:form>
+	<div id="modelDiv">
+			<form id="inputForm" action="${ctx}/roomtype/roomType/save" method="post" class="form-horizontal">
+			<input id="id" name="id" value="${roomType.id}" type="hidden"/>
+			<sys:message content="${message}"/>
+			<table class="table table-bordered  table-condensed dataTables-example dataTable no-footer">
+			   <tbody>
+					<tr>
+						<td class="width-15 active"><label class="pull-right"><font color="red">*</font>房型名称：</label></td>
+						<td class="width-35">
+							<input name="name" :value="roomType.name" htmlEscape="false"    class="form-control required"/>
+						</td>
+						<td class="width-15 active"><label class="pull-right">可入住人数：</label></td>
+						<td class="width-35">
+							<input name="capacity" :value="roomType.capacity" htmlEscape="false"    class="form-control  digits"/>
+						</td>
+					</tr>
+					<tr>
+						<td class="width-15 active"><label class="pull-right"><font color="red">*</font>床型：</label></td>
+						<td class="width-35">
+							<select name="bedType" htmlEscape="false"    class="form-control required">
+								<c:forEach items="${fns:getDictList('bed_type')}" var="bedType">
+									<option label="${bedType.description}" value="${bedType.value}"></option>
+								</c:forEach>
+							</select>
+						</td>
+						<td class="width-15 active"><label class="pull-right"><font color="red">*</font>床位数：</label></td>
+						<td class="width-35">
+							<input name="bedNum" :value="roomType.bedNum" htmlEscape="false"    class="form-control required digits"/>
+						</td>
+					</tr>
+					<tr>
+						<td class="width-15 active"><label class="pull-right"><font color="red">*</font>平日价：</label></td>
+						<td class="width-35">
+							<input name="dailyPrice" :value="roomType.dailyPrice" htmlEscape="false"    class="form-control required number"/>
+						</td>
+						<td class="width-15 active"><label class="pull-right"><font color="red">*</font>周末价：</label></td>
+						<td class="width-35">
+							<input name="weekendPrice" :value="roomType.weekendPrice" htmlEscape="false"    class="form-control required number"/>
+						</td>
+					</tr>
+					<tr>
+						<td class="width-15 active"><label class="pull-right"><font color="red">*</font>钟点房价：</label></td>
+						<td class="width-35">
+							<input name="hourPrice" :value="roomType.hourPrice" htmlEscape="false"    class="form-control required number"/>
+						</td>
+						<td class="width-15 active"><label class="pull-right"><font color="red">*</font>钟点小时数：</label></td>
+						<td class="width-35">
+							<input name="hourNum" :value="roomType.hourNum" htmlEscape="false"    class="form-control required number"/>
+						</td>
+					</tr>
+					<tr>
+						<td class="width-15 active"><label class="pull-right"><font color="red">*</font>节假日价：</label></td>
+						<td class="width-35">
+							<input name="holidayPrice" :value="roomType.holidayPrice" htmlEscape="false"    class="form-control required number"/>
+						</td>
+						<td class="width-15 active"><label class="pull-right"><font color="red">*</font>月租价：</label></td>
+						<td class="width-35">
+							<input name="monthlyRent" :value="roomType.monthlyRent" htmlEscape="false"    class="form-control required number"/>
+						</td>
+					</tr>
+					<tr>
+						<td class="width-15 active"><label class="pull-right"><font color="red">*</font>所属酒店：</label></td>
+						<td class="width-35">
+							<select name="hotelId" htmlEscape="false"    class="form-control required">
+								<option v-for="hotel in hotels" :label="hotel.office.name" :value="hotel.id"></option>
+							</select>
+						</td>
+						<td class="width-15 active"><label class="pull-right">说明：</label></td>
+						<td class="width-35">
+							<textarea name="remarks" :value="roomType.remarks" htmlEscape="false" rows="4"    class="form-control "></textarea>
+						</td>
+						<%--<td class="width-15 active"></td>--%>
+						<%--<td class="width-35" ></td>--%>
+					</tr>
+				</tbody>
+			</table>
+		</form>
+		<script src="${ctxStatic}/pmsol/js/roomTypeForm.js"></script>
+	</div>
 </body>
 </html>
