@@ -3,26 +3,26 @@
 <mapper namespace="com.jeeplus.pmsol.roomtype.dao.RoomTypeDao">
 
 
-	<!-- 自定义resultMap,主要用于复杂关联查询 -->
-	<resultMap id="roomTypeMap" type="RoomType">
-		<id property="id" column="id"/>
-		<result property="name" column="name"/>
-		<result property="capacity" column="capacity"/>
-		<result property="dailyPrice" column="daily_price"/>
-		<result property="weekendPrice" column="weekend_price"/>
-		<result property="holidayPrice" column="holiday_price"/>
-		<result property="hourPrice" column="hour_price"/>
-		<result property="hourNum" column="hour_num"/>
-		<result property="monthlyRent" column="monthly_rent"/>
-		<result property="bedNum" column="bed_num"/>
-		<result property="bedType" column="bed_type"/>
-		<association property="hotel" column="{id=hotel.id}"
-					 javaType="com.jeeplus.pmsol.hotel.entity.Hotel"
-					 select="com.jeeplus.pmsol.hotel.dao.HotelDao.get">
-		</association>
-	</resultMap>
+    <!-- 自定义resultMap,主要用于复杂关联查询 -->
+    <resultMap id="roomTypeMap" type="RoomType">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="capacity" column="capacity"/>
+        <result property="dailyPrice" column="daily_price"/>
+        <result property="weekendPrice" column="weekend_price"/>
+        <result property="holidayPrice" column="holiday_price"/>
+        <result property="hourPrice" column="hour_price"/>
+        <result property="hourNum" column="hour_num"/>
+        <result property="monthlyRent" column="monthly_rent"/>
+        <result property="bedNum" column="bed_num"/>
+        <result property="bedType" column="bed_type"/>
+        <association property="hotel" column="{id=hotel.id}"
+                     javaType="com.jeeplus.pmsol.hotel.entity.Hotel"
+                     select="com.jeeplus.pmsol.hotel.dao.HotelDao.get">
+        </association>
+    </resultMap>
 
-	<sql id="roomTypeColumns">
+    <sql id="roomTypeColumns">
 		a.id AS "id",
 		a.create_by AS "createBy.id",
 		a.create_date AS "createDate",
@@ -42,86 +42,86 @@
 		a.bed_type AS "bedType",
 		a.hotel_id AS "hotel.id"
 	</sql>
-	
-	<sql id="roomTypeJoins">
-	</sql>
-	
-    
-	<select id="get" resultMap="roomTypeMap" >
-		SELECT 
-			<include refid="roomTypeColumns"/>
-		FROM room_type a
-		<include refid="roomTypeJoins"/>
-		WHERE a.id = #{id}
-	</select>
-	
-	<select id="findList" resultMap="roomTypeMap" >
-		SELECT 
-			<include refid="roomTypeColumns"/>
-		FROM room_type a
-		<include refid="roomTypeJoins"/>
-		<where>
-			a.del_flag = #{DEL_FLAG_NORMAL}
-			<if test="name != null and name != ''">
-				AND a.name LIKE 
-					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
-					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
-					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
-			</if>
-			<if test="capacity != null and capacity != ''">
-				AND a.capacity = #{capacity}
-			</if>
-			<if test="beginDailyPrice != null and endDailyPrice != null and beginDailyPrice != '' and endDailyPrice != ''">
-				AND a.daily_price BETWEEN #{beginDailyPrice} AND #{endDailyPrice}
-			</if>
-			<if test="beginHolidayPrice != null and endHolidayPrice != null and beginHolidayPrice != '' and endHolidayPrice != ''">
-				AND a.holiday_price BETWEEN #{beginHolidayPrice} AND #{endHolidayPrice}
-			</if>
-			<if test="beginHourPrice != null and endHourPrice != null and beginHourPrice != '' and endHourPrice != ''">
-				AND a.hour_price BETWEEN #{beginHourPrice} AND #{endHourPrice}
-			</if>
-			<if test="beginMonthlyRent != null and endMonthlyRent != null and beginMonthlyRent != '' and endMonthlyRent != ''">
-				AND a.monthly_rent BETWEEN #{beginMonthlyRent} AND #{endMonthlyRent}
-			</if>
-			<if test="bedNum != null and bedNum != ''">
-				AND a.bed_num = #{bedNum}
-			</if>
-			<if test="bedType != null and bedType != ''">
-				AND a.bed_type = #{bedType}
-			</if>
-			<if test="hotel != null and hotel.id != ''">
-				AND a.hotel_id = #{hotel.id}
-			</if>
-		</where>
-		<choose>
-			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
-				ORDER BY ${page.orderBy}
-			</when>
-			<otherwise>
-				ORDER BY a.update_date DESC
-			</otherwise>
-		</choose>
-	</select>
-	
-	<select id="findAllList" resultMap="roomTypeMap" >
-		SELECT 
-			<include refid="roomTypeColumns"/>
-		FROM room_type a
-		<include refid="roomTypeJoins"/>
-		<where>
-			a.del_flag = #{DEL_FLAG_NORMAL}
-		</where>		
-		<choose>
-			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
-				ORDER BY ${page.orderBy}
-			</when>
-			<otherwise>
-				ORDER BY a.update_date DESC
-			</otherwise>
-		</choose>
-	</select>
-	
-	<insert id="insert">
+
+    <sql id="roomTypeJoins">
+    </sql>
+
+
+    <select id="get" resultMap="roomTypeMap">
+        SELECT
+        <include refid="roomTypeColumns"/>
+        FROM room_type a
+        <include refid="roomTypeJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultMap="roomTypeMap">
+        SELECT
+        <include refid="roomTypeColumns"/>
+        FROM room_type a
+        <include refid="roomTypeJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+            <if test="name != null and name != ''">
+                AND a.name LIKE
+                <if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+                <if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
+                <if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+            </if>
+            <if test="capacity != null and capacity != ''">
+                AND a.capacity = #{capacity}
+            </if>
+            <if test="beginDailyPrice != null and endDailyPrice != null and beginDailyPrice != '' and endDailyPrice != ''">
+                AND a.daily_price BETWEEN #{beginDailyPrice} AND #{endDailyPrice}
+            </if>
+            <if test="beginHolidayPrice != null and endHolidayPrice != null and beginHolidayPrice != '' and endHolidayPrice != ''">
+                AND a.holiday_price BETWEEN #{beginHolidayPrice} AND #{endHolidayPrice}
+            </if>
+            <if test="beginHourPrice != null and endHourPrice != null and beginHourPrice != '' and endHourPrice != ''">
+                AND a.hour_price BETWEEN #{beginHourPrice} AND #{endHourPrice}
+            </if>
+            <if test="beginMonthlyRent != null and endMonthlyRent != null and beginMonthlyRent != '' and endMonthlyRent != ''">
+                AND a.monthly_rent BETWEEN #{beginMonthlyRent} AND #{endMonthlyRent}
+            </if>
+            <if test="bedNum != null and bedNum != ''">
+                AND a.bed_num = #{bedNum}
+            </if>
+            <if test="bedType != null and bedType != ''">
+                AND a.bed_type = #{bedType}
+            </if>
+            <if test="hotel != null and hotel.id != ''">
+                AND a.hotel_id = #{hotel.id}
+            </if>
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultMap="roomTypeMap">
+        SELECT
+        <include refid="roomTypeColumns"/>
+        FROM room_type a
+        <include refid="roomTypeJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
 		INSERT INTO room_type(
 			id,
 			create_by,
@@ -162,8 +162,8 @@
 			#{hotel.id}
 		)
 	</insert>
-	
-	<update id="update">
+
+    <update id="update">
 		UPDATE room_type SET 	
 			update_by = #{updateBy.id},
 			update_date = #{updateDate},
@@ -181,25 +181,25 @@
 			hotel_id = #{hotel.id}
 		WHERE id = #{id}
 	</update>
-	
-	
-	<!--物理删除-->
-	<update id="delete">
+
+
+    <!--物理删除-->
+    <update id="delete">
 		DELETE FROM room_type
 		WHERE id = #{id}
 	</update>
-	
-	<!--逻辑删除-->
-	<update id="deleteByLogic">
+
+    <!--逻辑删除-->
+    <update id="deleteByLogic">
 		UPDATE room_type SET 
 			del_flag = #{DEL_FLAG_DELETE}
 		WHERE id = #{id}
 	</update>
-	
-	
-	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
-	<select id="findUniqueByProperty" resultType="com.jeeplus.pmsol.roomtype.entity.RoomType" statementType="STATEMENT">
+
+
+    <!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
+    <select id="findUniqueByProperty" resultType="com.jeeplus.pmsol.roomtype.entity.RoomType" statementType="STATEMENT">
 		select * FROM room_type  where ${propertyName} = '${value}'
 	</select>
-	
+
 </mapper>
