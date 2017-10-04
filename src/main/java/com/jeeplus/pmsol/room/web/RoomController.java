@@ -12,12 +12,11 @@ import javax.validation.ConstraintViolationException;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -76,6 +75,23 @@ public class RoomController extends BaseController {
 	public String form(Room room, Model model) {
 		model.addAttribute("room", room);
 		return "pmsol/room/roomForm";
+	}
+
+	/**
+	 * 获取房间——ajax
+	 */
+	@RequiresPermissions(value = {"room:room:add", "room:room:edit"}, logical = Logical.OR)
+	@RequestMapping(value = "getModel/{id}")
+	@ResponseBody
+	public ResponseEntity<Room> getModel(@PathVariable String id) throws Exception {
+		if (StringUtils.isBlank(id)) {
+			return new ResponseEntity(HttpStatus.NO_CONTENT);
+		}
+		Room t = roomService.get(id);
+		if (t == null) {
+			return new ResponseEntity(HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity(t, HttpStatus.OK);
 	}
 
 	/**

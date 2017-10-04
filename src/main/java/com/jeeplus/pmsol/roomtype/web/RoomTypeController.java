@@ -101,6 +101,18 @@ public class RoomTypeController extends BaseController {
         return new ResponseEntity(t, HttpStatus.OK);
     }
 
+
+    /**
+     * 获取所有房型——ajax
+     */
+    @RequiresPermissions(value="roomtype:roomType:view")
+    @RequestMapping(value = "getList")
+    @ResponseBody
+    public ResponseEntity<List<RoomType>> getList(RoomType roomtype) throws Exception{
+        List<RoomType> list = roomTypeService.findList(roomtype);
+        return new ResponseEntity(list, HttpStatus.OK);
+    }
+
     /**
      * 保存房型
      */
