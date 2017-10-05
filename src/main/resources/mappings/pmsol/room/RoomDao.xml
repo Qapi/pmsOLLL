@@ -152,7 +152,14 @@
 			#{layout},
 			#{roomType.id},
 			#{bedType},
-			#{status}
+			<choose>
+				<when test="status != null and status !=''">
+					#{status}
+				</when>
+				<otherwise>
+					0
+				</otherwise>
+			</choose>
 		)
 	</insert>
 
@@ -188,7 +195,7 @@
 
 
 	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
-	<select id="findUniqueByProperty" resultMap="roomMap"\ statementType="STATEMENT">
+	<select id="findUniqueByProperty" resultMap="roomMap" statementType="STATEMENT">
 		select * FROM room  where ${propertyName} = '${value}'
 	</select>
 	

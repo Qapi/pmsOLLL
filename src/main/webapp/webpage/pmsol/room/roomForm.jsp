@@ -55,7 +55,7 @@
                 <tr>
                     <td class="width-15 active"><label class="pull-right">所属酒店：</label></td>
                     <td class="width-35">
-                        <select name="hotelId" htmlEscape="false"    class="form-control required">
+                        <select name="hotel.id" htmlEscape="false"    class="form-control required">
                             <option v-for="hotel in hotels" :label="hotel.office.name" :value="hotel.id"></option>
                         </select>
                     </td>
@@ -71,7 +71,7 @@
                     </td>
                     <td class="width-15 active"><label class="pull-right">房型：</label></td>
                     <td class="width-35">
-                        <select name="roomTypeId" htmlEscape="false"    class="form-control required">
+                        <select name="roomType.id" htmlEscape="false"    class="form-control required">
                             <option v-for="roomType in roomTypes" :label="roomType.name" :value="roomType.id"></option>
                         </select>
                     </td>
