@@ -9,7 +9,7 @@
 	<div class="wrapper wrapper-content">
 	<div class="ibox">
 	<div class="ibox-title">
-			<h5>角色列表 </h5>
+			<h5>岗位列表 </h5>
 			<div class="ibox-tools">
 				<a class="collapse-link">
 					<i class="fa fa-chevron-up"></i>
@@ -39,7 +39,7 @@
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<table:sortColumn id="orderBy" name="orderBy" value="${page.orderBy}" callback="sortOrRefresh();"/><!-- 支持排序 -->
 		<div class="form-group">
-			<span>角色名称：</span>
+			<span>岗位名称：</span>
 				<form:input path="name" value="${role.name}"  htmlEscape="false" maxlength="64"  class=" form-control input-sm"/>
 				
 		 </div>	
