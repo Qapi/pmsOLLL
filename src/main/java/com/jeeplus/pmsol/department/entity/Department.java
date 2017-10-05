@@ -6,6 +6,8 @@ package com.jeeplus.pmsol.department.entity;
 
 import com.jeeplus.common.persistence.DataEntity;
 import com.jeeplus.common.utils.excel.annotation.ExcelField;
+import com.jeeplus.modules.sys.entity.Office;
+import com.jeeplus.pmsol.hotel.entity.Hotel;
 
 /**
  * 部门配置Entity
@@ -16,9 +18,9 @@ public class Department extends DataEntity<Department> {
 	
 	private static final long serialVersionUID = 1L;
 	private String flag;		// 等级标识
-	private String hotelId;		// 所属酒店
+	private Hotel hotel;		// 所属酒店
 	private String status;		// 状态
-	private String officeId;		// 系统officeId
+	private Office office;		// 系统office
 	
 	public Department() {
 		super();
@@ -38,12 +40,12 @@ public class Department extends DataEntity<Department> {
 	}
 	
 	@ExcelField(title="所属酒店", align=2, sort=7)
-	public String getHotelId() {
-		return hotelId;
+	public Hotel getHotel() {
+		return hotel;
 	}
 
-	public void setHotelId(String hotelId) {
-		this.hotelId = hotelId;
+	public void setHotel(Hotel hotel) {
+		this.hotel = hotel;
 	}
 	
 	@ExcelField(title="状态", align=2, sort=8)
@@ -56,12 +58,12 @@ public class Department extends DataEntity<Department> {
 	}
 	
 	@ExcelField(title="系统officeId", fieldType=String.class, value="", align=2, sort=9)
-	public String getOfficeId() {
-		return officeId;
+	public Office getOffice() {
+		return office;
 	}
 
-	public void setOfficeId(String officeId) {
-		this.officeId = officeId;
+	public void setOffice(Office office) {
+		this.office = office;
 	}
 	
 }
