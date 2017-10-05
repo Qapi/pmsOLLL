@@ -2,7 +2,7 @@
 <%@ include file="/webpage/include/taglib.jsp"%>
 <html>
 <head>
-	<title>机构管理</title>
+	<title>机构配置</title>
 	<meta name="decorator" content="default"/>
 	<%@include file="/webpage/include/treeview.jsp" %>
 	<style type="text/css">

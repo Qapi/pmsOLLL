@@ -2,7 +2,7 @@
 <%@ include file="/webpage/include/taglib.jsp"%>
 <html>
 <head>
-	<title>角色管理</title>
+	<title>岗位配置</title>
 	<meta name="decorator" content="default"/>
 </head>
 <body class="gray-bg">
