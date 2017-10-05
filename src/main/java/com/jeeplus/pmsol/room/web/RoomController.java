@@ -9,6 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolationException;
 
+import com.jeeplus.pmsol.hotel.entity.Hotel;
+import com.jeeplus.pmsol.hotel.service.HotelService;
+import com.jeeplus.pmsol.roomtype.entity.RoomType;
+import com.jeeplus.pmsol.roomtype.service.RoomTypeService;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +47,11 @@ public class RoomController extends BaseController {
 
 	@Autowired
 	private RoomService roomService;
-	
+	@Autowired
+	private HotelService hotelService;
+	@Autowired
+	private RoomTypeService roomTypeService;
+
 	@ModelAttribute
 	public Room get(@RequestParam(required=false) String id) {
 		Room entity = null;
@@ -61,9 +69,13 @@ public class RoomController extends BaseController {
 	 */
 	@RequiresPermissions("room:room:list")
 	@RequestMapping(value = {"list", ""})
-	public String list(Room room, HttpServletRequest request, HttpServletResponse response, Model model) {
-		Page<Room> page = roomService.findPage(new Page<Room>(request, response), room); 
+	public String list(Room room, Hotel hotel, RoomType roomType, HttpServletRequest request, HttpServletResponse response, Model model) {
+		Page<Room> page = roomService.findPage(new Page<Room>(request, response), room);
+		List<Hotel> hotelList = hotelService.findList(hotel);
+		List<RoomType> roomTypeList = roomTypeService.findList(roomType);
 		model.addAttribute("page", page);
+		model.addAttribute("hotels", hotelList);
+		model.addAttribute("roomTypes", roomTypeList);
 		return "pmsol/room/roomList";
 	}
 

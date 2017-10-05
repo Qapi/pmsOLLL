@@ -6,6 +6,8 @@ package com.jeeplus.pmsol.room.entity;
 
 import com.jeeplus.common.persistence.DataEntity;
 import com.jeeplus.common.utils.excel.annotation.ExcelField;
+import com.jeeplus.pmsol.hotel.entity.Hotel;
+import com.jeeplus.pmsol.roomtype.entity.RoomType;
 
 /**
  * 房间配置Entity
@@ -17,10 +19,10 @@ public class Room extends DataEntity<Room> {
 	private static final long serialVersionUID = 1L;
 	private String roomNum;		// 房间号
 	private String topicName;		// 主题名称/房间别名
-	private String hotelId;		// 所属酒店
+	private Hotel hotel;		// 所属酒店
 	private String floorNum;		// 楼层
 	private String layout;		// 户型
-	private String roomTypeId;		// 所属房型
+	private RoomType roomType;		// 所属房型
 	private String bedType;		// 床型
 	private String status;		// 状态
 	
@@ -51,12 +53,12 @@ public class Room extends DataEntity<Room> {
 	}
 	
 	@ExcelField(title="所属酒店", align=2, sort=9)
-	public String getHotelId() {
-		return hotelId;
+	public Hotel getHotel() {
+		return hotel;
 	}
 
-	public void setHotelId(String hotelId) {
-		this.hotelId = hotelId;
+	public void setHotel(Hotel hotel) {
+		this.hotel = hotel;
 	}
 	
 	@ExcelField(title="楼层", align=2, sort=10)
@@ -78,12 +80,12 @@ public class Room extends DataEntity<Room> {
 	}
 	
 	@ExcelField(title="所属房型", align=2, sort=12)
-	public String getRoomTypeId() {
-		return roomTypeId;
+	public RoomType getRoomType() {
+		return roomType;
 	}
 
-	public void setRoomTypeId(String roomTypeId) {
-		this.roomTypeId = roomTypeId;
+	public void setRoomType(RoomType roomType) {
+		this.roomType = roomType;
 	}
 	
 	@ExcelField(title="床型", align=2, sort=13)

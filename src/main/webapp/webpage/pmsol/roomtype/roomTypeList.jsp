@@ -52,7 +52,7 @@
                             <form:select path="bedType" class="form-control ">
                                 <form:option value=""></form:option>
                                 <form:options items="${fns:getDictList('bed_type')}"
-                                              itemLabel="description" itemValue="value" htmlEscape="false"/>
+                                              itemLabel="label" itemValue="value" htmlEscape="false"/>
                             </form:select>
                                 <%--<span>可入住人数：</span>--%>
                                 <%--<form:input path="capacity" htmlEscape="false" maxlength="8"  class=" form-control input-sm"/>--%>
@@ -68,6 +68,7 @@
                             <form:input path="bedNum" htmlEscape="false" maxlength="8" class=" form-control input-sm"/>
                             <span>所属酒店：</span>
                             <form:select path="hotel.id" class="form-control ">
+                                <form:option value=""></form:option>
                                 <form:options items="${hotels}"
                                               itemLabel="office.name" itemValue="id" htmlEscape="false"/>
                             </form:select>

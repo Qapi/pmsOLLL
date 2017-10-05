@@ -31,7 +31,7 @@ window.vm = new Vue({
                 axios.get(ctx + "/room/room/getModel/" + id).then(response => {
                     const res = response.data;
                     if (res && response.status == "200") {
-                        this.roomType = res;
+                        this.room = res;
                     }
                 });
             }

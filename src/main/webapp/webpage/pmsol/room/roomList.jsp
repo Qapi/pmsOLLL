@@ -32,10 +32,10 @@
 			</a>
 		</div>
 	</div>
-    
+
     <div class="ibox-content">
 	<sys:message content="${message}"/>
-	
+
 	<!--查询条件-->
 	<div class="row">
 	<div class="col-sm-12">
@@ -44,28 +44,36 @@
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<table:sortColumn id="orderBy" name="orderBy" value="${page.orderBy}" callback="sortOrRefresh();"/><!-- 支持排序 -->
 		<div class="form-group">
-			<span>备注信息：</span>
-				<form:input path="remarks" htmlEscape="false" maxlength="255"  class=" form-control input-sm"/>
 			<span>房间号：</span>
 				<form:input path="roomNum" htmlEscape="false" maxlength="16"  class=" form-control input-sm"/>
-			<span>主题名称/房间别名：</span>
-				<form:input path="topicName" htmlEscape="false" maxlength="64"  class=" form-control input-sm"/>
+			<%--<span>房间名：</span>--%>
+				<%--<form:input path="topicName" htmlEscape="false" maxlength="64"  class=" form-control input-sm"/>--%>
 			<span>所属酒店：</span>
-				<form:input path="hotelId" htmlEscape="false" maxlength="64"  class=" form-control input-sm"/>
-			<span>楼层：</span>
+                <form:select path="hotel.id" class="form-control ">
+                    <form:option value=""></form:option>
+                    <form:options items="${hotels}" itemLabel="office.name" itemValue="id" htmlEscape="false"/>
+                </form:select>
+            <span>楼层：</span>
 				<form:input path="floorNum" htmlEscape="false" maxlength="64"  class=" form-control input-sm"/>
-			<span>户型：</span>
-				<form:input path="layout" htmlEscape="false" maxlength="64"  class=" form-control input-sm"/>
-			<span>所属房型：</span>
-				<form:input path="roomTypeId" htmlEscape="false" maxlength="64"  class=" form-control input-sm"/>
+			<%--<span>户型：</span>--%>
+				<%--<form:input path="layout" htmlEscape="false" maxlength="64"  class=" form-control input-sm"/>--%>
+			<span>房型：</span>
+                <form:select path="roomType.id" class="form-control ">
+                    <form:option value=""></form:option>
+                    <form:options items="${roomTypes}" itemLabel="name" itemValue="id" htmlEscape="false"/>
+                </form:select>
 			<span>状态：</span>
-				<form:input path="status" htmlEscape="false" maxlength="64"  class=" form-control input-sm"/>
-		 </div>	
+                <form:select path="status" class="form-control ">
+                    <form:option value=""></form:option>
+                    <form:options items="${fns:getDictList('room_status')}"
+                                  itemLabel="label" itemValue="value" htmlEscape="false"/>
+                </form:select>
+        </div>
 	</form:form>
 	<br/>
 	</div>
 	</div>
-	
+
 	<!-- 工具栏 -->
 	<div class="row">
 	<div class="col-sm-12">
@@ -86,7 +94,7 @@
 	       		<table:exportExcel url="${ctx}/room/room/export"></table:exportExcel><!-- 导出按钮 -->
 	       	</shiro:hasPermission>
 	       <button class="btn btn-white btn-sm " data-toggle="tooltip" data-placement="left" onclick="sortOrRefresh()" title="刷新"><i class="glyphicon glyphicon-repeat"></i> 刷新</button>
-		
+
 			</div>
 		<div class="pull-right">
 			<button  class="btn btn-primary btn-rounded btn-outline btn-sm " onclick="search()" ><i class="fa fa-search"></i> 查询</button>
@@ -94,19 +102,19 @@
 		</div>
 	</div>
 	</div>
-	
+
 	<!-- 表格 -->
 	<table id="contentTable" class="table table-striped table-bordered table-hover table-condensed dataTables-example dataTable">
 		<thead>
 			<tr>
 				<th> <input type="checkbox" class="i-checks"></th>
-				<th  class="sort-column remarks">备注信息</th>
+				<%--<th  class="sort-column remarks">备注信息</th>--%>
 				<th  class="sort-column roomNum">房间号</th>
-				<th  class="sort-column topicName">主题名称/房间别名</th>
-				<th  class="sort-column hotelId">所属酒店</th>
+				<th  class="sort-column topicName">房间名</th>
+				<th  class="sort-column hotel">所属酒店</th>
 				<th  class="sort-column floorNum">楼层</th>
 				<th  class="sort-column layout">户型</th>
-				<th  class="sort-column roomTypeId">所属房型</th>
+				<th  class="sort-column roomType">房型</th>
 				<th  class="sort-column bedType">床型</th>
 				<th  class="sort-column status">状态</th>
 				<th>操作</th>
@@ -116,9 +124,9 @@
 		<c:forEach items="${page.list}" var="room">
 			<tr>
 				<td> <input type="checkbox" id="${room.id}" class="i-checks"></td>
-				<td><a  href="#" onclick="openDialogView('查看房间', '${ctx}/room/room/form?id=${room.id}','800px', '500px')">
-					${room.remarks}
-				</a></td>
+				<%--<td><a  href="#" onclick="openDialogView('查看房间', '${ctx}/room/room/form?id=${room.id}','800px', '500px')">--%>
+					<%--${room.remarks}--%>
+				<%--</a></td>--%>
 				<td>
 					${room.roomNum}
 				</td>
@@ -126,7 +134,7 @@
 					${room.topicName}
 				</td>
 				<td>
-					${room.hotelId}
+				    ${room.hotel.office.name}
 				</td>
 				<td>
 					${room.floorNum}
@@ -135,13 +143,13 @@
 					${room.layout}
 				</td>
 				<td>
-					${room.roomTypeId}
+					${room.roomType.name}
 				</td>
 				<td>
-					${room.bedType}
+				    ${fns:getDictLabel(room.roomType.bedType,'bed_type', '')}
 				</td>
 				<td>
-					${room.status}
+				    ${fns:getDictLabel(room.status,'room_status', '')}
 				</td>
 				<td>
 					<shiro:hasPermission name="room:room:view">
@@ -158,7 +166,7 @@
 		</c:forEach>
 		</tbody>
 	</table>
-	
+
 		<!-- 分页代码 -->
 	<table:page page="${page}"></table:page>
 	<br/>

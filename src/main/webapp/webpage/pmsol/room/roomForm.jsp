@@ -69,7 +69,7 @@
                     <td class="width-35">
                         <input name="layout" :value="room.layout" htmlEscape="false" class="form-control "/>
                     </td>
-                    <td class="width-15 active"><label class="pull-right">所属房型：</label></td>
+                    <td class="width-15 active"><label class="pull-right">房型：</label></td>
                     <td class="width-35">
                         <select name="roomTypeId" htmlEscape="false"    class="form-control required">
                             <option v-for="roomType in roomTypes" :label="roomType.name" :value="roomType.id"></option>

@@ -1,7 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jeeplus.pmsol.room.dao.RoomDao">
-    
+
+	<!-- 自定义resultMap,主要用于复杂关联查询 -->
+	<resultMap id="roomMap" type="Room">
+		<id property="id" column="id"/>
+		<result property="roomNum" column="room_num"/>
+		<result property="topicName" column="topic_name"/>
+		<result property="floorNum" column="floor_num"/>
+		<result property="layout" column="layout"/>
+		<result property="bedType" column="bed_type"/>
+		<result property="status" column="status"/>
+		<association property="roomType" column="{id=roomType.id}"
+					 javaType="com.jeeplus.pmsol.roomtype.entity.RoomType"
+					 select="com.jeeplus.pmsol.roomtype.dao.RoomTypeDao.get">
+		</association>
+		<association property="hotel" column="{id=hotel.id}"
+					 javaType="com.jeeplus.pmsol.hotel.entity.Hotel"
+					 select="com.jeeplus.pmsol.hotel.dao.HotelDao.get">
+		</association>
+	</resultMap>
+
 	<sql id="roomColumns">
 		a.id AS "id",
 		a.create_by AS "createBy.id",
@@ -12,10 +31,10 @@
 		a.del_flag AS "delFlag",
 		a.room_num AS "roomNum",
 		a.topic_name AS "topicName",
-		a.hotel_id AS "hotelId",
+		a.hotel_id AS "hotel.id",
 		a.floor_num AS "floorNum",
 		a.layout AS "layout",
-		a.roomtype_id AS "roomTypeId",
+		a.roomtype_id AS "roomType.id",
 		a.bed_type AS "bedType",
 		a.status AS "status"
 	</sql>
@@ -24,7 +43,7 @@
 	</sql>
 	
     
-	<select id="get" resultType="com.jeeplus.pmsol.room.entity.Room" >
+	<select id="get" resultMap="roomMap" >
 		SELECT
 			<include refid="roomColumns"/>
 		FROM room a
@@ -32,7 +51,7 @@
 		WHERE a.id = #{id}
 	</select>
 
-	<select id="findList" resultType="com.jeeplus.pmsol.room.entity.Room" >
+	<select id="findList" resultMap="roomMap" >
 		SELECT
 			<include refid="roomColumns"/>
 		FROM room a
@@ -54,8 +73,8 @@
 					<if test="dbName == 'mssql'">'%'+#{topicName}+'%'</if>
 					<if test="dbName == 'mysql'">concat('%',#{topicName},'%')</if>
 			</if>
-			<if test="hotelId != null and hotelId != ''">
-				AND a.hotel_id = #{hotelId}
+			<if test="hotel != null and hotel.id != ''">
+				AND a.hotel_id = #{hotel.id}
 			</if>
 			<if test="floorNum != null and floorNum != ''">
 				AND a.floor_num = #{floorNum}
@@ -66,8 +85,8 @@
 					<if test="dbName == 'mssql'">'%'+#{layout}+'%'</if>
 					<if test="dbName == 'mysql'">concat('%',#{layout},'%')</if>
 			</if>
-			<if test="roomTypeId != null and roomTypeId != ''">
-				AND a.roomtype_id = #{roomTypeId}
+			<if test="roomType != null and roomType.id != ''">
+				AND a.roomtype_id = #{roomType.id}
 			</if>
 			<if test="status != null and status != ''">
 				AND a.status = #{status}
@@ -83,7 +102,7 @@
 		</choose>
 	</select>
 
-	<select id="findAllList" resultType="com.jeeplus.pmsol.room.entity.Room" >
+	<select id="findAllList" resultMap="roomMap" >
 		SELECT
 			<include refid="roomColumns"/>
 		FROM room a
@@ -128,10 +147,10 @@
 			#{delFlag},
 			#{roomNum},
 			#{topicName},
-			#{hotelId},
+			#{hotel.id},
 			#{floorNum},
 			#{layout},
-			#{roomTypeId},
+			#{roomType.id},
 			#{bedType},
 			#{status}
 		)
@@ -144,10 +163,10 @@
 			remarks = #{remarks},
 			room_num = #{roomNum},
 			topic_name = #{topicName},
-			hotel_id = #{hotelId},
+			hotel_id = #{hotel.id},
 			floor_num = #{floorNum},
 			layout = #{layout},
-			roomtype_id = #{roomTypeId},
+			roomtype_id = #{roomType.id},
 			bed_type = #{bedType},
 			status = #{status}
 		WHERE id = #{id}
@@ -169,7 +188,7 @@
 
 
 	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
-	<select id="findUniqueByProperty" resultType="com.jeeplus.pmsol.room.entity.Room" statementType="STATEMENT">
+	<select id="findUniqueByProperty" resultMap="roomMap"\ statementType="STATEMENT">
 		select * FROM room  where ${propertyName} = '${value}'
 	</select>
 	
