@@ -87,8 +87,37 @@
 		         <td class="active"><label class="pull-right"><c:if test="${empty user.id}"><font color="red">*</font></c:if>确认密码:</label></td>
 		         <td><input id="confirmNewPassword" name="confirmNewPassword" type="password"  class="form-control ${empty user.id?'required':''}" value="" maxlength="50" minlength="3" equalTo="#newPassword"/></td>
 		      </tr>
-		      
-		       <tr>
+
+			  <tr>
+				  <td class="active"><label class="pull-right">身份证号:</label></td>
+				  <td><form:input path="idNum" htmlEscape="false" maxlength="18" class="form-control"/></td>
+				  <td class="active"><label class="pull-right">生日:</label></td>
+				  <td><form:input path="birthday" htmlEscape="false" maxlength="10" class="form-control date" placeholder="格式：2000-01-01"/></td>
+			  </tr>
+
+			  <tr>
+				  <td class="active"><label class="pull-right">家庭地址:</label></td>
+				  <td><form:input path="homeAddress" htmlEscape="false" maxlength="18" class="form-control"/></td>
+				  <td class="active"><label class="pull-right">性别:</label></td>
+				  <td><form:select path="gender" class="form-control ">
+					  <form:option value=""></form:option>
+					  <form:options items="${fns:getDictList('sex')}"
+									itemLabel="label" itemValue="value" htmlEscape="false"/>
+				  </form:select></td>
+			  </tr>
+
+			  <tr>
+				  <td class="active"><label class="pull-right"><font color="red">*</font>合同期:</label></td>
+				  <td><form:input path="contractPeriod" htmlEscape="false" maxlength="30" class="form-control required"  placeholder="格式：2000-01-01到2020-01-01"/></td>
+				  <td class="active"><label class="pull-right"><font color="red">*</font>在职状态:</label></td>
+				  <td><form:select path="status" class="form-control ">
+					  <form:option value=""></form:option>
+					  <form:options items="${fns:getDictList('staff_status')}"
+									itemLabel="label" itemValue="value" htmlEscape="false"/>
+				  </form:select></td>
+			  </tr>
+
+			  <tr>
 		         <td class="active"><label class="pull-right">邮箱:</label></td>
 		         <td><form:input path="email" htmlEscape="false" maxlength="100" class="form-control email"/></td>
 		         <td class="active"><label class="pull-right">电话:</label></td>
@@ -96,8 +125,8 @@
 		      </tr>
 		      
 		      <tr>
-		         <td class="active"><label class="pull-right">手机:</label></td>
-		         <td><form:input path="mobile" htmlEscape="false" maxlength="100" class="form-control"/></td>
+				  <td class="active"><label class="pull-right"><font color="red">*</font>手机:</label></td>
+		         <td><form:input path="mobile" htmlEscape="false" maxlength="100" class="form-control number"/></td>
 		         <td class="active"><label class="pull-right">是否允许登录:</label></td>
 		         <td><form:select path="loginFlag"  class="form-control">
 					<form:options items="${fns:getDictList('yes_no')}" itemLabel="label" itemValue="value" htmlEscape="false"/>

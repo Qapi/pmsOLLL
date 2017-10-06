@@ -53,10 +53,10 @@
 	<div class="col-sm-12">
 		<div class="pull-left">
 			<shiro:hasPermission name="sys:role:add">
-				<table:addRow url="${ctx}/sys/role/form" title="角色"></table:addRow><!-- 增加按钮 -->
+				<table:addRow url="${ctx}/sys/role/form" title="岗位"></table:addRow><!-- 增加按钮 -->
 			</shiro:hasPermission>
 			<shiro:hasPermission name="sys:role:edit">
-			    <table:editRow url="${ctx}/sys/role/form" id="contentTable"  title="角色"></table:editRow><!-- 编辑按钮 -->
+			    <table:editRow url="${ctx}/sys/role/form" id="contentTable"  title="岗位"></table:editRow><!-- 编辑按钮 -->
 			</shiro:hasPermission>
 			<shiro:hasPermission name="sys:role:del">
 				<table:delRow url="${ctx}/sys/role/deleteAll" id="contentTable"></table:delRow><!-- 删除按钮 -->
@@ -75,7 +75,7 @@
 		<thead>
 			<tr>
 				<th><input type="checkbox" class="i-checks"></th>
-				<th>角色名称</th>
+				<th>岗位名称</th>
 				<th>英文名称</th>
 				<th>归属机构</th>
 				<th>数据范围</th>
@@ -86,21 +86,21 @@
 			<c:forEach items="${list}" var="role">
 				<tr>
 					<td> <input type="checkbox" id="${role.id}" class="i-checks"></td>
-					<td><a  href="#" onclick="openDialogView('查看角色', '${ctx}/sys/role/form?id=${role.id}','800px', '500px')">${role.name}</a></td>
-					<td><a  href="#" onclick="openDialogView('查看角色', '${ctx}/sys/role/form?id=${role.id}','800px', '500px')">${role.enname}</a></td>
+					<td><a  href="#" onclick="openDialogView('查看岗位', '${ctx}/sys/role/form?id=${role.id}','800px', '500px')">${role.name}</a></td>
+					<td><a  href="#" onclick="openDialogView('查看岗位', '${ctx}/sys/role/form?id=${role.id}','800px', '500px')">${role.enname}</a></td>
 					<td>${role.office.name}</td>
 					<td>${fns:getDictLabel(role.dataScope, 'sys_data_scope', '无')}</td>
 					<td>
 						<shiro:hasPermission name="sys:role:view">
-						<a href="#" onclick="openDialogView('查看角色', '${ctx}/sys/role/form?id=${role.id}','800px', '500px')" class="btn btn-info btn-xs" ><i class="fa fa-search-plus"></i> 查看</a>
+						<a href="#" onclick="openDialogView('查看岗位', '${ctx}/sys/role/form?id=${role.id}','800px', '500px')" class="btn btn-info btn-xs" ><i class="fa fa-search-plus"></i> 查看</a>
 						</shiro:hasPermission>
 						<shiro:hasPermission name="sys:role:edit"> 
 						<c:if test="${(role.sysData eq fns:getDictValue('是', 'yes_no', '1') && fns:getUser().admin)||!(role.sysData eq fns:getDictValue('是', 'yes_no', '1'))}">
-							<a href="#" onclick="openDialog('修改角色', '${ctx}/sys/role/form?id=${role.id}','800px', '500px')" class="btn btn-success btn-xs" ><i class="fa fa-edit"></i> 修改</a>
+							<a href="#" onclick="openDialog('修改岗位', '${ctx}/sys/role/form?id=${role.id}','800px', '500px')" class="btn btn-success btn-xs" ><i class="fa fa-edit"></i> 修改</a>
 						</c:if>
 						</shiro:hasPermission>
 						<shiro:hasPermission name="sys:role:del"> 
-						<a href="${ctx}/sys/role/delete?id=${role.id}" onclick="return confirmx('确认要删除该角色吗？', this.href)" class="btn  btn-danger btn-xs"><i class="fa fa-trash"></i> 删除</a>
+						<a href="${ctx}/sys/role/delete?id=${role.id}" onclick="return confirmx('确认要删除该岗位吗？', this.href)" class="btn  btn-danger btn-xs"><i class="fa fa-trash"></i> 删除</a>
 						</shiro:hasPermission>
 						<shiro:hasPermission name="sys:role:assign"> 
 						<a href="#" onclick="openDialog('权限设置', '${ctx}/sys/role/auth?id=${role.id}','350px', '700px')" class="btn btn-primary btn-xs" ><i class="fa fa-edit"></i> 权限设置</a> 

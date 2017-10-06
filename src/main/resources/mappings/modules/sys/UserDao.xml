@@ -69,6 +69,12 @@
 		a.email,
 		a.phone,
 		a.mobile,
+		a.id_num AS "idNum",
+		a.birthday,
+		a.gender,
+		a.home_address AS "homeAddress",
+		a.contract_period AS "contractPeriod",
+		a.status,
 		a.user_type,
 		a.login_ip,
 		a.login_date,
@@ -181,6 +187,21 @@
 					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
 					<if test="dbName == 'mysql'">CONCAT('%', #{name}, '%')</if>
 		</if>
+		<if test="idNum != null and idNum != ''">
+			AND a.id_Num like
+			<if test="dbName == 'oracle'">'%'||#{idNum}||'%'</if>
+			<if test="dbName == 'mysql'">CONCAT('%', #{idNum}, '%')</if>
+		</if>
+		<if test="mobile != null and mobile != ''">
+			AND a.mobile like
+			<if test="dbName == 'oracle'">'%'||#{mobile}||'%'</if>
+			<if test="dbName == 'mysql'">CONCAT('%', #{mobile}, '%')</if>
+		</if>
+		<if test="status != null and status != ''">
+			AND a.status like
+			<if test="dbName == 'oracle'">'%'||#{status}||'%'</if>
+			<if test="dbName == 'mysql'">CONCAT('%', #{status}, '%')</if>
+		</if>
 		<!-- 数据范围过滤 -->
 		${sqlMap.dsf}
 		<choose>
@@ -222,6 +243,22 @@
 					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
 					<if test="dbName == 'mysql'">CONCAT('%', #{name}, '%')</if>
 		</if>
+		<if test="idNum != null and idNum != ''">
+			AND a.id_Num like
+			<if test="dbName == 'oracle'">'%'||#{idNum}||'%'</if>
+			<if test="dbName == 'mysql'">CONCAT('%', #{idNum}, '%')</if>
+		</if>
+		<if test="mobile != null and mobile != ''">
+			AND a.mobile like
+			<if test="dbName == 'oracle'">'%'||#{mobile}||'%'</if>
+			<if test="dbName == 'mysql'">CONCAT('%', #{mobile}, '%')</if>
+		</if>
+		<if test="status != null and status != ''">
+			AND a.status like
+			<if test="dbName == 'oracle'">'%'||#{status}||'%'</if>
+			<if test="dbName == 'mysql'">CONCAT('%', #{status}, '%')</if>
+		</if>
+
 		<!-- 数据范围过滤 -->
 		${sqlMap.dsf}
 		<!-- 排序 -->
@@ -269,7 +306,13 @@
 			name, 
 			email, 
 			phone, 
-			mobile, 
+			mobile,
+			id_num,
+			birthday,
+			gender,
+			home_address,
+			contract_period,
+			status,
 			user_type, 
 			create_by, 
 			create_date, 
@@ -290,7 +333,13 @@
 			#{name}, 
 			#{email}, 
 			#{phone}, 
-			#{mobile}, 
+			#{mobile},
+			#{idNum},
+			#{birthday},
+			#{gender},
+			#{homeAddress},
+			#{contractPeriod},
+			#{status},
 			#{userType}, 
 			#{createBy.id}, 
 			#{createDate}, 
@@ -315,7 +364,13 @@
 			name = #{name}, 
 			email = #{email}, 
 			phone = #{phone}, 
-			mobile = #{mobile}, 
+			mobile = #{mobile},
+			id_num = #{idNum},
+			birthday = #{birthday},
+			gender = #{gender},
+			home_address = #{homeAddress},
+			contract_period = #{contractPeriod},
+			status = #{status},
 			user_type = #{userType}, 
 			update_by = #{updateBy.id}, 
 			update_date = #{updateDate}, 

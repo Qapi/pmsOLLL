@@ -28,7 +28,7 @@ import com.jeeplus.common.utils.excel.fieldtype.RoleListType;
 public class User extends DataEntity<User> {
 
 	private static final long serialVersionUID = 1L;
-	private Office company;	// 归属公司
+	private Office company;	// 归属公司、酒店
 	private Office office;	// 归属部门
 	private String loginName;// 登录名
 	private String password;// 密码
@@ -37,6 +37,14 @@ public class User extends DataEntity<User> {
 	private String email;	// 邮箱
 	private String phone;	// 电话
 	private String mobile;	// 手机
+
+	private String idNum;		// 身份证号
+	private String birthday;		// 生日
+	private String gender;		// 性别
+	private String homeAddress;		// 家庭地址
+	private String contractPeriod;		// 合同期
+	private String status;		// 状态
+
 	private String userType;// 用户类型
 	private String loginIp;	// 最后登陆IP
 	private Date loginDate;	// 最后登陆日期
@@ -341,5 +349,53 @@ public class User extends DataEntity<User> {
 	 */
 	public String getSign() {
 		return sign;
+	}
+
+	public String getIdNum() {
+		return idNum;
+	}
+
+	public void setIdNum(String idNum) {
+		this.idNum = idNum;
+	}
+
+	public String getBirthday() {
+		return birthday;
+	}
+
+	public void setBirthday(String birthday) {
+		this.birthday = birthday;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public String getHomeAddress() {
+		return homeAddress;
+	}
+
+	public void setHomeAddress(String homeAddress) {
+		this.homeAddress = homeAddress;
+	}
+
+	public String getContractPeriod() {
+		return contractPeriod;
+	}
+
+	public void setContractPeriod(String contractPeriod) {
+		this.contractPeriod = contractPeriod;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 }
