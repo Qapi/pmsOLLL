@@ -57,19 +57,28 @@
 			<span>名称：</span>
 				<form:input path="name" htmlEscape="false" maxlength="64"  class=" form-control input-sm"/>
 			<span>等级标识：</span>
-				<form:input path="flag" htmlEscape="false" maxlength="64"  class=" form-control input-sm"/>
+				<form:select path="flag" class="form-control">
+					<form:option value=""></form:option>
+					<form:options items="${fns:getDictList('member_grade')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+				</form:select>
 			<span>所属酒店：</span>
-				<form:input path="hotelId" htmlEscape="false" maxlength="64"  class=" form-control input-sm"/>
-			<span>折扣优惠：</span>
-				<form:input path="salePercent" htmlEscape="false" maxlength="64"  class=" form-control input-sm"/>
+				<form:select path="hotel.id" class="form-control ">
+					<form:option value=""></form:option>
+					<form:options items="${hotels}" itemLabel="office.name" itemValue="id" htmlEscape="false"/>
+				</form:select>
 			<span>有效期：</span>
 				<input id="beginValidityTerm" name="beginValidityTerm" type="text" maxlength="20" class="laydate-icon form-control layer-date input-sm"
-					value="<fmt:formatDate value="${memberLevel.beginValidityTerm}" pattern="yyyy-MM-dd HH:mm:ss"/>"/> - 
+					value="<fmt:formatDate value="${memberLevel.beginValidityTerm}" pattern="yyyy-MM-dd"/>"/> -
 				<input id="endValidityTerm" name="endValidityTerm" type="text" maxlength="20" class="laydate-icon form-control layer-date input-sm"
-					value="<fmt:formatDate value="${memberLevel.endValidityTerm}" pattern="yyyy-MM-dd HH:mm:ss"/>"/>
+					value="<fmt:formatDate value="${memberLevel.endValidityTerm}" pattern="yyyy-MM-dd"/>"/>
+		</div>
+		<div class="form-group">
 			<span>状态：</span>
-				<form:input path="status" htmlEscape="false" maxlength="64"  class=" form-control input-sm"/>
-		 </div>	
+			<form:select path="status" class="form-control">
+				<form:option value=""></form:option>
+				<form:options items="${fns:getDictList('general_status')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+			</form:select>
+		</div>
 	</form:form>
 	<br/>
 	</div>
@@ -109,7 +118,6 @@
 		<thead>
 			<tr>
 				<th> <input type="checkbox" class="i-checks"></th>
-				<th  class="sort-column remarks">备注信息</th>
 				<th  class="sort-column name">名称</th>
 				<th  class="sort-column flag">等级标识</th>
 				<th  class="sort-column hotelId">所属酒店</th>
@@ -123,26 +131,23 @@
 		<c:forEach items="${page.list}" var="memberLevel">
 			<tr>
 				<td> <input type="checkbox" id="${memberLevel.id}" class="i-checks"></td>
-				<td><a  href="#" onclick="openDialogView('查看会员等级', '${ctx}/memberlevel/memberLevel/form?id=${memberLevel.id}','800px', '500px')">
-					${memberLevel.remarks}
-				</a></td>
 				<td>
 					${memberLevel.name}
 				</td>
 				<td>
-					${memberLevel.flag}
+					${fns:getDictLabel(memberLevel.flag,'member_grade','')}
 				</td>
 				<td>
-					${memberLevel.hotelId}
+					${memberLevel.hotel.office.name}
 				</td>
 				<td>
 					${memberLevel.salePercent}
 				</td>
 				<td>
-					${memberLevel.validityTerm}
+					${fns:formatDate(memberLevel.validityTerm)}
 				</td>
 				<td>
-					${memberLevel.status}
+					${fns:getDictLabel(memberLevel.status,'general_status','')}
 				</td>
 				<td>
 					<shiro:hasPermission name="memberlevel:memberLevel:view">

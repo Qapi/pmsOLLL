@@ -16,10 +16,11 @@
 		a.home_address AS "homeAddress",
 		a.phone AS "phone",
 		a.emergency_contact AS "emergencyContact",
-		a.emergency_contact_phone AS "emergency_contactPhone",
+		a.emergency_contact_phone AS "emergencyContactPhone",
 		a.member_num AS "memberNum",
 		a.menber_level_id AS "menberLevelId",
 		a.user_id AS "userId",
+		a.validity_term AS "validityTerm",
 		a.status AS "status"
 	</sql>
 	
@@ -69,11 +70,11 @@
 					<if test="dbName == 'mssql'">'%'+#{emergencyContact}+'%'</if>
 					<if test="dbName == 'mysql'">concat('%',#{emergencyContact},'%')</if>
 			</if>
-			<if test="emergency_contactPhone != null and emergency_contactPhone != ''">
+			<if test="emergencyContactPhone != null and emergencyContactPhone != ''">
 				AND a.emergency_contact_phone LIKE 
-					<if test="dbName == 'oracle'">'%'||#{emergency_contactPhone}||'%'</if>
-					<if test="dbName == 'mssql'">'%'+#{emergency_contactPhone}+'%'</if>
-					<if test="dbName == 'mysql'">concat('%',#{emergency_contactPhone},'%')</if>
+					<if test="dbName == 'oracle'">'%'||#{emergencyContactPhone}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{emergencyContactPhone}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{emergencyContactPhone},'%')</if>
 			</if>
 			<if test="memberNum != null and memberNum != ''">
 				AND a.member_num = #{memberNum}
@@ -132,6 +133,7 @@
 			member_num,
 			menber_level_id,
 			user_id,
+			validity_term,
 			status
 		) VALUES (
 			#{id},
@@ -147,10 +149,11 @@
 			#{homeAddress},
 			#{phone},
 			#{emergencyContact},
-			#{emergency_contactPhone},
+			#{emergencyContactPhone},
 			#{memberNum},
 			#{menberLevelId},
 			#{userId},
+			#{validityTerm},
 			#{status}
 		)
 	</insert>
@@ -166,10 +169,11 @@
 			home_address = #{homeAddress},
 			phone = #{phone},
 			emergency_contact = #{emergencyContact},
-			emergency_contact_phone = #{emergency_contactPhone},
+			emergency_contact_phone = #{emergencyContactPhone},
 			member_num = #{memberNum},
 			menber_level_id = #{menberLevelId},
 			user_id = #{userId},
+			validity_term = #{validityTerm},
 			status = #{status}
 		WHERE id = #{id}
 	</update>

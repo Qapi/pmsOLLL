@@ -1,7 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jeeplus.pmsol.memberlevel.dao.MemberLevelDao">
-    
+
+	<!-- 自定义resultMap,主要用于复杂关联查询 -->
+	<resultMap id="memberLevelMap" type="MemberLevel">
+		<id property="id" column="id"/>
+		<result property="flag" column="flag"/>
+		<result property="salePercent" column="sale_percent"/>
+		<result property="validityTerm" column="validity_term"/>
+		<result property="status" column="status"/>
+		<association property="hotel" column="{id=hotel.id}"
+					 javaType="com.jeeplus.pmsol.hotel.entity.Hotel"
+					 select="com.jeeplus.pmsol.hotel.dao.HotelDao.get">
+		</association>
+	</resultMap>
+
 	<sql id="memberLevelColumns">
 		a.id AS "id",
 		a.create_by AS "createBy.id",
@@ -12,7 +25,7 @@
 		a.del_flag AS "delFlag",
 		a.name AS "name",
 		a.flag AS "flag",
-		a.hotel_id AS "hotelId",
+		a.hotel_id AS "hotel.id",
 		a.sale_percent AS "salePercent",
 		a.validity_term AS "validityTerm",
 		a.status AS "status"
@@ -22,7 +35,7 @@
 	</sql>
 	
     
-	<select id="get" resultType="com.jeeplus.pmsol.memberlevel.entity.MemberLevel" >
+	<select id="get" resultMap="memberLevelMap" >
 		SELECT 
 			<include refid="memberLevelColumns"/>
 		FROM member_level a
@@ -30,7 +43,7 @@
 		WHERE a.id = #{id}
 	</select>
 	
-	<select id="findList" resultType="com.jeeplus.pmsol.memberlevel.entity.MemberLevel" >
+	<select id="findList" resultMap="memberLevelMap" >
 		SELECT 
 			<include refid="memberLevelColumns"/>
 		FROM member_level a
@@ -46,8 +59,8 @@
 			<if test="flag != null and flag != ''">
 				AND a.flag = #{flag}
 			</if>
-			<if test="hotelId != null and hotelId != ''">
-				AND a.hotel_id = #{hotelId}
+			<if test="hotel != null and hotel.id != ''">
+				AND a.hotel_id = #{hotel.id}
 			</if>
 			<if test="beginSalePercent != null and endSalePercent != null and beginSalePercent != '' and endSalePercent != ''">
 				AND a.sale_percent BETWEEN #{beginSalePercent} AND #{endSalePercent}
@@ -69,7 +82,7 @@
 		</choose>
 	</select>
 	
-	<select id="findAllList" resultType="com.jeeplus.pmsol.memberlevel.entity.MemberLevel" >
+	<select id="findAllList" resultMap="memberLevelMap" >
 		SELECT 
 			<include refid="memberLevelColumns"/>
 		FROM member_level a
@@ -112,7 +125,7 @@
 			#{delFlag},
 			#{name},
 			#{flag},
-			#{hotelId},
+			#{hotel.id},
 			#{salePercent},
 			#{validityTerm},
 			#{status}
@@ -126,7 +139,7 @@
 			remarks = #{remarks},
 			name = #{name},
 			flag = #{flag},
-			hotel_id = #{hotelId},
+			hotel_id = #{hotel.id},
 			sale_percent = #{salePercent},
 			validity_term = #{validityTerm},
 			status = #{status}
@@ -149,7 +162,7 @@
 	
 	
 	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
-	<select id="findUniqueByProperty" resultType="com.jeeplus.pmsol.memberlevel.entity.MemberLevel" statementType="STATEMENT">
+	<select id="findUniqueByProperty" resultMap="memberLevelMap" statementType="STATEMENT">
 		select * FROM member_level  where ${propertyName} = '${value}'
 	</select>
 	

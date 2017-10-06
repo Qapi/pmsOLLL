@@ -46,7 +46,15 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 		}
 		return formatDate;
 	}
-	
+
+	/**
+	 * 得到日期字符串 格式（yyyy-MM-dd）
+	 */
+	public static String formatDate(Date date) {
+		String formatDate = DateFormatUtils.format(date, "yyyy-MM-dd");;
+		return formatDate;
+	}
+
 	/**
 	 * 得到日期时间字符串，转换格式（yyyy-MM-dd HH:mm:ss）
 	 */

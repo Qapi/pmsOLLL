@@ -9,15 +9,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolationException;
 
+import com.jeeplus.pmsol.hotel.entity.Hotel;
+import com.jeeplus.pmsol.hotel.service.HotelService;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -44,7 +45,9 @@ public class MemberLevelController extends BaseController {
 
 	@Autowired
 	private MemberLevelService memberLevelService;
-	
+	@Autowired
+	private HotelService hotelService;
+
 	@ModelAttribute
 	public MemberLevel get(@RequestParam(required=false) String id) {
 		MemberLevel entity = null;
@@ -62,9 +65,11 @@ public class MemberLevelController extends BaseController {
 	 */
 	@RequiresPermissions("memberlevel:memberLevel:list")
 	@RequestMapping(value = {"list", ""})
-	public String list(MemberLevel memberLevel, HttpServletRequest request, HttpServletResponse response, Model model) {
-		Page<MemberLevel> page = memberLevelService.findPage(new Page<MemberLevel>(request, response), memberLevel); 
+	public String list(MemberLevel memberLevel, Hotel hotel, HttpServletRequest request, HttpServletResponse response, Model model) {
+		Page<MemberLevel> page = memberLevelService.findPage(new Page<MemberLevel>(request, response), memberLevel);
+		List<Hotel> hotelList = hotelService.findList(hotel);
 		model.addAttribute("page", page);
+		model.addAttribute("hotels", hotelList);
 		return "pmsol/memberlevel/memberLevelList";
 	}
 
@@ -76,6 +81,23 @@ public class MemberLevelController extends BaseController {
 	public String form(MemberLevel memberLevel, Model model) {
 		model.addAttribute("memberLevel", memberLevel);
 		return "pmsol/memberlevel/memberLevelForm";
+	}
+
+	/**
+	 * 获取房间——ajax
+	 */
+	@RequiresPermissions(value = {"memberlevel:memberLevel:add", "memberlevel:memberLevel:edit"}, logical = Logical.OR)
+	@RequestMapping(value = "getModel/{id}")
+	@ResponseBody
+	public ResponseEntity<MemberLevel> getModel(@PathVariable String id) throws Exception {
+		if (StringUtils.isBlank(id)) {
+			return new ResponseEntity(HttpStatus.NO_CONTENT);
+		}
+		MemberLevel t = memberLevelService.get(id);
+		if (t == null) {
+			return new ResponseEntity(HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity(t, HttpStatus.OK);
 	}
 
 	/**

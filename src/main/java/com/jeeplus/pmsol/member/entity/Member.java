@@ -7,6 +7,8 @@ package com.jeeplus.pmsol.member.entity;
 import com.jeeplus.common.persistence.DataEntity;
 import com.jeeplus.common.utils.excel.annotation.ExcelField;
 
+import java.util.Date;
+
 /**
  * 会员配置Entity
  * @author wangp
@@ -22,10 +24,11 @@ public class Member extends DataEntity<Member> {
 	private String homeAddress;		// 家庭地址
 	private String phone;		// 手机号
 	private String emergencyContact;		// 紧急联系人
-	private String emergency_contactPhone;		// 紧急联系人电话
+	private String emergencyContactPhone;		// 紧急联系人电话
 	private String memberNum;		// 会员号
 	private String menberLevelId;		// 所属会员等级
 	private String userId;		// 所属用户id
+	private Date validityTerm;		// 有效期
 	private String status;		// 状态
 	
 	public Member() {
@@ -100,12 +103,12 @@ public class Member extends DataEntity<Member> {
 	}
 	
 	@ExcelField(title="紧急联系人电话", align=2, sort=13)
-	public String getEmergency_contactPhone() {
-		return emergency_contactPhone;
+	public String getEmergencyContactPhone() {
+		return emergencyContactPhone;
 	}
 
-	public void setEmergency_contactPhone(String emergency_contactPhone) {
-		this.emergency_contactPhone = emergency_contactPhone;
+	public void setEmergencyContactPhone(String emergencyContactPhone) {
+		this.emergencyContactPhone = emergencyContactPhone;
 	}
 	
 	@ExcelField(title="会员号", align=2, sort=14)
@@ -143,5 +146,12 @@ public class Member extends DataEntity<Member> {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
+
+	public Date getValidityTerm() {
+		return validityTerm;
+	}
+
+	public void setValidityTerm(Date validityTerm) {
+		this.validityTerm = validityTerm;
+	}
 }

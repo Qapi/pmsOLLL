@@ -55,7 +55,7 @@
 						<td class="width-35">
 							<select name="bedType" htmlEscape="false"    class="form-control required">
 								<c:forEach items="${fns:getDictList('bed_type')}" var="bedType">
-									<option label="${bedType.description}" value="${bedType.value}"></option>
+									<option label="${bedType.label}" value="${bedType.value}"></option>
 								</c:forEach>
 							</select>
 						</td>
@@ -97,8 +97,11 @@
 					<tr>
 						<td class="width-15 active"><label class="pull-right"><font color="red">*</font>所属酒店：</label></td>
 						<td class="width-35">
-							<select name="hotelId" htmlEscape="false"    class="form-control required">
-								<option v-for="hotel in hotels" :label="hotel.office.name" :value="hotel.id"></option>
+							<select name="hotel.id" htmlEscape="false"    class="form-control required">
+								<option value=""></option>
+								<option v-for="hotel in hotels" :label="hotel.office.name" :value="hotel.id"
+									<c:if test="${roomType.hotel.id eq hotel.id}">selected</c:if>>
+								</option>
 							</select>
 						</td>
 						<td class="width-15 active"><label class="pull-right">说明：</label></td>

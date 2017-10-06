@@ -257,6 +257,13 @@
     <example>${fns:pastDays(date)}</example>  
   </function>
   <function>
+    <description>将日期对象Date转为标准格式字符串yyyy-mm-dd显示</description>
+    <name>formatDate</name>
+    <function-class>com.jeeplus.common.utils.DateUtils</function-class>
+    <function-signature>java.lang.String formatDate(java.util.Date)</function-signature>
+    <example>${fns:formatDate(date)}</example>
+  </function>
+  <function>
     <description>将日期对象Date转为标准格式字符串yyyy-mm-dd hh:mm:ss显示</description>
     <name>formatDateTime</name>
     <function-class>com.jeeplus.common.utils.DateUtils</function-class>
