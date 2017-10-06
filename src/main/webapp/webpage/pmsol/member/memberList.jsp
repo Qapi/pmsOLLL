@@ -62,7 +62,7 @@
 			<span>紧急联系人：</span>
 				<form:input path="emergencyContact" htmlEscape="false" maxlength="64"  class=" form-control input-sm"/>
 			<span>紧急联系人电话：</span>
-				<form:input path="emergency_contactPhone" htmlEscape="false" maxlength="64"  class=" form-control input-sm"/>
+				<form:input path="emergencyContactPhone" htmlEscape="false" maxlength="64"  class=" form-control input-sm"/>
 			<span>会员号：</span>
 				<form:input path="memberNum" htmlEscape="false" maxlength="64"  class=" form-control input-sm"/>
 			<span>所属会员等级：</span>
@@ -116,7 +116,7 @@
 				<th  class="sort-column homeAddress">家庭地址</th>
 				<th  class="sort-column phone">手机号</th>
 				<th  class="sort-column emergencyContact">紧急联系人</th>
-				<th  class="sort-column emergency_contactPhone">紧急联系人电话</th>
+				<th  class="sort-column emergencyContactPhone">紧急联系人电话</th>
 				<th  class="sort-column memberNum">会员号</th>
 				<th  class="sort-column menberLevelId">所属会员等级</th>
 				<th  class="sort-column status">状态</th>
@@ -149,7 +149,7 @@
 					${member.emergencyContact}
 				</td>
 				<td>
-					${member.emergency_contactPhone}
+					${member.emergencyContactPhone}
 				</td>
 				<td>
 					${member.memberNum}
