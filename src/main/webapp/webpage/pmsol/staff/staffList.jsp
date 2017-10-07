@@ -65,7 +65,7 @@
 			<span>手机号：</span>
 				<form:input path="phone" htmlEscape="false" maxlength="32"  class=" form-control input-sm"/>
 			<span>所属酒店：</span>
-				<form:input path="hotelId" htmlEscape="false" maxlength="64"  class=" form-control input-sm"/>
+				<form:input path="hotel" htmlEscape="false" maxlength="64"  class=" form-control input-sm"/>
 			<span>身份证号：</span>
 				<form:input path="idNum" htmlEscape="false" maxlength="64"  class=" form-control input-sm"/>
 			<span>生日：</span>
@@ -130,7 +130,7 @@
 				<th  class="sort-column remarks">备注信息</th>
 				<th  class="sort-column name">姓名</th>
 				<th  class="sort-column phone">手机号</th>
-				<th  class="sort-column hotelId">所属酒店</th>
+				<th  class="sort-column hotel">所属酒店</th>
 				<th  class="sort-column idNum">身份证号</th>
 				<th  class="sort-column birthday">生日</th>
 				<th  class="sort-column gender">性别</th>
@@ -157,7 +157,7 @@
 					${staff.phone}
 				</td>
 				<td>
-					${staff.hotelId}
+					${staff.hotel}
 				</td>
 				<td>
 					${staff.idNum}

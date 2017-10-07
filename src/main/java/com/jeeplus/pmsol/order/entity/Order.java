@@ -6,6 +6,14 @@ package com.jeeplus.pmsol.order.entity;
 
 import com.jeeplus.common.persistence.DataEntity;
 import com.jeeplus.common.utils.excel.annotation.ExcelField;
+import com.jeeplus.pmsol.hotel.entity.Hotel;
+import com.jeeplus.pmsol.hotelchannel.entity.HotelChannel;
+import com.jeeplus.pmsol.member.entity.Member;
+import com.jeeplus.pmsol.room.entity.Room;
+import com.jeeplus.pmsol.roomtype.entity.RoomType;
+
+import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * 订单配置Entity
@@ -16,23 +24,24 @@ public class Order extends DataEntity<Order> {
 	
 	private static final long serialVersionUID = 1L;
 	private String orderNum;		// 订单号
-	private String channelId;		// 所属渠道
-	private String hotelId;		// 所属酒店
-	private String roomTypeId;		// 所属房型
-	private String leaseMode;		// 租期
+	private HotelChannel channel;		// 所属渠道
+	private Hotel hotel;		// 所属酒店
+	private RoomType roomType;		// 所属房型
+	private String leaseMode;		// 租赁方式  	短租/钟点/月租
 	private String rentMonths;		// 长租月数
-	private String bookTime;		// 预订时间
-	private String checkInDate;		// 入住日期
-	private String checkOutDate;		// 离店日期
+	private Date checkInDate;		// 入住日期
+	private Date checkOutDate;		// 预离日期
 	private String liveDays;		// 入住天数
-	private String totalAmount;		// 订单总额
-	private String contacts;		// 联系人
-	private String contactsPhone;		// 联系人电话
-	private String memberId;		// 预订人id
-	private String bookRoomId;		// 预约房间
+	private BigDecimal totalAmount;		// 订单总额
+	private String contacts;		// 入住人
+	private String contactsPhone;		// 入住人电话
+	private Member booker;		// 预订人id
+	private Room bookRoom;		// 预约房间
 	private String status;		// 状态
-	private String beginCheckInDate;		// 开始 入住日期
-	private String endCheckInDate;		// 结束 入住日期
+	private Date beginCheckInDate;		// 开始 入住日期
+	private Date endCheckInDate;		// 结束 入住日期
+	private Date beginCheckOutDate;		// 开始 预离日期
+	private Date endCheckOutDate;		// 结束 预离日期
 	
 	public Order() {
 		super();
@@ -52,30 +61,30 @@ public class Order extends DataEntity<Order> {
 	}
 	
 	@ExcelField(title="所属渠道", align=2, sort=8)
-	public String getChannelId() {
-		return channelId;
+	public HotelChannel getChannel() {
+		return channel;
 	}
 
-	public void setChannelId(String channelId) {
-		this.channelId = channelId;
+	public void setChannel(HotelChannel channel) {
+		this.channel = channel;
 	}
 	
 	@ExcelField(title="所属酒店", align=2, sort=9)
-	public String getHotelId() {
-		return hotelId;
+	public Hotel getHotel() {
+		return hotel;
 	}
 
-	public void setHotelId(String hotelId) {
-		this.hotelId = hotelId;
+	public void setHotel(Hotel hotel) {
+		this.hotel = hotel;
 	}
 	
 	@ExcelField(title="所属房型", align=2, sort=10)
-	public String getRoomTypeId() {
-		return roomTypeId;
+	public RoomType getRoomType() {
+		return roomType;
 	}
 
-	public void setRoomTypeId(String roomTypeId) {
-		this.roomTypeId = roomTypeId;
+	public void setRoomType(RoomType roomType) {
+		this.roomType = roomType;
 	}
 	
 	@ExcelField(title="租期", align=2, sort=11)
@@ -95,22 +104,13 @@ public class Order extends DataEntity<Order> {
 	public void setRentMonths(String rentMonths) {
 		this.rentMonths = rentMonths;
 	}
-	
-	@ExcelField(title="预订时间", align=2, sort=13)
-	public String getBookTime() {
-		return bookTime;
-	}
 
-	public void setBookTime(String bookTime) {
-		this.bookTime = bookTime;
-	}
-	
 	@ExcelField(title="入住日期", align=2, sort=14)
-	public String getCheckInDate() {
+	public Date getCheckInDate() {
 		return checkInDate;
 	}
 
-	public void setCheckInDate(String checkInDate) {
+	public void setCheckInDate(Date checkInDate) {
 		this.checkInDate = checkInDate;
 	}
 	
@@ -133,21 +133,21 @@ public class Order extends DataEntity<Order> {
 	}
 	
 	@ExcelField(title="预订人id", align=2, sort=17)
-	public String getMemberId() {
-		return memberId;
+	public Member getBooker() {
+		return booker;
 	}
 
-	public void setMemberId(String memberId) {
-		this.memberId = memberId;
+	public void setBooker(Member booker) {
+		this.booker = booker;
 	}
 	
 	@ExcelField(title="预约房间", align=2, sort=18)
-	public String getBookRoomId() {
-		return bookRoomId;
+	public Room getBookRoom() {
+		return bookRoom;
 	}
 
-	public void setBookRoomId(String bookRoomId) {
-		this.bookRoomId = bookRoomId;
+	public void setBookRoom(Room bookRoom) {
+		this.bookRoom = bookRoom;
 	}
 	
 	@ExcelField(title="状态", align=2, sort=19)
@@ -159,19 +159,19 @@ public class Order extends DataEntity<Order> {
 		this.status = status;
 	}
 	
-	public String getBeginCheckInDate() {
+	public Date getBeginCheckInDate() {
 		return beginCheckInDate;
 	}
 
-	public void setBeginCheckInDate(String beginCheckInDate) {
+	public void setBeginCheckInDate(Date beginCheckInDate) {
 		this.beginCheckInDate = beginCheckInDate;
 	}
 	
-	public String getEndCheckInDate() {
+	public Date getEndCheckInDate() {
 		return endCheckInDate;
 	}
 
-	public void setEndCheckInDate(String endCheckInDate) {
+	public void setEndCheckInDate(Date endCheckInDate) {
 		this.endCheckInDate = endCheckInDate;
 	}
 
@@ -183,19 +183,35 @@ public class Order extends DataEntity<Order> {
 		this.liveDays = liveDays;
 	}
 
-	public String getTotalAmount() {
+	public BigDecimal getTotalAmount() {
 		return totalAmount;
 	}
 
-	public void setTotalAmount(String totalAmount) {
+	public void setTotalAmount(BigDecimal totalAmount) {
 		this.totalAmount = totalAmount;
 	}
 
-	public String getCheckOutDate() {
+	public Date getCheckOutDate() {
 		return checkOutDate;
 	}
 
-	public void setCheckOutDate(String checkOutDate) {
+	public void setCheckOutDate(Date checkOutDate) {
 		this.checkOutDate = checkOutDate;
+	}
+
+	public Date getBeginCheckOutDate() {
+		return beginCheckOutDate;
+	}
+
+	public void setBeginCheckOutDate(Date beginCheckOutDate) {
+		this.beginCheckOutDate = beginCheckOutDate;
+	}
+
+	public Date getEndCheckOutDate() {
+		return endCheckOutDate;
+	}
+
+	public void setEndCheckOutDate(Date endCheckOutDate) {
+		this.endCheckOutDate = endCheckOutDate;
 	}
 }

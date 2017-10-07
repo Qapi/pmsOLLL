@@ -12,7 +12,7 @@
 		a.del_flag AS "delFlag",
 		a.name AS "name",
 		a.phone AS "phone",
-		a.hotel_id AS "hotelId",
+		a.hotel_id AS "hotel",
 		a.id_num AS "idNum",
 		a.birthday AS "birthday",
 		a.gender AS "gender",
@@ -62,8 +62,8 @@
 					<if test="dbName == 'mssql'">'%'+#{phone}+'%'</if>
 					<if test="dbName == 'mysql'">concat('%',#{phone},'%')</if>
 			</if>
-			<if test="hotelId != null and hotelId != ''">
-				AND a.hotel_id = #{hotelId}
+			<if test="hotel != null and hotel != ''">
+				AND a.hotel_id = #{hotel}
 			</if>
 			<if test="idNum != null and idNum != ''">
 				AND a.id_num LIKE 
@@ -155,7 +155,7 @@
 			#{delFlag},
 			#{name},
 			#{phone},
-			#{hotelId},
+			#{hotel},
 			#{idNum},
 			#{birthday},
 			#{gender},
@@ -175,7 +175,7 @@
 			remarks = #{remarks},
 			name = #{name},
 			phone = #{phone},
-			hotel_id = #{hotelId},
+			hotel_id = #{hotel},
 			id_num = #{idNum},
 			birthday = #{birthday},
 			gender = #{gender},

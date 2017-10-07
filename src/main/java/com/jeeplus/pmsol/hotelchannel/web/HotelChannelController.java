@@ -12,12 +12,11 @@ import javax.validation.ConstraintViolationException;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -76,6 +75,35 @@ public class HotelChannelController extends BaseController {
 	public String form(HotelChannel hotelChannel, Model model) {
 		model.addAttribute("hotelChannel", hotelChannel);
 		return "pmsol/hotelchannel/hotelChannelForm";
+	}
+
+	/**
+	 * 获取渠道——ajax
+	 */
+	@RequiresPermissions(value = {"hotelchannel:hotelChannel:add", "hotelchannel:hotelChannel:edit"}, logical = Logical.OR)
+	@RequestMapping(value = "getModel/{id}")
+	@ResponseBody
+	public ResponseEntity<HotelChannel> getModel(@PathVariable String id) throws Exception {
+		if (StringUtils.isBlank(id)) {
+			return new ResponseEntity(HttpStatus.NO_CONTENT);
+		}
+		HotelChannel t = hotelChannelService.get(id);
+		if (t == null) {
+			return new ResponseEntity(HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity(t, HttpStatus.OK);
+	}
+
+
+	/**
+	 * 获取所有渠道——ajax
+	 */
+	@RequiresPermissions(value="hotelchannel:hotelChannel:view")
+	@RequestMapping(value = "getList")
+	@ResponseBody
+	public ResponseEntity<List<HotelChannel>> getList(HotelChannel hotelChannel) throws Exception{
+		List<HotelChannel> list = hotelChannelService.findList(hotelChannel);
+		return new ResponseEntity(list, HttpStatus.OK);
 	}
 
 	/**

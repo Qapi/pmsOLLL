@@ -47,7 +47,7 @@
 			<span>等级标识：</span>
 				<form:input path="flag" htmlEscape="false" maxlength="64"  class=" form-control input-sm"/>
 			<span>所属酒店：</span>
-				<form:input path="hotelId" htmlEscape="false" maxlength="64"  class=" form-control input-sm"/>
+				<form:input path="hotel" htmlEscape="false" maxlength="64"  class=" form-control input-sm"/>
 			<span>状态：</span>
 				<form:input path="status" htmlEscape="false" maxlength="64"  class=" form-control input-sm"/>
 		 </div>	
@@ -91,7 +91,7 @@
 			<tr>
 				<th> <input type="checkbox" class="i-checks"></th>
 				<th  class="sort-column flag">等级标识</th>
-				<th  class="sort-column hotelId">所属酒店</th>
+				<th  class="sort-column hotel">所属酒店</th>
 				<th  class="sort-column status">状态</th>
 				<th>操作</th>
 			</tr>
@@ -104,7 +104,7 @@
 					${department.flag}
 				</a></td>
 				<td>
-					${department.hotelId}
+					${department.hotel}
 				</td>
 				<td>
 					${department.status}

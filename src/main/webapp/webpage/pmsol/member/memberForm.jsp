@@ -99,12 +99,14 @@
 							<input name="email" :value="member.email" htmlEscape="false"    class="form-control email"/>
 						</td>
 						<td class="active"><label class="pull-right">性别:</label></td>
-						<td><select path="gender" :value="member.gender" class="form-control ">
+						<td>
+							<select name="gender" :value="member.gender" class="form-control ">
 							<option value=""></option>
 							<c:forEach items="${fns:getDictList('sex')}" var="sex">
 								<option label="${sex.label}" value="${sex.value}" htmlEscape="false"/>
 							</c:forEach>
-						</select></td>
+							</select>
+						</td>
 					</tr>
 					<tr>
 						<td class="width-15 active"><label class="pull-right"><font color="red">*</font>所属酒店：</label></td>

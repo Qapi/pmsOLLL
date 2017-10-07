@@ -61,9 +61,9 @@
 			<span>房间id：</span>
 				<form:input path="roomId" htmlEscape="false" maxlength="64"  class=" form-control input-sm"/>
 			<span>所属酒店：</span>
-				<form:input path="hotelId" htmlEscape="false" maxlength="64"  class=" form-control input-sm"/>
+				<form:input path="hotel" htmlEscape="false" maxlength="64"  class=" form-control input-sm"/>
 			<span>所属房型：</span>
-				<form:input path="roomTypeId" htmlEscape="false" maxlength="64"  class=" form-control input-sm"/>
+				<form:input path="roomType" htmlEscape="false" maxlength="64"  class=" form-control input-sm"/>
 			<span>日期：</span>
 				<input id="beginResDate" name="beginResDate" type="text" maxlength="20" class="laydate-icon form-control layer-date input-sm"
 					value="<fmt:formatDate value="${roomRes.beginResDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"/> - 
@@ -112,8 +112,8 @@
 				<th  class="sort-column remarks">备注信息</th>
 				<th  class="sort-column roomNum">房间号</th>
 				<th  class="sort-column roomId">房间id</th>
-				<th  class="sort-column hotelId">所属酒店</th>
-				<th  class="sort-column roomTypeId">所属房型</th>
+				<th  class="sort-column hotel">所属酒店</th>
+				<th  class="sort-column roomType">所属房型</th>
 				<th  class="sort-column resDate">日期</th>
 				<th  class="sort-column status">状态</th>
 				<th>操作</th>
@@ -133,10 +133,10 @@
 					${roomRes.roomId}
 				</td>
 				<td>
-					${roomRes.hotelId}
+					${roomRes.hotel}
 				</td>
 				<td>
-					${roomRes.roomTypeId}
+					${roomRes.roomType}
 				</td>
 				<td>
 					${roomRes.resDate}

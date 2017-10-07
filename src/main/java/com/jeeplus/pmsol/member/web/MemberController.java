@@ -111,6 +111,18 @@ public class MemberController extends BaseController {
 
 
     /**
+     * 获取所有会员——ajax
+     */
+    @RequiresPermissions(value="member:member:view")
+    @RequestMapping(value = "getList")
+    @ResponseBody
+    public ResponseEntity<List<Member>> getList(Member member) throws Exception{
+        List<Member> list = memberService.findList(member);
+        return new ResponseEntity(list, HttpStatus.OK);
+    }
+
+
+    /**
      * 保存会员
      */
     @RequiresPermissions(value = {"member:member:add", "member:member:edit"}, logical = Logical.OR)

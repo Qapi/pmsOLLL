@@ -12,8 +12,8 @@
 		a.del_flag AS "delFlag",
 		a.room_num AS "roomNum",
 		a.room_id AS "roomId",
-		a.hotel_id AS "hotelId",
-		a.roomtype_id AS "roomTypeId",
+		a.hotel_id AS "hotel",
+		a.roomtype_id AS "roomType",
 		a.res_date AS "resDate",
 		a.status AS "status"
 	</sql>
@@ -49,11 +49,11 @@
 			<if test="roomId != null and roomId != ''">
 				AND a.room_id = #{roomId}
 			</if>
-			<if test="hotelId != null and hotelId != ''">
-				AND a.hotel_id = #{hotelId}
+			<if test="hotel != null and hotel != ''">
+				AND a.hotel_id = #{hotel}
 			</if>
-			<if test="roomTypeId != null and roomTypeId != ''">
-				AND a.roomtype_id = #{roomTypeId}
+			<if test="roomType != null and roomType != ''">
+				AND a.roomtype_id = #{roomType}
 			</if>
 			<if test="beginResDate != null and endResDate != null and beginResDate != '' and endResDate != ''">
 				AND a.res_date BETWEEN #{beginResDate} AND #{endResDate}
@@ -112,8 +112,8 @@
 			#{delFlag},
 			#{roomNum},
 			#{roomId},
-			#{hotelId},
-			#{roomTypeId},
+			#{hotel},
+			#{roomType},
 			#{resDate},
 			#{status}
 		)
@@ -126,8 +126,8 @@
 			remarks = #{remarks},
 			room_num = #{roomNum},
 			room_id = #{roomId},
-			hotel_id = #{hotelId},
-			roomtype_id = #{roomTypeId},
+			hotel_id = #{hotel},
+			roomtype_id = #{roomType},
 			res_date = #{resDate},
 			status = #{status}
 		WHERE id = #{id}

@@ -8,6 +8,8 @@ import com.jeeplus.common.persistence.DataEntity;
 import com.jeeplus.common.utils.excel.annotation.ExcelField;
 import com.jeeplus.pmsol.hotel.entity.Hotel;
 
+import java.math.BigDecimal;
+
 /**
  * 房型配置Entity
  * @author wangp
@@ -18,12 +20,12 @@ public class RoomType extends DataEntity<RoomType> {
 	private static final long serialVersionUID = 1L;
 	private String name;		// 房型名称
 	private String capacity;		// 可入住人数
-	private String dailyPrice;		// 平日价
-	private String weekendPrice;		// 周末价
-	private String holidayPrice;		// 节日价
-	private String hourPrice;		// 钟点价
+	private BigDecimal dailyPrice;		// 平日价
+	private BigDecimal weekendPrice;		// 周末价
+	private BigDecimal holidayPrice;		// 节日价
+	private BigDecimal hourPrice;		// 钟点价
 	private String hourNum; 			// 钟点房小时数
-	private String monthlyRent;		// 月租价
+	private BigDecimal monthlyRent;		// 月租价
 	private String bedNum;		// 床位数
 	private String bedType;		// 床型
 	private Hotel hotel;		// 所属酒店
@@ -63,38 +65,38 @@ public class RoomType extends DataEntity<RoomType> {
 	}
 	
 	@ExcelField(title="平日价", align=2, sort=9)
-	public String getDailyPrice() {
+	public BigDecimal getDailyPrice() {
 		return dailyPrice;
 	}
 
-	public void setDailyPrice(String dailyPrice) {
+	public void setDailyPrice(BigDecimal dailyPrice) {
 		this.dailyPrice = dailyPrice;
 	}
 	
 	@ExcelField(title="节假日价", align=2, sort=10)
-	public String getHolidayPrice() {
+	public BigDecimal getHolidayPrice() {
 		return holidayPrice;
 	}
 
-	public void setHolidayPrice(String holidayPrice) {
+	public void setHolidayPrice(BigDecimal holidayPrice) {
 		this.holidayPrice = holidayPrice;
 	}
 	
 	@ExcelField(title="钟点房价", align=2, sort=11)
-	public String getHourPrice() {
+	public BigDecimal getHourPrice() {
 		return hourPrice;
 	}
 
-	public void setHourPrice(String hourPrice) {
+	public void setHourPrice(BigDecimal hourPrice) {
 		this.hourPrice = hourPrice;
 	}
 	
 	@ExcelField(title="月租价", align=2, sort=12)
-	public String getMonthlyRent() {
+	public BigDecimal getMonthlyRent() {
 		return monthlyRent;
 	}
 
-	public void setMonthlyRent(String monthlyRent) {
+	public void setMonthlyRent(BigDecimal monthlyRent) {
 		this.monthlyRent = monthlyRent;
 	}
 	
@@ -189,11 +191,11 @@ public class RoomType extends DataEntity<RoomType> {
 		this.hotel = hotel;
 	}
 
-	public String getWeekendPrice() {
+	public BigDecimal getWeekendPrice() {
 		return weekendPrice;
 	}
 
-	public void setWeekendPrice(String weekendPrice) {
+	public void setWeekendPrice(BigDecimal weekendPrice) {
 		this.weekendPrice = weekendPrice;
 	}
 

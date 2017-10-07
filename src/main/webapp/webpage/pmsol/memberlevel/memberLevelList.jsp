@@ -120,7 +120,7 @@
 				<th> <input type="checkbox" class="i-checks"></th>
 				<th  class="sort-column name">名称</th>
 				<th  class="sort-column flag">等级标识</th>
-				<th  class="sort-column hotelId">所属酒店</th>
+				<th  class="sort-column hotel">所属酒店</th>
 				<th  class="sort-column salePercent">折扣优惠</th>
 				<th  class="sort-column validityTerm">有效期</th>
 				<th  class="sort-column status">状态</th>

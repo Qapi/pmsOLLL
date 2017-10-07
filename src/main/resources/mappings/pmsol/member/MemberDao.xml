@@ -211,7 +211,7 @@
 	</insert>
 	
 	<update id="update">
-		UPDATE member SET 	
+		UPDATE member SET
 			update_by = #{updateBy.id},
 			update_date = #{updateDate},
 			name = #{name},
@@ -244,7 +244,7 @@
 	
 	<!--逻辑删除-->
 	<update id="deleteByLogic">
-		UPDATE member SET 
+		UPDATE member SET
 			del_flag = #{DEL_FLAG_DELETE}
 		WHERE id = #{id}
 	</update>

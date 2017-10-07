@@ -46,7 +46,7 @@
             	<div class="col-sm-4">
                 <div class="ibox ">
                     <div class="ibox-title">
-                    	 <a href="#"><img alt="member" class="img-circle" src="${layGroup.avatar}" width="50px" height="50px">
+                    	 <a href="#"><img alt="booker" class="img-circle" src="${layGroup.avatar}" width="50px" height="50px">
                             ${layGroup.groupname}</a>
                  
                         <span class=" pull-right">

@@ -61,13 +61,13 @@
 					</td>
 					<td class="width-15 active"><label class="pull-right">所属酒店：</label></td>
 					<td class="width-35">
-						<form:input path="hotelId" htmlEscape="false"    class="form-control "/>
+						<form:input path="hotel" htmlEscape="false"    class="form-control "/>
 					</td>
 				</tr>
 				<tr>
 					<td class="width-15 active"><label class="pull-right">所属房型：</label></td>
 					<td class="width-35">
-						<form:input path="roomTypeId" htmlEscape="false"    class="form-control "/>
+						<form:input path="roomType" htmlEscape="false"    class="form-control "/>
 					</td>
 					<td class="width-15 active"><label class="pull-right">日期：</label></td>
 					<td class="width-35">

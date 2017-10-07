@@ -12,7 +12,7 @@
 		a.del_flag AS "delFlag",
 		a.name AS "name",
 		a.flag AS "flag",
-		a.hotel_id AS "hotelId",
+		a.hotel_id AS "hotel",
 		a.status AS "status"
 	</sql>
 	
@@ -87,7 +87,7 @@
 			#{delFlag},
 			#{name},
 			#{flag},
-			#{hotelId},
+			#{hotel},
 			#{status}
 		)
 	</insert>
@@ -99,7 +99,7 @@
 			remarks = #{remarks},
 			name = #{name},
 			flag = #{flag},
-			hotel_id = #{hotelId},
+			hotel_id = #{hotel},
 			status = #{status}
 		WHERE id = #{id}
 	</update>

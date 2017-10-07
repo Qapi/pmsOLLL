@@ -43,7 +43,7 @@
 	<!--查询条件-->
 	<div class="row">
 	<div class="col-sm-12">
-	<form:form id="searchForm" modelAttribute="member" action="${ctx}/member/member/" method="post" class="form-inline">
+	<form:form id="searchForm" modelAttribute="booker" action="${ctx}/booker/booker/" method="post" class="form-inline">
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<table:sortColumn id="orderBy" name="orderBy" value="${page.orderBy}" callback="sortOrRefresh();"/><!-- 支持排序 -->
@@ -83,20 +83,20 @@
 	<div class="row">
 	<div class="col-sm-12">
 		<div class="pull-left">
-			<shiro:hasPermission name="member:member:add">
-				<table:addRow url="${ctx}/member/member/form" title="会员"></table:addRow><!-- 增加按钮 -->
+			<shiro:hasPermission name="booker:booker:add">
+				<table:addRow url="${ctx}/booker/booker/form" title="会员"></table:addRow><!-- 增加按钮 -->
 			</shiro:hasPermission>
-			<shiro:hasPermission name="member:member:edit">
-			    <table:editRow url="${ctx}/member/member/form" title="会员" id="contentTable"></table:editRow><!-- 编辑按钮 -->
+			<shiro:hasPermission name="booker:booker:edit">
+			    <table:editRow url="${ctx}/booker/booker/form" title="会员" id="contentTable"></table:editRow><!-- 编辑按钮 -->
 			</shiro:hasPermission>
-			<shiro:hasPermission name="member:member:del">
-				<table:delRow url="${ctx}/member/member/deleteAll" id="contentTable"></table:delRow><!-- 删除按钮 -->
+			<shiro:hasPermission name="booker:booker:del">
+				<table:delRow url="${ctx}/booker/booker/deleteAll" id="contentTable"></table:delRow><!-- 删除按钮 -->
 			</shiro:hasPermission>
-			<shiro:hasPermission name="member:member:import">
-				<table:importExcel url="${ctx}/member/member/import"></table:importExcel><!-- 导入按钮 -->
+			<shiro:hasPermission name="booker:booker:import">
+				<table:importExcel url="${ctx}/booker/booker/import"></table:importExcel><!-- 导入按钮 -->
 			</shiro:hasPermission>
-			<shiro:hasPermission name="member:member:export">
-	       		<table:exportExcel url="${ctx}/member/member/export"></table:exportExcel><!-- 导出按钮 -->
+			<shiro:hasPermission name="booker:booker:export">
+	       		<table:exportExcel url="${ctx}/booker/booker/export"></table:exportExcel><!-- 导出按钮 -->
 	       	</shiro:hasPermission>
 	       <button class="btn btn-white btn-sm " data-toggle="tooltip" data-placement="left" onclick="sortOrRefresh()" title="刷新"><i class="glyphicon glyphicon-repeat"></i> 刷新</button>
 		
@@ -125,42 +125,42 @@
 			</tr>
 		</thead>
 		<tbody>
-		<c:forEach items="${page.list}" var="member">
+		<c:forEach items="${page.list}" var="booker">
 			<tr>
-				<td> <input type="checkbox" id="${member.id}" class="i-checks"></td>
-				<td><a  href="#" onclick="openDialogView('查看会员', '${ctx}/member/member/form?id=${member.id}','800px', '500px')">
-					${member.name}
+				<td> <input type="checkbox" id="${booker.id}" class="i-checks"></td>
+				<td><a  href="#" onclick="openDialogView('查看会员', '${ctx}/booker/booker/form?id=${booker.id}','800px', '500px')">
+					${booker.name}
 				</a></td>
 				<td>
-					${member.memberNum}
+					${booker.memberNum}
 				</td>
 				<td>
-					${member.hotel.office.name}
+					${booker.hotel.office.name}
 				</td>
 				<td>
-					${member.idNum}
+					${booker.idNum}
 				</td>
 				<td>
-					${member.phone}
+					${booker.phone}
 				</td>
 				<td>
-					${member.memberLevel.name}
+					${booker.memberLevel.name}
 				</td>
 				<td>
-					${member.integral}
+					${booker.integral}
 				</td>
 				<td>
-					${fns:getDictLabel(member.status,'general_status','')}
+					${fns:getDictLabel(booker.status,'general_status','')}
 				</td>
 				<td>
-					<shiro:hasPermission name="member:member:view">
-						<a href="#" onclick="openDialogView('查看会员', '${ctx}/member/member/form?id=${member.id}','800px', '500px')" class="btn btn-info btn-xs" ><i class="fa fa-search-plus"></i> 查看</a>
+					<shiro:hasPermission name="booker:booker:view">
+						<a href="#" onclick="openDialogView('查看会员', '${ctx}/booker/booker/form?id=${booker.id}','800px', '500px')" class="btn btn-info btn-xs" ><i class="fa fa-search-plus"></i> 查看</a>
 					</shiro:hasPermission>
-					<shiro:hasPermission name="member:member:edit">
-    					<a href="#" onclick="openDialog('修改会员', '${ctx}/member/member/form?id=${member.id}','800px', '500px')" class="btn btn-success btn-xs" ><i class="fa fa-edit"></i> 修改</a>
+					<shiro:hasPermission name="booker:booker:edit">
+    					<a href="#" onclick="openDialog('修改会员', '${ctx}/booker/booker/form?id=${booker.id}','800px', '500px')" class="btn btn-success btn-xs" ><i class="fa fa-edit"></i> 修改</a>
     				</shiro:hasPermission>
-    				<shiro:hasPermission name="member:member:del">
-						<a href="${ctx}/member/member/delete?id=${member.id}" onclick="return confirmx('确认要删除该会员吗？', this.href)"   class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> 删除</a>
+    				<shiro:hasPermission name="booker:booker:del">
+						<a href="${ctx}/booker/booker/delete?id=${booker.id}" onclick="return confirmx('确认要删除该会员吗？', this.href)"   class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> 删除</a>
 					</shiro:hasPermission>
 				</td>
 			</tr>

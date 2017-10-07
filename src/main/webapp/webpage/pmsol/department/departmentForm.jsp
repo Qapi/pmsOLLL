@@ -47,7 +47,7 @@
 					</td>
 					<td class="width-15 active"><label class="pull-right">所属酒店：</label></td>
 					<td class="width-35">
-						<form:input path="hotelId" htmlEscape="false"    class="form-control "/>
+						<form:input path="hotel" htmlEscape="false"    class="form-control "/>
 					</td>
 				</tr>
 				<tr>

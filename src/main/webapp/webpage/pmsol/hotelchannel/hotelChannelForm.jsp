@@ -57,7 +57,7 @@
 				<tr>
 					<td class="width-15 active"><label class="pull-right"><font color="red">*</font>所属酒店：</label></td>
 					<td class="width-35">
-						<sys:treeselect id="hotelId" name="hotelId" value="${hotelChannel.hotelId}" labelName="" labelValue="${hotelChannel.}"
+						<sys:treeselect id="hotel" name="hotel" value="${hotelChannel.hotel}" labelName="" labelValue="${hotelChannel.}"
 							title="部门" url="/sys/office/treeData?type=2" cssClass="form-control required" allowClear="true" notAllowSelectParent="true"/>
 					</td>
 					<td class="width-15 active"><label class="pull-right"><font color="red">*</font>联系人：</label></td>

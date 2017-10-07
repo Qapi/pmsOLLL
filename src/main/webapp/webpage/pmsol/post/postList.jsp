@@ -87,7 +87,7 @@
 				<th  class="sort-column remarks">备注信息</th>
 				<th  class="sort-column name">姓名</th>
 				<th  class="sort-column flag">等级标识</th>
-				<th  class="sort-column hotelId">所属酒店</th>
+				<th  class="sort-column hotel">所属酒店</th>
 				<th  class="sort-column status">状态</th>
 				<th>操作</th>
 			</tr>
@@ -106,7 +106,7 @@
 					${post.flag}
 				</td>
 				<td>
-					${post.hotelId}
+					${post.hotel}
 				</td>
 				<td>
 					${post.status}

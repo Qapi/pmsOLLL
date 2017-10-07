@@ -2,6 +2,41 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jeeplus.pmsol.order.dao.OrderDao">
 
+	<!-- 自定义resultMap,主要用于复杂关联查询 -->
+	<resultMap id="orderMap" type="Order">
+		<id property="id" column="id"/>
+		<result property="orderNum" column="order_num"/>
+		<result property="leaseMode" column="lease_mode"/>
+		<result property="rentMonths" column="rent_months"/>
+		<result property="checkInDate" column="checkin_date"/>
+		<result property="checkInDate" column="checkin_date"/>
+		<result property="liveDays" column="live_days"/>
+		<result property="totalAmount" column="total_amount"/>
+		<result property="contacts" column="contacts"/>
+		<result property="contactsPhone" column="contacts_phone"/>
+		<result property="status" column="status"/>
+		<association property="channel" column="{id=channel.id}"
+					 javaType="com.jeeplus.pmsol.hotelchannel.entity.HotelChannel"
+					 select="com.jeeplus.pmsol.hotelchannel.dao.HotelChannelDao.get">
+		</association>
+		<association property="hotel" column="{id=hotel.id}"
+					 javaType="com.jeeplus.pmsol.hotel.entity.Hotel"
+					 select="com.jeeplus.pmsol.hotel.dao.HotelDao.get">
+		</association>
+		<association property="roomType" column="{id=roomType.id}"
+					 javaType="com.jeeplus.pmsol.roomtype.entity.RoomType"
+					 select="com.jeeplus.pmsol.roomtype.dao.RoomTypeDao.get">
+		</association>
+		<association property="booker" column="{id=booker.id}"
+					 javaType="com.jeeplus.pmsol.member.entity.Member"
+					 select="com.jeeplus.pmsol.member.dao.MemberDao.get">
+		</association>
+		<association property="bookRoom" column="{id=hotel.id}"
+					 javaType="com.jeeplus.pmsol.room.entity.Room"
+					 select="com.jeeplus.pmsol.room.dao.RoomDao.get">
+		</association>
+	</resultMap>
+
     <sql id="orderColumns">
 		a.id AS "id",
 		a.create_by AS "createBy.id",
@@ -11,20 +46,19 @@
 		a.remarks AS "remarks",
 		a.del_flag AS "delFlag",
 		a.order_num AS "orderNum",
-		a.channel_id AS "channelId",
-		a.hotel_id AS "hotelId",
-		a.roomtype_id AS "roomTypeId",
+		a.channel_id AS "channel.id",
+		a.hotel_id AS "hotel.id",
+		a.roomtype_id AS "roomType.id",
 		a.lease_mode AS "leaseMode",
 		a.rent_months AS "rentMonths",
-		a.book_time AS "bookTime",
 		a.checkin_date AS "checkInDate",
 		a.checkout_date AS "checkOutDate",
 		a.live_days AS "liveDays",
 		a.total_amount AS "totalAmount",
 		a.contacts AS "contacts",
 		a.contacts_phone AS "contactsPhone",
-		a.member_id AS "memberId",
-		a.book_room_id AS "bookRoomId",
+		a.member_id AS "booker.id",
+		a.book_room_id AS "bookRoom.id",
 		a.status AS "status"
 	</sql>
 
@@ -32,7 +66,7 @@
     </sql>
 
 
-    <select id="get" resultType="com.jeeplus.pmsol.order.entity.Order">
+    <select id="get" resultMap="orderMap">
         SELECT
         <include refid="orderColumns"/>
         FROM book_order a
@@ -40,7 +74,7 @@
         WHERE a.id = #{id}
     </select>
 
-    <select id="findList" resultType="com.jeeplus.pmsol.order.entity.Order">
+    <select id="findList" resultMap="orderMap">
         SELECT
         <include refid="orderColumns"/>
         FROM book_order a
@@ -59,14 +93,14 @@
                 <if test="dbName == 'mssql'">'%'+#{orderNum}+'%'</if>
                 <if test="dbName == 'mysql'">concat('%',#{orderNum},'%')</if>
             </if>
-            <if test="channelId != null and channelId != ''">
-                AND a.channel_id = #{channelId}
+            <if test="channel != null and channel.id != ''">
+                AND a.channel_id = #{channel.id}
             </if>
-            <if test="hotelId != null and hotelId != ''">
-                AND a.hotel_id = #{hotelId}
+            <if test="hotel != null and hotel != ''">
+                AND a.hotel_id = #{hotel.id}
             </if>
-            <if test="roomTypeId != null and roomTypeId != ''">
-                AND a.roomtype_id = #{roomTypeId}
+            <if test="roomType != null and roomType != ''">
+                AND a.roomtype_id = #{roomType.id}
             </if>
             <if test="leaseMode != null and leaseMode != ''">
                 AND a.lease_mode = #{leaseMode}
@@ -74,15 +108,12 @@
             <if test="rentMonths != null and rentMonths != ''">
                 AND a.rent_months = #{rentMonths}
             </if>
-            <if test="bookTime != null and bookTime != ''">
-                AND a.book_time LIKE
-                <if test="dbName == 'oracle'">'%'||#{bookTime}||'%'</if>
-                <if test="dbName == 'mssql'">'%'+#{bookTime}+'%'</if>
-                <if test="dbName == 'mysql'">concat('%',#{bookTime},'%')</if>
-            </if>
             <if test="beginCheckInDate != null and endCheckInDate != null and beginCheckInDate != '' and endCheckInDate != ''">
                 AND a.checkin_date BETWEEN #{beginCheckInDate} AND #{endCheckInDate}
             </if>
+			<if test="beginCheckInDate != null and endCheckInDate != null and beginCheckInDate != '' and endCheckInDate != ''">
+				AND a.checkout_date BETWEEN #{beginCheckOutDate} AND #{endCheckOutDate}
+			</if>
             <if test="contacts != null and contacts != ''">
                 AND a.contacts LIKE
                 <if test="dbName == 'oracle'">'%'||#{contacts}||'%'</if>
@@ -95,8 +126,8 @@
                 <if test="dbName == 'mssql'">'%'+#{contactsPhone}+'%'</if>
                 <if test="dbName == 'mysql'">concat('%',#{contactsPhone},'%')</if>
             </if>
-            <if test="bookRoomId != null and bookRoomId != ''">
-                AND a.book_room_id = #{bookRoomId}
+            <if test="bookRoom != null and bookRoom != ''">
+                AND a.book_room_id = #{bookRoom}
             </if>
             <if test="status != null and status != ''">
                 AND a.status = #{status}
@@ -112,7 +143,7 @@
         </choose>
     </select>
 
-    <select id="findAllList" resultType="com.jeeplus.pmsol.order.entity.Order">
+    <select id="findAllList" resultMap="orderMap">
         SELECT
         <include refid="orderColumns"/>
         FROM book_order a
@@ -145,7 +176,6 @@
 			roomtype_id,
 			lease_mode,
 			rent_months,
-			book_time,
 			checkin_date,
 			checkout_date,
 		    live_days,
@@ -164,44 +194,42 @@
 			#{remarks},
 			#{delFlag},
 			#{orderNum},
-			#{channelId},
-			#{hotelId},
-			#{roomTypeId},
+			#{channel.id},
+			#{hotel.id},
+			#{roomType.id},
 			#{leaseMode},
 			#{rentMonths},
-			#{bookTime},
 			#{checkInDate},
 			#{checkOutDate},
 			#{liveDays},
 			#{totalAmount},
 			#{contacts},
 			#{contactsPhone},
-			#{memberId},
-			#{bookRoomId},
+			#{booker.id},
+			#{bookRoom.id},
 			#{status}
 		)
 	</insert>
 
     <update id="update">
-		UPDATE book_order SET 	
+		UPDATE book_order SET
 			update_by = #{updateBy.id},
 			update_date = #{updateDate},
 			remarks = #{remarks},
 			order_num = #{orderNum},
-			channel_id = #{channelId},
-			hotel_id = #{hotelId},
-			roomtype_id = #{roomTypeId},
+			channel_id = #{channel.id},
+			hotel_id = #{hotel.id},
+			roomtype_id = #{roomType.id},
 			lease_mode = #{leaseMode},
 			rent_months = #{rentMonths},
-			book_time = #{bookTime},
 			checkin_date = #{checkInDate},
 			checkout_date = #{checkOutDate},
 			live_days = #{liveDays},
 			total_amount = #{totalAmount},
 			contacts = #{contacts},
 			contacts_phone = #{contactsPhone},
-			member_id = #{memberId},
-			book_room_id = #{bookRoomId},
+			member_id = #{booker.id},
+			book_room_id = #{bookRoom.id},
 			status = #{status}
 		WHERE id = #{id}
 	</update>
@@ -222,7 +250,7 @@
 
 
     <!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
-    <select id="findUniqueByProperty" resultType="com.jeeplus.pmsol.order.entity.Order" statementType="STATEMENT">
+    <select id="findUniqueByProperty" resultMap="orderMap" statementType="STATEMENT">
 		select * FROM book_order  where ${propertyName} = '${value}'
 	</select>
 

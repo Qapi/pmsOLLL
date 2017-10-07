@@ -59,7 +59,7 @@
 			<span>名称：</span>
 				<form:input path="name" htmlEscape="false" maxlength="64"  class=" form-control input-sm"/>
 			<span>所属酒店：</span>
-				<sys:treeselect id="hotelId" name="hotelId" value="${hotelChannel.hotelId}" labelName="" labelValue="${hotelChannel.}"
+				<sys:treeselect id="hotel" name="hotel" value="${hotelChannel.hotel}" labelName="" labelValue="${hotelChannel.}"
 					title="部门" url="/sys/office/treeData?type=2" cssClass="form-control input-sm" allowClear="true" notAllowSelectParent="true"/>
 			<span>联系人：</span>
 				<form:input path="contacts" htmlEscape="false" maxlength="64"  class=" form-control input-sm"/>

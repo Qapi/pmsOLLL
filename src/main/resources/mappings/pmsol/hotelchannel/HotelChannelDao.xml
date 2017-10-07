@@ -11,7 +11,7 @@
 		a.remarks AS "remarks",
 		a.del_flag AS "delFlag",
 		a.name AS "name",
-		a.hotel_id AS "hotelId",
+		a.hotel_id AS "hotel",
 		a.contacts AS "contacts",
 		a.contacts_phone AS "contactsPhone",
 		a.contract_period AS "contractPeriod",
@@ -49,8 +49,8 @@
 					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
 					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
 			</if>
-			<if test="hotelId != null and hotelId != ''">
-				AND a.hotel_id = #{hotelId}
+			<if test="hotel != null and hotel != ''">
+				AND a.hotel_id = #{hotel}
 			</if>
 			<if test="contacts != null and contacts != ''">
 				AND a.contacts LIKE 
@@ -123,7 +123,7 @@
 			#{remarks},
 			#{delFlag},
 			#{name},
-			#{hotelId},
+			#{hotel},
 			#{contacts},
 			#{contactsPhone},
 			#{contractPeriod},
@@ -137,7 +137,7 @@
 			update_date = #{updateDate},
 			remarks = #{remarks},
 			name = #{name},
-			hotel_id = #{hotelId},
+			hotel_id = #{hotel},
 			contacts = #{contacts},
 			contacts_phone = #{contactsPhone},
 			contract_period = #{contractPeriod},

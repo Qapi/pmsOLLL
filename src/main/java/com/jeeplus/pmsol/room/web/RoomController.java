@@ -107,6 +107,18 @@ public class RoomController extends BaseController {
 	}
 
 	/**
+	 * 获取所有房间——ajax
+	 */
+	@RequiresPermissions(value="room:room:view")
+	@RequestMapping(value = "getList")
+	@ResponseBody
+	public ResponseEntity<List<Room>> getList(Room room) throws Exception{
+		List<Room> list = roomService.findList(room);
+		return new ResponseEntity(list, HttpStatus.OK);
+	}
+
+
+	/**
 	 * 保存房间
 	 */
 	@RequiresPermissions(value={"room:room:add","room:room:edit"},logical=Logical.OR)
