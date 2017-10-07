@@ -80,7 +80,7 @@
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
 			<if test="name != null and name != ''">
-				AND a.nick_name LIKE 
+				AND a.name LIKE
 					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
 					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
 					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
@@ -89,7 +89,10 @@
 				AND a.hotel_id = #{hotel.id}
 			</if>
 			<if test="idNum != null and idNum != ''">
-				AND a.id_num = #{idNum}
+				AND a.id_num LIKE
+				<if test="dbName == 'oracle'">'%'||#{idNum}||'%'</if>
+				<if test="dbName == 'mssql'">'%'+#{idNum}+'%'</if>
+				<if test="dbName == 'mysql'">concat('%',#{idNum},'%')</if>
 			</if>
 			<if test="birthday != null and birthday != ''">
 				AND a.birthday = #{birthday}
@@ -113,7 +116,10 @@
 					<if test="dbName == 'mysql'">concat('%',#{emergencyContactPhone},'%')</if>
 			</if>
 			<if test="memberNum != null and memberNum != ''">
-				AND a.member_num = #{memberNum}
+				AND a.member_num LIKE
+				<if test="dbName == 'oracle'">'%'||#{memberNum}||'%'</if>
+				<if test="dbName == 'mssql'">'%'+#{memberNum}+'%'</if>
+				<if test="dbName == 'mysql'">concat('%',#{memberNum},'%')</if>
 			</if>
 			<if test="memberLevel != null and memberLevel.id != ''">
 				AND a.menber_level_id = #{memberLevel.id}
