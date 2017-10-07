@@ -8,7 +8,7 @@ window.vm = new Vue({
             id: '',
             name: '',
             capacity: '',
-            hotelId: '',
+            hotel: '',
             bedNum: '',
             dailyPrice: '',
             holidayPrice: '',

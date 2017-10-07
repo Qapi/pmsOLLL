@@ -39,7 +39,7 @@ public class User extends DataEntity<User> {
 	private String mobile;	// 手机
 
 	private String idNum;		// 身份证号
-	private String birthday;		// 生日
+	private Date birthday;		// 生日
 	private String gender;		// 性别
 	private String homeAddress;		// 家庭地址
 	private String contractPeriod;		// 合同期
@@ -359,11 +359,11 @@ public class User extends DataEntity<User> {
 		this.idNum = idNum;
 	}
 
-	public String getBirthday() {
+	public Date getBirthday() {
 		return birthday;
 	}
 
-	public void setBirthday(String birthday) {
+	public void setBirthday(Date birthday) {
 		this.birthday = birthday;
 	}
 

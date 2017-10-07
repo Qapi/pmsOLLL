@@ -56,7 +56,9 @@
                     <td class="width-15 active"><label class="pull-right">所属酒店：</label></td>
                     <td class="width-35">
                         <select name="hotel.id" htmlEscape="false"    class="form-control required">
-                            <option v-for="hotel in hotels" :label="hotel.office.name" :value="hotel.id"></option>
+                            <option value=""></option>
+                            <option v-for="hotel in hotels" :label="hotel.office.name" :value="hotel.id" v-if="hotel.id == room.hotel.id" selected></option>
+                            <option :label="hotel.office.name" :value="hotel.id" v-else></option>
                         </select>
                     </td>
                     <td class="width-15 active"><label class="pull-right">楼层：</label></td>
@@ -72,7 +74,9 @@
                     <td class="width-15 active"><label class="pull-right">房型：</label></td>
                     <td class="width-35">
                         <select name="roomType.id" htmlEscape="false"    class="form-control required">
-                            <option v-for="roomType in roomTypes" :label="roomType.name" :value="roomType.id"></option>
+                            <option value=""></option>
+                            <option v-for="roomType in roomTypes" :label="roomType.name" :value="roomType.id" v-if="roomType.id == room.roomType.id" selected></option>
+                            <option :label="roomType.name" :value="roomType.id" v-else></option>
                         </select>
                     </td>
                 </tr>

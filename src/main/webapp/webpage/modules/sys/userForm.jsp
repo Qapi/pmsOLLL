@@ -43,6 +43,11 @@
 			//否则打开修改对话框，不做任何更改直接submit,这时再触发远程校验，耗时较长，
 			//submit函数在等待远程校验结果然后再提交，而layer对话框不会阻塞会直接关闭同时会销毁表单，因此submit没有提交就被销毁了导致提交表单失败。
 			$("#inputForm").validate().element($("#loginName"));
+
+            laydate({
+                elem: '#birthday', //目标元素。由于laydate.js封装了一个轻量级的选择器引擎，因此elem还允许你传入class、tag但必须按照这种方式 '#id .class'
+                event: 'focus' //响应事件。如果没有传入event，则按照默认的click
+            });
 		});
 
 	
@@ -92,11 +97,13 @@
 				  <td class="active"><label class="pull-right">身份证号:</label></td>
 				  <td><form:input path="idNum" htmlEscape="false" maxlength="18" class="form-control"/></td>
 				  <td class="active"><label class="pull-right">生日:</label></td>
-				  <td><form:input path="birthday" htmlEscape="false" maxlength="10" class="form-control date" placeholder="格式：2000-01-01"/></td>
+				  <td><input id="birthday" name="birthday" type="text" maxlength="20" class="laydate-icon form-control layer-date "
+							 value="<fmt:formatDate value="${user.birthday}" pattern="yyyy-MM-dd"/>"/>
+				  </td>
 			  </tr>
 
 			  <tr>
-				  <td class="active"><label class="pull-right">家庭地址:</label></td>
+				  <td class="active"><label class="pull-right">居住地址:</label></td>
 				  <td><form:input path="homeAddress" htmlEscape="false" maxlength="18" class="form-control"/></td>
 				  <td class="active"><label class="pull-right">性别:</label></td>
 				  <td><form:select path="gender" class="form-control ">
@@ -126,7 +133,7 @@
 		      
 		      <tr>
 				  <td class="active"><label class="pull-right"><font color="red">*</font>手机:</label></td>
-		         <td><form:input path="mobile" htmlEscape="false" maxlength="100" class="form-control number"/></td>
+		         <td><form:input path="mobile" htmlEscape="false" maxlength="100" class="form-control digits"/></td>
 		         <td class="active"><label class="pull-right">是否允许登录:</label></td>
 		         <td><form:select path="loginFlag"  class="form-control">
 					<form:options items="${fns:getDictList('yes_no')}" itemLabel="label" itemValue="value" htmlEscape="false"/>

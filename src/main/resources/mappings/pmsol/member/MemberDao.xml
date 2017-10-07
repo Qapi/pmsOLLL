@@ -1,7 +1,38 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jeeplus.pmsol.member.dao.MemberDao">
-    
+
+	<!-- 自定义resultMap,主要用于复杂关联查询 -->
+	<resultMap id="memberMap" type="Member">
+		<id property="id" column="id"/>
+		<result property="name" column="name"/>
+		<result property="nickName" column="nick_name"/>
+		<result property="idNum" column="id_num"/>
+		<result property="birthday" column="birthday"/>
+		<result property="gender" column="gender"/>
+		<result property="homeAddress" column="home_address"/>
+		<result property="phone" column="phone"/>
+		<result property="email" column="email"/>
+		<result property="emergencyContact" column="emergency_contact"/>
+		<result property="emergencyContactPhone" column="emergency_contact_phone"/>
+		<result property="memberNum" column="member_num"/>
+		<result property="integral" column="integral"/>
+		<result property="validityTerm" column="validity_term"/>
+		<result property="status" column="status"/>
+		<association property="memberLevel" column="{id=memberLevel.id}"
+					 javaType="com.jeeplus.pmsol.memberlevel.entity.MemberLevel"
+					 select="com.jeeplus.pmsol.memberlevel.dao.MemberLevelDao.get">
+		</association>
+		<association property="operator" column="{id=operator.id}"
+					 javaType="com.jeeplus.modules.sys.entity.User"
+					 select="com.jeeplus.modules.sys.dao.UserDao.get">
+		</association>
+		<association property="hotel" column="{id=hotel.id}"
+					 javaType="com.jeeplus.pmsol.hotel.entity.Hotel"
+					 select="com.jeeplus.pmsol.hotel.dao.HotelDao.get">
+		</association>
+	</resultMap>
+
 	<sql id="memberColumns">
 		a.id AS "id",
 		a.create_by AS "createBy.id",
@@ -9,16 +40,21 @@
 		a.update_by AS "updateBy.id",
 		a.update_date AS "updateDate",
 		a.del_flag AS "delFlag",
+		a.name AS "name",
 		a.nick_name AS "nickName",
-		a.hotel_id AS "hotelId",
+		a.hotel_id AS "hotel.id",
 		a.id_num AS "idNum",
 		a.birthday AS "birthday",
 		a.home_address AS "homeAddress",
+		a.gender AS "gender",
 		a.phone AS "phone",
+		a.email AS "email",
 		a.emergency_contact AS "emergencyContact",
 		a.emergency_contact_phone AS "emergencyContactPhone",
 		a.member_num AS "memberNum",
-		a.menber_level_id AS "menberLevelId",
+		a.menber_level_id AS "memberLevel.id",
+		a.operator_id AS "operator.id",
+		a.integral AS "integral",
 		a.user_id AS "userId",
 		a.validity_term AS "validityTerm",
 		a.status AS "status"
@@ -28,7 +64,7 @@
 	</sql>
 	
     
-	<select id="get" resultType="com.jeeplus.pmsol.member.entity.Member" >
+	<select id="get" resultMap="memberMap" >
 		SELECT 
 			<include refid="memberColumns"/>
 		FROM member a
@@ -36,21 +72,21 @@
 		WHERE a.id = #{id}
 	</select>
 	
-	<select id="findList" resultType="com.jeeplus.pmsol.member.entity.Member" >
+	<select id="findList" resultMap="memberMap" >
 		SELECT 
 			<include refid="memberColumns"/>
 		FROM member a
 		<include refid="memberJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
-			<if test="nickName != null and nickName != ''">
+			<if test="name != null and name != ''">
 				AND a.nick_name LIKE 
-					<if test="dbName == 'oracle'">'%'||#{nickName}||'%'</if>
-					<if test="dbName == 'mssql'">'%'+#{nickName}+'%'</if>
-					<if test="dbName == 'mysql'">concat('%',#{nickName},'%')</if>
+					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
 			</if>
-			<if test="hotelId != null and hotelId != ''">
-				AND a.hotel_id = #{hotelId}
+			<if test="hotel != null and hotel.id != ''">
+				AND a.hotel_id = #{hotel.id}
 			</if>
 			<if test="idNum != null and idNum != ''">
 				AND a.id_num = #{idNum}
@@ -79,8 +115,8 @@
 			<if test="memberNum != null and memberNum != ''">
 				AND a.member_num = #{memberNum}
 			</if>
-			<if test="menberLevelId != null and menberLevelId != ''">
-				AND a.menber_level_id = #{menberLevelId}
+			<if test="memberLevel != null and memberLevel.id != ''">
+				AND a.menber_level_id = #{memberLevel.id}
 			</if>
 			<if test="status != null and status != ''">
 				AND a.status = #{status}
@@ -96,7 +132,7 @@
 		</choose>
 	</select>
 	
-	<select id="findAllList" resultType="com.jeeplus.pmsol.member.entity.Member" >
+	<select id="findAllList" resultMap="memberMap" >
 		SELECT 
 			<include refid="memberColumns"/>
 		FROM member a
@@ -122,16 +158,21 @@
 			update_by,
 			update_date,
 			del_flag,
+			name,
 			nick_name,
 			hotel_id,
 			id_num,
 			birthday,
+			gender,
 			home_address,
+			email,
 			phone,
 			emergency_contact,
 			emergency_contact_phone,
 			member_num,
 			menber_level_id,
+			operator_id,
+			integral,
 			user_id,
 			validity_term,
 			status
@@ -142,16 +183,21 @@
 			#{updateBy.id},
 			#{updateDate},
 			#{delFlag},
+			#{name},
 			#{nickName},
-			#{hotelId},
+			#{hotel.id},
 			#{idNum},
 			#{birthday},
+			#{gender},
 			#{homeAddress},
+			#{email},
 			#{phone},
 			#{emergencyContact},
 			#{emergencyContactPhone},
 			#{memberNum},
-			#{menberLevelId},
+			#{memberLevel.id},
+			#{operator.id},
+			#{integral},
 			#{userId},
 			#{validityTerm},
 			#{status}
@@ -162,16 +208,21 @@
 		UPDATE member SET 	
 			update_by = #{updateBy.id},
 			update_date = #{updateDate},
+			name = #{name},
 			nick_name = #{nickName},
-			hotel_id = #{hotelId},
+			hotel_id = #{hotel.id},
 			id_num = #{idNum},
 			birthday = #{birthday},
+			email = #{email},
+			gender = #{gender},
 			home_address = #{homeAddress},
 			phone = #{phone},
 			emergency_contact = #{emergencyContact},
 			emergency_contact_phone = #{emergencyContactPhone},
 			member_num = #{memberNum},
-			menber_level_id = #{menberLevelId},
+			menber_level_id = #{memberLevel.id},
+			operator_id = #{operator.id},
+			integral = #{integral},
 			user_id = #{userId},
 			validity_term = #{validityTerm},
 			status = #{status}
@@ -194,7 +245,7 @@
 	
 	
 	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
-	<select id="findUniqueByProperty" resultType="com.jeeplus.pmsol.member.entity.Member" statementType="STATEMENT">
+	<select id="findUniqueByProperty" resultMap="memberMap" statementType="STATEMENT">
 		select * FROM member  where ${propertyName} = '${value}'
 	</select>
 	

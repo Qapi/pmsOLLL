@@ -84,7 +84,7 @@ public class MemberLevelController extends BaseController {
 	}
 
 	/**
-	 * 获取房间——ajax
+	 * 获取会员等级——ajax
 	 */
 	@RequiresPermissions(value = {"memberlevel:memberLevel:add", "memberlevel:memberLevel:edit"}, logical = Logical.OR)
 	@RequestMapping(value = "getModel/{id}")
@@ -98,6 +98,18 @@ public class MemberLevelController extends BaseController {
 			return new ResponseEntity(HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity(t, HttpStatus.OK);
+	}
+
+
+	/**
+	 * 获取所有会员等级——ajax
+	 */
+	@RequiresPermissions(value="memberlevel:memberLevel:view")
+	@RequestMapping(value = "getList")
+	@ResponseBody
+	public ResponseEntity<List<MemberLevel>> getList(MemberLevel memberLvel) throws Exception{
+		List<MemberLevel> list = memberLevelService.findList(memberLvel);
+		return new ResponseEntity(list, HttpStatus.OK);
 	}
 
 	/**

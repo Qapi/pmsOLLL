@@ -63,7 +63,9 @@
                     <td class="width-15 active"><label class="pull-right">所属酒店：</label></td>
                     <td class="width-35">
                         <select name="hotel.id" htmlEscape="false"    class="form-control required">
-                            <option v-for="hotel in hotels" :label="hotel.office.name" :value="hotel.id"></option>
+                            <option value=""></option>
+                            <option v-for="hotel in hotels" :label="hotel.office.name" :value="hotel.id" v-if="hotel.id == memberLevel.hotel.id" selected></option>
+                            <option :label="hotel.office.name" :value="hotel.id" v-else></option>
                         </select>
                     </td>
                     <td class="width-15 active"><label class="pull-right">折扣优惠：</label></td>
@@ -74,7 +76,7 @@
                 <tr>
                     <td class="width-15 active"><label class="pull-right">有效期：</label></td>
                     <td class="width-35">
-                        <input id="validityTerm" name="validityTerm" :value="memberLevel.validityTerm" type="text" maxlength="20"
+                        <input id="validityTerm" name="validityTerm" type="text" maxlength="20"
                                class="laydate-icon form-control layer-date "
                                value="<fmt:formatDate value="${memberLevel.validityTerm}" pattern="yyyy-MM-dd"/>"/>
                     </td>

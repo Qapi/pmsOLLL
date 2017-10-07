@@ -4,16 +4,29 @@
 window.vm = new Vue({
     el: '#modelDiv',
     data: {
-        memberLevel: {
+        member: {
             id: '',
             name: '',
-            flag: '',
-            salePercent: '',
+            nickName: '',
             hotel: '',
+            idNum: '',
+            birthday: '',
+            gender: '',
+            homeAddress: '',
+            phone: '',
+            email: '',
+            emergencyContact: '',
+            emergencyContactPhone: '',
+            memberNum: '',
+            memberLevel: '',
+            operator: '',
+            integral: '',
+            validityTerm: '',
             status: '',
             remarks: '',
         },
         hotels: [],
+        memberLevels: []
     },
     mounted: function () {
         this.$nextTick(function () {
@@ -25,10 +38,10 @@ window.vm = new Vue({
         getModel: function () {
             const id = $('#id').val();
             if (id) {
-                axios.get(ctx + "/memberlevel/memberLevel/getModel/" + id).then(response => {
+                axios.get(ctx + "/member/member/getModel/" + id).then(response => {
                     const res = response.data;
                     if (res && response.status == "200") {
-                        this.memberLevel = res;
+                        this.member = res;
                     }
                 });
             }
@@ -36,6 +49,12 @@ window.vm = new Vue({
                 const res = response.data;
                 if (res && response.status == "200") {
                     this.hotels = res;
+                }
+            });
+            axios.get(ctx + "/memberlevel/memberLevel/getList").then(response => {
+                const res = response.data;
+                if (res && response.status == "200") {
+                    this.memberLevels = res;
                 }
             });
         }

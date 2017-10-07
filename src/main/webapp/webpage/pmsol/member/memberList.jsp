@@ -48,27 +48,31 @@
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<table:sortColumn id="orderBy" name="orderBy" value="${page.orderBy}" callback="sortOrRefresh();"/><!-- 支持排序 -->
 		<div class="form-group">
-			<span>昵称：</span>
-				<form:input path="nickName" htmlEscape="false" maxlength="64"  class=" form-control input-sm"/>
-			<span>所属酒店：</span>
-				<form:input path="hotelId" htmlEscape="false" maxlength="64"  class=" form-control input-sm"/>
-			<span>身份证号：</span>
-				<form:input path="idNum" htmlEscape="false" maxlength="64"  class=" form-control input-sm"/>
-			<span>生日：</span>
-				<input id="birthday" name="birthday" type="text" maxlength="20" class="laydate-icon form-control layer-date input-sm"
-					value="<fmt:formatDate value="${member.birthday}" pattern="yyyy-MM-dd HH:mm:ss"/>"/>
-			<span>手机号：</span>
-				<form:input path="phone" htmlEscape="false" maxlength="64"  class=" form-control input-sm"/>
-			<span>紧急联系人：</span>
-				<form:input path="emergencyContact" htmlEscape="false" maxlength="64"  class=" form-control input-sm"/>
-			<span>紧急联系人电话：</span>
-				<form:input path="emergencyContactPhone" htmlEscape="false" maxlength="64"  class=" form-control input-sm"/>
+			<span>姓名：</span>
+				<form:input path="name" htmlEscape="false" maxlength="64"  class=" form-control input-sm"/>
 			<span>会员号：</span>
 				<form:input path="memberNum" htmlEscape="false" maxlength="64"  class=" form-control input-sm"/>
-			<span>所属会员等级：</span>
-				<form:input path="menberLevelId" htmlEscape="false" maxlength="64"  class=" form-control input-sm"/>
+			<span>身份证号：</span>
+				<form:input path="idNum" htmlEscape="false" maxlength="64"  class=" form-control input-sm"/>
+			<span>手机号：</span>
+				<form:input path="phone" htmlEscape="false" maxlength="64"  class=" form-control input-sm"/>
+		</div>
+		<div class="form-group">
+			<span>会员等级：</span>
+				<form:select path="memberLevel.id" class="form-control ">
+					<form:option value=""></form:option>
+					<form:options items="${memberLevels}" itemLabel="name" itemValue="id" htmlEscape="false"/>
+				</form:select>
+			<span>所属酒店：</span>
+				<form:select path="hotel.id" class="form-control ">
+					<form:option value=""></form:option>
+					<form:options items="${hotels}" itemLabel="office.name" itemValue="id" htmlEscape="false"/>
+				</form:select>
 			<span>状态：</span>
-				<form:input path="status" htmlEscape="false" maxlength="64"  class=" form-control input-sm"/>
+				<form:select path="status" class="form-control">
+					<form:option value=""></form:option>
+					<form:options items="${fns:getDictList('general_status')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+				</form:select>
 		 </div>	
 	</form:form>
 	<br/>
@@ -109,16 +113,13 @@
 		<thead>
 			<tr>
 				<th> <input type="checkbox" class="i-checks"></th>
-				<th  class="sort-column nickName">昵称</th>
-				<th  class="sort-column hotelId">所属酒店</th>
-				<th  class="sort-column idNum">身份证号</th>
-				<th  class="sort-column birthday">生日</th>
-				<th  class="sort-column homeAddress">家庭地址</th>
-				<th  class="sort-column phone">手机号</th>
-				<th  class="sort-column emergencyContact">紧急联系人</th>
-				<th  class="sort-column emergencyContactPhone">紧急联系人电话</th>
+				<th  class="sort-column name">姓名</th>
 				<th  class="sort-column memberNum">会员号</th>
-				<th  class="sort-column menberLevelId">所属会员等级</th>
+				<th  class="sort-column hotel">所属酒店</th>
+				<th  class="sort-column idNum">身份证号</th>
+				<th  class="sort-column phone">手机号</th>
+				<th  class="sort-column memberLevel">会员等级</th>
+				<th  class="sort-column integral">积分</th>
 				<th  class="sort-column status">状态</th>
 				<th>操作</th>
 			</tr>
@@ -128,37 +129,28 @@
 			<tr>
 				<td> <input type="checkbox" id="${member.id}" class="i-checks"></td>
 				<td><a  href="#" onclick="openDialogView('查看会员', '${ctx}/member/member/form?id=${member.id}','800px', '500px')">
-					${member.nickName}
+					${member.name}
 				</a></td>
 				<td>
-					${member.hotelId}
+					${member.memberNum}
+				</td>
+				<td>
+					${member.hotel.office.name}
 				</td>
 				<td>
 					${member.idNum}
 				</td>
 				<td>
-					${member.birthday}
-				</td>
-				<td>
-					${member.homeAddress}
-				</td>
-				<td>
 					${member.phone}
 				</td>
 				<td>
-					${member.emergencyContact}
+					${member.memberLevel.name}
 				</td>
 				<td>
-					${member.emergencyContactPhone}
+					${member.integral}
 				</td>
 				<td>
-					${member.memberNum}
-				</td>
-				<td>
-					${member.menberLevelId}
-				</td>
-				<td>
-					${member.status}
+					${fns:getDictLabel(member.status,'general_status','')}
 				</td>
 				<td>
 					<shiro:hasPermission name="member:member:view">

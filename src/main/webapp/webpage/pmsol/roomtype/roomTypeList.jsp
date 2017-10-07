@@ -138,12 +138,9 @@
                 <c:forEach items="${page.list}" var="roomType">
                     <tr>
                         <td><input type="checkbox" id="${roomType.id}" class="i-checks"></td>
-                            <%--<td><a  href="#" onclick="openDialogView('查看房型', '${ctx}/roomtype/roomType/form?id=${roomType.id}','800px', '500px')">--%>
-                            <%--${roomType.remarks}--%>
-                            <%--</a></td>--%>
-                        <td>
-                                ${roomType.name}
-                        </td>
+                            <td><a  href="#" onclick="openDialogView('查看房型', '${ctx}/roomtype/roomType/form?id=${roomType.id}','800px', '500px')">
+                            ${roomType.name}
+                            </a></td>
                             <%--<td>--%>
                             <%--${roomType.capacity}--%>
                             <%--</td>--%>

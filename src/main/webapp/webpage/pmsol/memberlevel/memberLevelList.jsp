@@ -131,7 +131,7 @@
 		<c:forEach items="${page.list}" var="memberLevel">
 			<tr>
 				<td> <input type="checkbox" id="${memberLevel.id}" class="i-checks"></td>
-				<td>
+				<td><a  href="#" onclick="openDialogView('查看会员等级', '${ctx}/memberlevel/memberLevel/form?id=${memberLevel.id}','800px', '500px')">
 					${memberLevel.name}
 				</td>
 				<td>

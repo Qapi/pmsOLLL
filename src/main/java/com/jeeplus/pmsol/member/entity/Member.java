@@ -5,7 +5,11 @@ package com.jeeplus.pmsol.member.entity;
 
 
 import com.jeeplus.common.persistence.DataEntity;
+import com.jeeplus.common.utils.DateUtils;
 import com.jeeplus.common.utils.excel.annotation.ExcelField;
+import com.jeeplus.modules.sys.entity.User;
+import com.jeeplus.pmsol.hotel.entity.Hotel;
+import com.jeeplus.pmsol.memberlevel.entity.MemberLevel;
 
 import java.util.Date;
 
@@ -17,20 +21,25 @@ import java.util.Date;
 public class Member extends DataEntity<Member> {
 	
 	private static final long serialVersionUID = 1L;
+	private String name; 		// 姓名
 	private String nickName;		// 昵称
-	private String hotelId;		// 所属酒店
+	private Hotel hotel;		// 所属酒店
 	private String idNum;		// 身份证号
-	private String birthday;		// 生日
+	private Date birthday;		// 生日
+	private String gender;		// 性别
 	private String homeAddress;		// 家庭地址
 	private String phone;		// 手机号
+	private String email;		// 邮箱
 	private String emergencyContact;		// 紧急联系人
 	private String emergencyContactPhone;		// 紧急联系人电话
 	private String memberNum;		// 会员号
-	private String menberLevelId;		// 所属会员等级
+	private MemberLevel memberLevel;		// 所属会员等级
+	private User operator;		// 操作注册用户
+	private int integral;		// 积分
 	private String userId;		// 所属用户id
 	private Date validityTerm;		// 有效期
 	private String status;		// 状态
-	
+
 	public Member() {
 		super();
 	}
@@ -49,12 +58,12 @@ public class Member extends DataEntity<Member> {
 	}
 	
 	@ExcelField(title="所属酒店", align=2, sort=7)
-	public String getHotelId() {
-		return hotelId;
+	public Hotel getHotel() {
+		return hotel;
 	}
 
-	public void setHotelId(String hotelId) {
-		this.hotelId = hotelId;
+	public void setHotel(Hotel hotel) {
+		this.hotel = hotel;
 	}
 	
 	@ExcelField(title="身份证号", align=2, sort=8)
@@ -67,11 +76,11 @@ public class Member extends DataEntity<Member> {
 	}
 	
 	@ExcelField(title="生日", align=2, sort=9)
-	public String getBirthday() {
+	public Date getBirthday() {
 		return birthday;
 	}
 
-	public void setBirthday(String birthday) {
+	public void setBirthday(Date birthday) {
 		this.birthday = birthday;
 	}
 	
@@ -121,12 +130,12 @@ public class Member extends DataEntity<Member> {
 	}
 	
 	@ExcelField(title="所属会员等级", align=2, sort=15)
-	public String getMenberLevelId() {
-		return menberLevelId;
+	public MemberLevel getMemberLevel() {
+		return memberLevel;
 	}
 
-	public void setMenberLevelId(String menberLevelId) {
-		this.menberLevelId = menberLevelId;
+	public void setMemberLevel(MemberLevel memberLevel) {
+		this.memberLevel = memberLevel;
 	}
 	
 	@ExcelField(title="所属用户id", align=2, sort=16)
@@ -148,10 +157,50 @@ public class Member extends DataEntity<Member> {
 	}
 
 	public Date getValidityTerm() {
-		return validityTerm;
+		return this.validityTerm;
 	}
 
 	public void setValidityTerm(Date validityTerm) {
 		this.validityTerm = validityTerm;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public User getOperator() {
+		return operator;
+	}
+
+	public void setOperator(User operator) {
+		this.operator = operator;
+	}
+
+	public int getIntegral() {
+		return integral;
+	}
+
+	public void setIntegral(int integral) {
+		this.integral = integral;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
 	}
 }

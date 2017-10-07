@@ -99,9 +99,8 @@
 						<td class="width-35">
 							<select name="hotel.id" htmlEscape="false"    class="form-control required">
 								<option value=""></option>
-								<option v-for="hotel in hotels" :label="hotel.office.name" :value="hotel.id"
-									<c:if test="${roomType.hotel.id eq hotel.id}">selected</c:if>>
-								</option>
+								<option v-for="hotel in hotels" :label="hotel.office.name" :value="hotel.id" v-if="hotel.id == roomType.hotel.id" selected></option>
+								<option :label="hotel.office.name" :value="hotel.id" v-else></option>
 							</select>
 						</td>
 						<td class="width-15 active"><label class="pull-right">说明：</label></td>
