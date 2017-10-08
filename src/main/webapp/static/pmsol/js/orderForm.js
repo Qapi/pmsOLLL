@@ -29,14 +29,22 @@ window.vm = new Vue({
         roomTypes: [],
         rooms: [],
         channels: [],
+        leaseModes: [
+            {value: false},
+            {value: false},
+            {value: false}
+        ],
     },
+
     mounted: function () {
         this.$nextTick(function () {
             this.getModel();
+            this.initMode();
         })
     },
     filters: {},
     methods: {
+        /** 获取初始数据 **/
         getModel: function () {
             const id = $('#id').val();
             if (id) {
@@ -77,9 +85,23 @@ window.vm = new Vue({
                     this.channels = res;
                 }
             });
-
         }
         ,
+        /** 初始化租赁类型 **/
+        initMode: function () {
+            const mode = $('#leaseMode').data('id');
+            if (mode != null) {
+                this.leaseModes.forEach(function (ele, index) {
+                    if (+mode == index) {
+                        ele.value = true;
+                    } else {
+                        ele.value = false;
+                    }
+                })
+            }
+        }
+        ,
+        /** 根据房型过滤可选房间 **/
         selectRoomType: function (ele) {
             axios.get(ctx + "/room/room/getList", {params: {roomTypeId: ele.target.value}}).then(response => {
                 const res = response.data;
@@ -89,6 +111,17 @@ window.vm = new Vue({
             });
         }
         ,
+        /** 根据租赁类型更改可输入入住时长和订单金额 **/
+        selectLeaseMode: function (ele) {
+            const mode = ele.target.value;
+            this.leaseModes.forEach(function (ele, index) {
+                if (+mode == index) {
+                    ele.value = true;
+                } else {
+                    ele.value = false;
+                }
+            })
+        }
     }
-})
+});
 

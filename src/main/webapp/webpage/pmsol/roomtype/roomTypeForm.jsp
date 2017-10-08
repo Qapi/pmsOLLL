@@ -99,7 +99,7 @@
 						<td class="width-35">
 							<select name="hotel.id" htmlEscape="false"    class="form-control required">
 								<option value=""></option>
-								<option v-for="hotel in hotels" :label="hotel.office.name" :value="hotel.id" v-if="hotel.id == roomType.hotel.id" selected></option>
+								<option v-for="hotel in hotels" :label="hotel.office.name" :value="hotel.id" v-if="roomType.hotel != null && hotel.id == roomType.hotel.id" selected></option>
 								<option :label="hotel.office.name" :value="hotel.id" v-else></option>
 							</select>
 						</td>

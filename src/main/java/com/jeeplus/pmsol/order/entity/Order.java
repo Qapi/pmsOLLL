@@ -27,7 +27,7 @@ public class Order extends DataEntity<Order> {
 	private HotelChannel channel;		// 所属渠道
 	private Hotel hotel;		// 所属酒店
 	private RoomType roomType;		// 所属房型
-	private String leaseMode;		// 租赁方式  	短租/钟点/月租
+	private String leaseMode;		// 租赁类型  	日租/钟点/月租
 	private String rentMonths;		// 长租月数
 	private Date checkInDate;		// 入住日期
 	private Date checkOutDate;		// 预离日期

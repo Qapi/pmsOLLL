@@ -54,7 +54,6 @@
             <input id="id" name="id" value="${order.id}" type="hidden"/>
             <sys:message content="${message}"/>
             <table class="table table-bordered  table-condensed dataTables-example dataTable no-footer">
-                <>
                 <tr>
                     <td class="width-15 active"><label class="pull-right">订单号：</label></td>
                     <td class="width-35">
@@ -82,7 +81,7 @@
                     <td class="width-35">
                         <select name="bookRoom.id" htmlEscape="false"    class="form-control">
                             <option value=""></option>
-                            <option v-for="room in rooms" :label="room.roomNum" :value="room.id" v-if="room.id == order.bookRoom.id" selected></option>
+                            <option v-for="room in rooms" :label="room.roomNum" :value="room.id" v-if="order.bookRoom != null && room.id == order.bookRoom.id" selected></option>
                             <option :label="room.roomNum" :value="room.id" v-else></option>
                         </select>
                     </td>
@@ -93,11 +92,11 @@
                         <select name="channel.id" htmlEscape="false"    class="form-control ">
                             <option v-for="hotel in channels" :label="channel.name" :value="channel.id" v-if="channel.id == order.channel.id" selected></option>
                             <option :label="channel.name" :value="channel.id" v-else></option>
-                        </select>                    
+                        </select>
                     </td>
-                    <td class="width-15 active"><label class="pull-right"><font color="red">*</font>租赁方式：</label></td>
+                    <td class="width-15 active"><label class="pull-right"><font color="red">*</font>租赁类型：</label></td>
                     <td class="width-35">
-                        <select name="leaseMode"  class="form-control required">
+                        <select  id="leaseMode" data-id="${order.leaseMode}" name="leaseMode" @change="selectLeaseMode" class="form-control required">
                             <c:forEach items="${fns:getDictList('lease_mode')}" var="mode" >
                             <option label="${mode.label}" value="${mode.value}" htmlEscape="false"  <c:if test="${order.leaseMode == mode.value}">selected</c:if>/>
                             </c:forEach>
@@ -118,7 +117,7 @@
                                value="<fmt:formatDate value="${order.checkOutDate}" pattern="yyyy-MM-dd"/>"/>
                     </td>
                 </tr>
-                <tr>
+                <tr id="liveForDay" v-show="leaseModes[0].value">
                     <td class="width-15 active"><label class="pull-right">入住天数：</label></td>
                     <td class="width-35">
                         <input name="livedays" :value="order.livedays" htmlEscape="false" class="form-control  number"/>
@@ -128,7 +127,7 @@
                         <input name="dailyPrice" :value="order.roomType.dailyPrice" htmlEscape="false" class="form-control  number"/>
                     </td>
                 </tr>
-                <tr>
+                <tr id="liveForHour" v-show="leaseModes[1].value">
                     <td class="width-15 active"><label class="pull-right">入住小时数：</label></td>
                     <td class="width-35">
                         <input name="livehours" :value="order.livehours" htmlEscape="false" class="form-control  number"/>
@@ -138,7 +137,7 @@
                         <input name="hourPrice" :value="order.roomType.hourPrice" htmlEscape="false" class="form-control  number"/>
                     </td>
                 </tr>
-                <tr>
+                <tr id="liveForMonth" v-show="leaseModes[2].value">
                     <td class="width-15 active"><label class="pull-right">长租月数：</label></td>
                     <td class="width-35">
                         <input name="rentMonths" :value="order.rentMonths" htmlEscape="false" class="form-control  number"/>
@@ -157,7 +156,7 @@
                     <td class="width-35">
                         <select name="booker.id" htmlEscape="false"    class="form-control">
                             <option value=""></option>
-                            <option v-for="member in members" :label="member.name" :value="member.id" v-if="member.id == order.booker.id" selected></option>
+                            <option v-for="member in members" :label="member.name" :value="member.id" v-if="order.member != null && member.id == order.booker.id" selected></option>
                             <option :label="member.name" :value="member.id" v-else></option>
                         </select>
                     </td>

@@ -28,7 +28,7 @@
                 done: function(value, date, endDate){
                     laydate.render({
                         elem: '#endCheckOutDate',  
-                        event: 'focus', /
+                        event: 'focus',
                         min: value ,
                         theme: 'molv'
                     });
