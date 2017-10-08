@@ -30,14 +30,19 @@
 					}
 				}
 			});
-			
-					laydate({
-			            elem: '#birthday', //目标元素。由于laydate.js封装了一个轻量级的选择器引擎，因此elem还允许你传入class、tag但必须按照这种方式 '#id .class'
-			            event: 'focus' //响应事件。如果没有传入event，则按照默认的click
+
+					laydate.render({
+			            elem: '#birthday',  
+			            event: 'focus' ,
+						value: '1991-06-10',
+						max: 0 ,
+                        theme: 'molv'
 			        });
-					laydate({
-						elem: '#validityTerm', //目标元素。由于laydate.js封装了一个轻量级的选择器引擎，因此elem还允许你传入class、tag但必须按照这种方式 '#id .class'
-						event: 'focus' //响应事件。如果没有传入event，则按照默认的click
+					laydate.render({
+						elem: '#validityTerm',  
+						event: 'focus' ,
+                        min: 0,
+                        theme: 'molv'
 					});
 		});
 	</script>
@@ -49,6 +54,19 @@
 			<sys:message content="${message}"/>
 			<table class="table table-bordered  table-condensed dataTables-example dataTable no-footer">
 			   <tbody>
+				   <tr>
+					   <td class="width-15 active"><label class="pull-right">会员号：</label></td>
+					   <td class="width-35">
+						   <input :value="member.memberNum" htmlEscape="false"  disabled  class="form-control"/>
+					   </td>
+					   <td class="width-15 active"><label class="pull-right"><font color="red">*</font>会员等级：</label></td>
+					   <td class="width-35">
+						   <select name="memberLevel.id" htmlEscape="false"    class="form-control required">
+							   <option v-for="memberLevel in memberLevels" :label="memberLevel.name" :value="memberLevel.id" v-if="memberLevel.id == member.memberLevel.id" selected></option>
+							   <option :label="memberLevel.name" :value="memberLevel.id" v-else></option>
+						   </select>
+					   </td>
+				   </tr>
 					<tr>
 						<td class="width-15 active"><label class="pull-right"><font color="red">*</font>姓名：</label></td>
 						<td class="width-35">
@@ -57,19 +75,6 @@
 						<td class="width-15 active"><label class="pull-right">昵称：</label></td>
 						<td class="width-35">
 							<input name="nickName" :value="member.nickName" htmlEscape="false"    class="form-control "/>
-						</td>
-					</tr>
-					<tr>
-						<td class="width-15 active"><label class="pull-right">会员号：</label></td>
-						<td class="width-35">
-							<input :value="member.memberNum" htmlEscape="false"  disabled  class="form-control"/>
-						</td>
-						<td class="width-15 active"><label class="pull-right"><font color="red">*</font>会员等级：</label></td>
-						<td class="width-35">
-							<select name="memberLevel.id" htmlEscape="false"    class="form-control required">
-								<option v-for="memberLevel in memberLevels" :label="memberLevel.name" :value="memberLevel.id" v-if="memberLevel.id == member.memberLevel.id" selected></option>
-								<option :label="memberLevel.name" :value="memberLevel.id" v-else></option>
-							</select>
 						</td>
 					</tr>
 					<tr>

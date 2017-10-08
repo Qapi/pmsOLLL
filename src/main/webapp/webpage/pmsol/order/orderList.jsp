@@ -6,24 +6,34 @@
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
-	        laydate({
-	            elem: '#beginCheckInDate', //目标元素。由于laydate.js封装了一个轻量级的选择器引擎，因此elem还允许你传入class、tag但必须按照这种方式 '#id .class'
-	            event: 'focus' //响应事件。如果没有传入event，则按照默认的click
+	        laydate.render({
+	            elem: '#beginCheckInDate', 
+	            event: 'focus', 
+				max: 0 ,
+                theme: 'molv',
+                done: function(value, date, endDate){
+                    laydate.render({
+                        elem: '#endCheckInDate', 
+                        event: 'focus',
+						min: value ,
+                        theme: 'molv'
+                    });
+                }
 	        });
-	        laydate({
-	            elem: '#endCheckInDate', //目标元素。由于laydate.js封装了一个轻量级的选择器引擎，因此elem还允许你传入class、tag但必须按照这种方式 '#id .class'
-	            event: 'focus' //响应事件。如果没有传入event，则按照默认的click
-	        });
-            laydate({
-                elem: '#beginCheckOutDate', //目标元素。由于laydate.js封装了一个轻量级的选择器引擎，因此elem还允许你传入class、tag但必须按照这种方式 '#id .class'
-                event: 'focus' //响应事件。如果没有传入event，则按照默认的click
+            laydate.render({
+                elem: '#beginCheckOutDate',  
+                event: 'focus',
+				min: 0 ,
+                theme: 'molv',
+                done: function(value, date, endDate){
+                    laydate.render({
+                        elem: '#endCheckOutDate',  
+                        event: 'focus', /
+                        min: value ,
+                        theme: 'molv'
+                    });
+                }
             });
-            laydate({
-                elem: '#endCheckOutDate', //目标元素。由于laydate.js封装了一个轻量级的选择器引擎，因此elem还允许你传入class、tag但必须按照这种方式 '#id .class'
-                event: 'focus' //响应事件。如果没有传入event，则按照默认的click
-            });
-					
-		
 		});
 	</script>
 </head>

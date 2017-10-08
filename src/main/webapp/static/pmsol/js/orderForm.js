@@ -25,10 +25,10 @@ window.vm = new Vue({
             remarks: '',
         },
         hotels: [],
-        channels: [],
+        members: [],
         roomTypes: [],
         rooms: [],
-        members: []
+        channels: [],
     },
     mounted: function () {
         this.$nextTick(function () {
@@ -78,6 +78,15 @@ window.vm = new Vue({
                 }
             });
 
+        }
+        ,
+        selectRoomType: function (ele) {
+            axios.get(ctx + "/room/room/getList", {params: {roomTypeId: ele.target.value}}).then(response => {
+                const res = response.data;
+                if (res && response.status == "200") {
+                    this.rooms = res;
+                }
+            });
         }
         ,
     }

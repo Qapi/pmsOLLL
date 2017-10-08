@@ -107,12 +107,18 @@ public class RoomController extends BaseController {
 	}
 
 	/**
-	 * 获取所有房间——ajax
+	 * 获取所有或根据房型选择房间——ajax
 	 */
 	@RequiresPermissions(value="room:room:view")
 	@RequestMapping(value = "getList")
 	@ResponseBody
-	public ResponseEntity<List<Room>> getList(Room room) throws Exception{
+	public ResponseEntity<List<Room>> getList(Room room , String roomTypeId) throws Exception{
+		if(StringUtils.isNotBlank(roomTypeId)){
+			// 动态切换房型进行房间选择
+			RoomType roomType = new RoomType();
+			roomType.setId(roomTypeId);
+			room.setRoomType(roomType);
+		}
 		List<Room> list = roomService.findList(room);
 		return new ResponseEntity(list, HttpStatus.OK);
 	}

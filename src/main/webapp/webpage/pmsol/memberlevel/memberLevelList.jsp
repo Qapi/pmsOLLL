@@ -6,16 +6,21 @@
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
-	        laydate({
-	            elem: '#beginValidityTerm', //目标元素。由于laydate.js封装了一个轻量级的选择器引擎，因此elem还允许你传入class、tag但必须按照这种方式 '#id .class'
-	            event: 'focus' //响应事件。如果没有传入event，则按照默认的click
-	        });
-	        laydate({
-	            elem: '#endValidityTerm', //目标元素。由于laydate.js封装了一个轻量级的选择器引擎，因此elem还允许你传入class、tag但必须按照这种方式 '#id .class'
-	            event: 'focus' //响应事件。如果没有传入event，则按照默认的click
-	        });
-					
-		
+	        laydate.render({
+	            elem: '#beginValidityTerm',
+	            event: 'focus' ,
+                max: 0 ,
+                theme: 'molv',
+                done: function(value, date, endDate){
+                    laydate.render({
+                        elem: '#endValidityTerm',  
+                        event: 'focus' ,
+                        min: value,
+                        theme: 'molv'
+                    });
+                }
+
+            });
 		});
 	</script>
 </head>

@@ -49,7 +49,7 @@
 
 <!-- 引入layer插件 -->
 <script src="${ctxStatic}/layer-v2.3/layer/layer.js"></script>
-<script src="${ctxStatic}/layer-v2.3/layer/laydate/laydate.js"></script>
+	<script src="${ctxStatic}/layer-v2.3/layer/laydate/laydate.js"></script>
 
 <!--引入webuploader-->
 <link rel="stylesheet" type="text/css" href="${ctxStatic}/webuploader-0.1.5/webuploader.css">

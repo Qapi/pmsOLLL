@@ -31,13 +31,19 @@
                 }
             });
 
-            laydate({
-                elem: '#checkInDate', //目标元素。由于laydate.js封装了一个轻量级的选择器引擎，因此elem还允许你传入class、tag但必须按照这种方式 '#id .class'
-                event: 'focus' //响应事件。如果没有传入event，则按照默认的click
-            });
-            laydate({
-                elem: '#checkOutDate', //目标元素。由于laydate.js封装了一个轻量级的选择器引擎，因此elem还允许你传入class、tag但必须按照这种方式 '#id .class'
-                event: 'focus' //响应事件。如果没有传入event，则按照默认的click
+            laydate.render({
+                elem: '#checkInDate',
+                event: 'focus',
+                min: 0 ,
+                theme: 'molv' ,
+                done: function(value, date, endDate){
+                    laydate.render({
+                        elem: '#checkOutDate',
+                        event: 'focus' ,
+                        min: value,
+                        theme: 'molv'
+                    });
+                }
             });
         });
     </script>
@@ -66,7 +72,8 @@
                 <tr>
                     <td class="width-15 active"><label class="pull-right"><font color="red">*</font>房型：</label></td>
                     <td class="width-35">
-                        <select name="roomType.id" htmlEscape="false"    class="form-control required">
+                        <select id="roomTypeId" name="roomType.id" htmlEscape="false"  @change="selectRoomType"  class="form-control required">
+                            <option value=""></option>
                             <option v-for="roomType in roomTypes" :label="roomType.name" :value="roomType.id" v-if="roomType.id == order.roomType.id" selected></option>
                             <option :label="roomType.name" :value="roomType.id" v-else></option>
                         </select>
@@ -90,11 +97,25 @@
                     </td>
                     <td class="width-15 active"><label class="pull-right"><font color="red">*</font>租赁方式：</label></td>
                     <td class="width-35">
-                        <select name="leaseMode" :value="order.leaseMode" class="form-control required">
-                            <c:forEach items="${fns:getDictList('lease_mode')}" var="mode">
-                                <option label="${mode.label}" value="${mode.value}" htmlEscape="false"/>
+                        <select name="leaseMode"  class="form-control required">
+                            <c:forEach items="${fns:getDictList('lease_mode')}" var="mode" >
+                            <option label="${mode.label}" value="${mode.value}" htmlEscape="false"  <c:if test="${order.leaseMode == mode.value}">selected</c:if>/>
                             </c:forEach>
                         </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="width-15 active"><label class="pull-right"><font color="red">*</font>入住日期：</label></td>
+                    <td class="width-35">
+                        <input id="checkInDate" name="checkInDate" type="text" maxlength="20"
+                               class="laydate-icon form-control required layer-date "
+                               value="<fmt:formatDate value="${order.checkInDate}" pattern="yyyy-MM-dd"/>"/>
+                    </td>
+                    <td class="width-15 active"><label class="pull-right"><font color="red">*</font>离店日期：</label></td>
+                    <td class="width-35">
+                        <input id="checkOutDate" name="checkOutDate" type="text" maxlength="20"
+                               class="laydate-icon form-control required layer-date "
+                               value="<fmt:formatDate value="${order.checkOutDate}" pattern="yyyy-MM-dd"/>"/>
                     </td>
                 </tr>
                 <tr>
@@ -152,25 +173,11 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="width-15 active"><label class="pull-right"><font color="red">*</font>入住日期：</label></td>
-                    <td class="width-35">
-                        <input id="checkInDate" name="checkInDate" type="text" maxlength="20"
-                               class="laydate-icon form-control required layer-date "
-                               value="<fmt:formatDate value="${order.checkInDate}" pattern="yyyy-MM-dd"/>"/>
-                    </td>
-                    <td class="width-15 active"><label class="pull-right"><font color="red">*</font>离店日期：</label></td>
-                    <td class="width-35">
-                        <input id="checkOutDate" name="checkOutDate" type="text" maxlength="20"
-                               class="laydate-icon form-control required layer-date "
-                               value="<fmt:formatDate value="${order.checkOutDate}" pattern="yyyy-MM-dd"/>"/>
-                    </td>
-                </tr>
-                <tr>
                     <td class="width-15 active"><label class="pull-right">状态：</label></td>
                     <td class="width-35">
-                        <select name="status" :value="order.status" class="form-control ">
+                        <select name="status" class="form-control ">
                             <c:forEach items="${fns:getDictList('order_status')}" var="status">
-                                <option label="${status.label}" value="${status.value}" htmlEscape="false"/>
+                                <option label="${status.label}" value="${status.value}" htmlEscape="false" <c:if test="${order.status == status.value}">selected</c:if>/>
                             </c:forEach>
                         </select>
                     </td>
