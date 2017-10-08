@@ -45,10 +45,10 @@
 <body class="hideScroll">
     <div id="modelDiv">
         <form id="inputForm" modelAttribute="order" action="${ctx}/order/order/save" method="post" class="form-horizontal">
-            <input id="id" name="id" value="${booker.id}" type="hidden"/>
+            <input id="id" name="id" value="${order.id}" type="hidden"/>
             <sys:message content="${message}"/>
             <table class="table table-bordered  table-condensed dataTables-example dataTable no-footer">
-                <tbody>
+                <>
                 <tr>
                     <td class="width-15 active"><label class="pull-right">订单号：</label></td>
                     <td class="width-35">
@@ -60,6 +60,23 @@
                             <option value=""></option>
                             <option v-for="hotel in hotels" :label="hotel.office.name" :value="hotel.id" v-if="hotel.id == order.hotel.id" selected></option>
                             <option :label="hotel.office.name" :value="hotel.id" v-else></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="width-15 active"><label class="pull-right"><font color="red">*</font>房型：</label></td>
+                    <td class="width-35">
+                        <select name="roomType.id" htmlEscape="false"    class="form-control required">
+                            <option v-for="roomType in roomTypes" :label="roomType.name" :value="roomType.id" v-if="roomType.id == order.roomType.id" selected></option>
+                            <option :label="roomType.name" :value="roomType.id" v-else></option>
+                        </select>
+                    </td>
+                    <td class="width-15 active"><label class="pull-right">预约房间：</label></td>
+                    <td class="width-35">
+                        <select name="bookRoom.id" htmlEscape="false"    class="form-control">
+                            <option value=""></option>
+                            <option v-for="room in rooms" :label="room.roomNum" :value="room.id" v-if="room.id == order.bookRoom.id" selected></option>
+                            <option :label="room.roomNum" :value="room.id" v-else></option>
                         </select>
                     </td>
                 </tr>
@@ -81,19 +98,46 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="width-15 active"><label class="pull-right"><font color="red">*</font>房型：</label></td>
+                    <td class="width-15 active"><label class="pull-right">入住天数：</label></td>
                     <td class="width-35">
-                        <select name="roomType.id" htmlEscape="false"    class="form-control required">
-                            <option v-for="roomType in roomTypes" :label="roomType.name" :value="roomType.id" v-if="roomType.id == order.roomType.id" selected></option>
-                            <option :label="roomType.name" :value="roomType.id" v-else></option>
-                        </select>                     
+                        <input name="livedays" :value="order.livedays" htmlEscape="false" class="form-control  number"/>
                     </td>
-                    <td class="width-15 active"><label class="pull-right">预约房间：</label></td>
+                    <td class="width-15 active"><label class="pull-right">每天租金：</label></td>
                     <td class="width-35">
-                        <select name="bookRoom.id" htmlEscape="false"    class="form-control">
+                        <input name="dailyPrice" :value="order.roomType.dailyPrice" htmlEscape="false" class="form-control  number"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="width-15 active"><label class="pull-right">入住小时数：</label></td>
+                    <td class="width-35">
+                        <input name="livehours" :value="order.livehours" htmlEscape="false" class="form-control  number"/>
+                    </td>
+                    <td class="width-15 active"><label class="pull-right">每小时租金：</label></td>
+                    <td class="width-35">
+                        <input name="hourPrice" :value="order.roomType.hourPrice" htmlEscape="false" class="form-control  number"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="width-15 active"><label class="pull-right">长租月数：</label></td>
+                    <td class="width-35">
+                        <input name="rentMonths" :value="order.rentMonths" htmlEscape="false" class="form-control  number"/>
+                    </td>
+                    <td class="width-15 active"><label class="pull-right">每月租金：</label></td>
+                    <td class="width-35">
+                        <input name="monthlyRent" :value="order.roomType.monthlyRent" htmlEscape="false" class="form-control  number"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="width-15 active"><label class="pull-right">订单总额：</label></td>
+                    <td class="width-35">
+                        <input name="totalAmount" :value="order.totalAmount" htmlEscape="false" class="form-control  number"/>
+                    </td>
+                    <td class="width-15 active"><label class="pull-right">预订人：</label></td>
+                    <td class="width-35">
+                        <select name="booker.id" htmlEscape="false"    class="form-control">
                             <option value=""></option>
-                            <option v-for="room in rooms" :label="room.roomNum" :value="room.id" v-if="room.id == order.bookRoom.id" selected></option>
-                            <option :label="room.roomNum" :value="room.id" v-else></option>
+                            <option v-for="member in members" :label="member.name" :value="member.id" v-if="member.id == order.booker.id" selected></option>
+                            <option :label="member.name" :value="member.id" v-else></option>
                         </select>
                     </td>
                 </tr>
@@ -105,20 +149,6 @@
                     <td class="width-15 active"><label class="pull-right"><font color="red">*</font>入住人电话：</label></td>
                     <td class="width-35">
                         <input name="contactsPhone" :value="order.contactsPhone" htmlEscape="false" class="form-control required"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="width-15 active"><label class="pull-right">预订人：</label></td>
-                    <td class="width-35">
-                        <select name="booker.id" htmlEscape="false"    class="form-control">
-                            <option value=""></option>
-                            <option v-for="member in members" :label="member.name" :value="member.id" v-if="member.id == order.booker.id" selected></option>
-                            <option :label="member.name" :value="member.id" v-else></option>
-                        </select>
-                    </td>
-                    <td class="width-15 active"><label class="pull-right">长租月数：</label></td>
-                    <td class="width-35">
-                        <input name="rentMonths" :value="order.rentMonths" htmlEscape="false" class="form-control  number"/>
                     </td>
                 </tr>
                 <tr>

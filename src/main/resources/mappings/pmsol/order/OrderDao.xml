@@ -10,7 +10,11 @@
 		<result property="rentMonths" column="rent_months"/>
 		<result property="checkInDate" column="checkin_date"/>
 		<result property="checkInDate" column="checkin_date"/>
+		<result property="liveHours" column="live_hours"/>
 		<result property="liveDays" column="live_days"/>
+		<result property="dailyPrice" column="daily_price"/>
+		<result property="monthlyRent" column="monthly_rent"/>
+		<result property="hourPrice" column="hour_price"/>
 		<result property="totalAmount" column="total_amount"/>
 		<result property="contacts" column="contacts"/>
 		<result property="contactsPhone" column="contacts_phone"/>
@@ -53,7 +57,11 @@
 		a.rent_months AS "rentMonths",
 		a.checkin_date AS "checkInDate",
 		a.checkout_date AS "checkOutDate",
+		a.live_hours AS "liveHours",
 		a.live_days AS "liveDays",
+		a.daily_price AS "dailyPrice",
+		a.monthly_rent AS "monthlyRent",
+		a.hour_price AS "hourPrice",
 		a.total_amount AS "totalAmount",
 		a.contacts AS "contacts",
 		a.contacts_phone AS "contactsPhone",
@@ -178,7 +186,11 @@
 			rent_months,
 			checkin_date,
 			checkout_date,
+			live_hours,
 		    live_days,
+		    daily_price,
+		    monthly_rent,
+		    hour_price,
 		    total_amount,
 			contacts,
 			contacts_phone,
@@ -201,7 +213,11 @@
 			#{rentMonths},
 			#{checkInDate},
 			#{checkOutDate},
+			#{liveHours},
 			#{liveDays},
+			#{dailyPrice},
+			#{monthlyRent},
+			#{hourPrice},
 			#{totalAmount},
 			#{contacts},
 			#{contactsPhone},
@@ -224,7 +240,11 @@
 			rent_months = #{rentMonths},
 			checkin_date = #{checkInDate},
 			checkout_date = #{checkOutDate},
+			live_hours = #{liveHours},
 			live_days = #{liveDays},
+			daily_price = #{dailyPrice},
+			monthly_rent = #{monthlyRent},
+			hour_price = #{hourPrice},
 			total_amount = #{totalAmount},
 			contacts = #{contacts},
 			contacts_phone = #{contactsPhone},

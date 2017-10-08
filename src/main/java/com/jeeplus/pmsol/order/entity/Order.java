@@ -31,7 +31,11 @@ public class Order extends DataEntity<Order> {
 	private String rentMonths;		// 长租月数
 	private Date checkInDate;		// 入住日期
 	private Date checkOutDate;		// 预离日期
+	private String liveHours;		// 入住小时数
 	private String liveDays;		// 入住天数
+	private BigDecimal dailyPrice;	// 每天单价
+	private BigDecimal monthlyRent;	// 每月单价
+	private BigDecimal hourPrice;		// 每小时单价
 	private BigDecimal totalAmount;		// 订单总额
 	private String contacts;		// 入住人
 	private String contactsPhone;		// 入住人电话
@@ -213,5 +217,37 @@ public class Order extends DataEntity<Order> {
 
 	public void setEndCheckOutDate(Date endCheckOutDate) {
 		this.endCheckOutDate = endCheckOutDate;
+	}
+
+	public BigDecimal getDailyPrice() {
+		return dailyPrice;
+	}
+
+	public void setDailyPrice(BigDecimal dailyPrice) {
+		this.dailyPrice = dailyPrice;
+	}
+
+	public BigDecimal getMonthlyRent() {
+		return monthlyRent;
+	}
+
+	public void setMonthlyRent(BigDecimal monthlyRent) {
+		this.monthlyRent = monthlyRent;
+	}
+
+	public BigDecimal getHourPrice() {
+		return hourPrice;
+	}
+
+	public void setHourPrice(BigDecimal hourPrice) {
+		this.hourPrice = hourPrice;
+	}
+
+	public String getLiveHours() {
+		return liveHours;
+	}
+
+	public void setLiveHours(String liveHours) {
+		this.liveHours = liveHours;
 	}
 }

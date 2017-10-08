@@ -40,7 +40,7 @@ window.vm = new Vue({
         getModel: function () {
             const id = $('#id').val();
             if (id) {
-                axios.get(ctx + "/member/member/getModel/" + id).then(response => {
+                axios.get(ctx + "/order/order/getModel/" + id).then(response => {
                     const res = response.data;
                     if (res && response.status == "200") {
                         this.order = res;
