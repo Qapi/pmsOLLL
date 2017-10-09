@@ -26,6 +26,7 @@ window.vm = new Vue({
     },
     filters: {},
     methods: {
+        /** 获取初始数据 **/
         getModel: function () {
             const id = $('#id').val();
             if (id) {
@@ -35,7 +36,7 @@ window.vm = new Vue({
                         this.room = res;
                     }
                 });
-            }
+            };
             axios.get(ctx + "/hotel/hotel/getList").then(response => {
                 const res = response.data;
                 if (res && response.status == "200") {
