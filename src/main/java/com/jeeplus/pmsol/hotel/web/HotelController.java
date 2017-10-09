@@ -3,6 +3,8 @@
  */
 package com.jeeplus.pmsol.hotel.web;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +13,7 @@ import javax.validation.ConstraintViolationException;
 
 import com.jeeplus.modules.sys.entity.Office;
 import com.jeeplus.modules.sys.service.OfficeService;
+import com.jeeplus.modules.sys.utils.UserUtils;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,7 +91,16 @@ public class HotelController extends BaseController {
 	@RequestMapping(value = "getList")
 	@ResponseBody
 	public ResponseEntity<List<Hotel>> getList(Hotel hotel) throws Exception{
-		List<Hotel> list = hotelService.findList(hotel);
+		// 若非管理员admin ，则默认只显示操作员所在酒店
+		// TODO 应调整为单独方法，配置相关权限，以拓展到报表数据等模块
+		List<Hotel> list = new ArrayList<>();
+		if(UserUtils.getUser().isAdmin()){
+			list = hotelService.findList(hotel);
+		}else{
+			Office company = UserUtils.getUser().getCompany();
+			hotel = hotelService.findUniqueByProperty("office_id",company.getId());
+			list.add(hotel);
+		}
 		return new ResponseEntity(list, HttpStatus.OK);
 	}
 

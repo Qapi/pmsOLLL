@@ -95,10 +95,10 @@ public class OrderController extends BaseController {
     @RequiresPermissions(value = {"order:order:view", "order:order:add", "order:order:edit"}, logical = Logical.OR)
     @RequestMapping(value = "form")
     public String form(Order order, Model model) {
-        // 设定默认酒店选择为用户所在酒店
-        Office company = UserUtils.getUser().getCompany();
-        Hotel hotel = hotelService.findUniqueByProperty("office_id",company.getId());
-        order.setHotel(hotel);
+//        // 设定默认酒店选择为用户所在酒店
+//        Office company = UserUtils.getUser().getCompany();
+//        Hotel hotel = hotelService.findUniqueByProperty("office_id",company.getId());
+//        order.setHotel(hotel);
         model.addAttribute("order", order);
         return "pmsol/order/orderForm";
     }
