@@ -26,6 +26,7 @@ window.vm = new Vue({
     },
     filters: {},
     methods: {
+        /** 获取初始数据 **/
         getModel: function () {
             const id = $('#id').val();
             if (id) {
