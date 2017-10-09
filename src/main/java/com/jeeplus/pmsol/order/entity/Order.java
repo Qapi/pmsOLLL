@@ -24,6 +24,7 @@ public class Order extends DataEntity<Order> {
 	
 	private static final long serialVersionUID = 1L;
 	private String orderNum;		// 订单号
+	private String chlOrderNum;		//外部渠道订单号
 	private HotelChannel channel;		// 所属渠道
 	private Hotel hotel;		// 所属酒店
 	private RoomType roomType;		// 所属房型
@@ -249,5 +250,13 @@ public class Order extends DataEntity<Order> {
 
 	public void setLiveHours(String liveHours) {
 		this.liveHours = liveHours;
+	}
+
+	public String getChlOrderNum() {
+		return chlOrderNum;
+	}
+
+	public void setChlOrderNum(String chlOrderNum) {
+		this.chlOrderNum = chlOrderNum;
 	}
 }

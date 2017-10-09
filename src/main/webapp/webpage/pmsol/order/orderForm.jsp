@@ -69,6 +69,19 @@
                     </td>
                 </tr>
                 <tr>
+                    <td class="width-15 active"><label class="pull-right">渠道：</label></td>
+                    <td class="width-35">
+                        <select name="channel.id" htmlEscape="false"    class="form-control ">
+                            <option v-for="hotel in channels" :label="channel.name" :value="channel.id" v-if="channel.id == order.channel.id" selected></option>
+                            <option :label="channel.name" :value="channel.id" v-else></option>
+                        </select>
+                    </td>
+                    <td class="width-15 active"><label class="pull-right">渠道订单号：</label></td>
+                    <td class="width-35">
+                        <input name="chlOrderNum" :value="order.chlOrderNum" htmlEscape="false" class="form-control"/>
+                    </td>
+                </tr>
+                <tr>
                     <td class="width-15 active"><label class="pull-right"><font color="red">*</font>房型：</label></td>
                     <td class="width-35">
                         <select id="roomTypeId" name="roomType.id" htmlEscape="false"  @change="selectRoomType"  class="form-control required">
@@ -87,11 +100,12 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="width-15 active"><label class="pull-right">渠道：</label></td>
+                    <td class="width-15 active"><label class="pull-right">预订人：</label></td>
                     <td class="width-35">
-                        <select name="channel.id" htmlEscape="false"    class="form-control ">
-                            <option v-for="hotel in channels" :label="channel.name" :value="channel.id" v-if="channel.id == order.channel.id" selected></option>
-                            <option :label="channel.name" :value="channel.id" v-else></option>
+                        <select name="booker.id" htmlEscape="false"    class="form-control">
+                            <option value=""></option>
+                            <option v-for="member in members" :label="member.name" :value="member.id" v-if="order.member != null && member.id == order.booker.id" selected></option>
+                            <option :label="member.name" :value="member.id" v-else></option>
                         </select>
                     </td>
                     <td class="width-15 active"><label class="pull-right"><font color="red">*</font>租赁类型：</label></td>
@@ -103,7 +117,7 @@
                         </select>
                     </td>
                 </tr>
-                <tr>
+                <tr v-show="!leaseModes[1].value"  <%--若为钟点房，则不用选择入住和离店日期--%>>
                     <td class="width-15 active"><label class="pull-right"><font color="red">*</font>入住日期：</label></td>
                     <td class="width-35">
                         <input id="checkInDate" name="checkInDate" type="text" maxlength="20"
@@ -150,14 +164,14 @@
                 <tr>
                     <td class="width-15 active"><label class="pull-right">订单总额：</label></td>
                     <td class="width-35">
-                        <input name="totalAmount" :value="order.totalAmount" htmlEscape="false" class="form-control  number"/>
+                        <input name="totalAmount" :value="calTotalAmount" htmlEscape="false" class="form-control  number"/>
                     </td>
-                    <td class="width-15 active"><label class="pull-right">预订人：</label></td>
+                    <td class="width-15 active"><label class="pull-right">状态：</label></td>
                     <td class="width-35">
-                        <select name="booker.id" htmlEscape="false"    class="form-control">
-                            <option value=""></option>
-                            <option v-for="member in members" :label="member.name" :value="member.id" v-if="order.member != null && member.id == order.booker.id" selected></option>
-                            <option :label="member.name" :value="member.id" v-else></option>
+                        <select name="status" class="form-control ">
+                            <c:forEach items="${fns:getDictList('order_status')}" var="status">
+                                <option label="${status.label}" value="${status.value}" htmlEscape="false" <c:if test="${order.status == status.value}">selected</c:if>/>
+                            </c:forEach>
                         </select>
                     </td>
                 </tr>
@@ -172,18 +186,12 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="width-15 active"><label class="pull-right">状态：</label></td>
-                    <td class="width-35">
-                        <select name="status" class="form-control ">
-                            <c:forEach items="${fns:getDictList('order_status')}" var="status">
-                                <option label="${status.label}" value="${status.value}" htmlEscape="false" <c:if test="${order.status == status.value}">selected</c:if>/>
-                            </c:forEach>
-                        </select>
-                    </td>
                     <td class="width-15 active"><label class="pull-right">备注信息：</label></td>
                     <td class="width-35">
                         <textarea name="remarks" :value="order.remarks" htmlEscape="false" rows="4" class="form-control "></textarea>
                     </td>
+                    <td class="width-15 active"></td>
+                    <td class="width-35" ></td>
                 </tr>
                 </tbody>
             </table>

@@ -6,6 +6,7 @@
 	<resultMap id="orderMap" type="Order">
 		<id property="id" column="id"/>
 		<result property="orderNum" column="order_num"/>
+		<result property="chlOrderNum" column="chl_order_num"/>
 		<result property="leaseMode" column="lease_mode"/>
 		<result property="rentMonths" column="rent_months"/>
 		<result property="checkInDate" column="checkin_date"/>
@@ -50,6 +51,7 @@
 		a.remarks AS "remarks",
 		a.del_flag AS "delFlag",
 		a.order_num AS "orderNum",
+		a.chl_order_num AS "chlOrderNum",
 		a.channel_id AS "channel.id",
 		a.hotel_id AS "hotel.id",
 		a.roomtype_id AS "roomType.id",
@@ -101,6 +103,12 @@
                 <if test="dbName == 'mssql'">'%'+#{orderNum}+'%'</if>
                 <if test="dbName == 'mysql'">concat('%',#{orderNum},'%')</if>
             </if>
+			<if test="orderNum != null and orderNum != ''">
+				AND a.chl_order_num LIKE
+				<if test="dbName == 'oracle'">'%'||#{chlOrderNum}||'%'</if>
+				<if test="dbName == 'mssql'">'%'+#{chlOrderNum}+'%'</if>
+				<if test="dbName == 'mysql'">concat('%',#{chlOrderNum},'%')</if>
+			</if>
             <if test="channel != null and channel.id != ''">
                 AND a.channel_id = #{channel.id}
             </if>
@@ -179,6 +187,7 @@
 			remarks,
 			del_flag,
 			order_num,
+			chl_order_num,
 			channel_id,
 			hotel_id,
 			roomtype_id,
@@ -206,6 +215,7 @@
 			#{remarks},
 			#{delFlag},
 			#{orderNum},
+			#{chlOrderNum},
 			#{channel.id},
 			#{hotel.id},
 			#{roomType.id},
@@ -233,6 +243,7 @@
 			update_date = #{updateDate},
 			remarks = #{remarks},
 			order_num = #{orderNum},
+			chl_order_num = #{chlOrderNum},
 			channel_id = #{channel.id},
 			hotel_id = #{hotel.id},
 			roomtype_id = #{roomType.id},
