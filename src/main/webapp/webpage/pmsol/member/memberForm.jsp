@@ -80,7 +80,7 @@
 					<tr>
 						<td class="width-15 active"><label class="pull-right"><font color="red">*</font>身份证号：</label></td>
 						<td class="width-35">
-							<input name="idNum" :value="member.idNum" htmlEscape="false"    class="form-control required"/>
+							<input name="idNum" :value="member.idNum" @blur="calBirth" htmlEscape="false"    class="form-control required"/>
 						</td>
 						<td class="width-15 active"><label class="pull-right">生日：</label></td>
 						<td class="width-35">
