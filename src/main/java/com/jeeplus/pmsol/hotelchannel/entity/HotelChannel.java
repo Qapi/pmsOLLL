@@ -6,6 +6,7 @@ package com.jeeplus.pmsol.hotelchannel.entity;
 
 import com.jeeplus.common.persistence.DataEntity;
 import com.jeeplus.common.utils.excel.annotation.ExcelField;
+import com.jeeplus.pmsol.hotel.entity.Hotel;
 
 /**
  * 酒店销售渠道配置Entity
@@ -16,7 +17,10 @@ public class HotelChannel extends DataEntity<HotelChannel> {
 	
 	private static final long serialVersionUID = 1L;
 	private String name;		// 名称
-	private String hotelId;		// 所属酒店
+	private Hotel hotel;		// 所属酒店
+	private String adminUrl;	// 后台管理网址
+	private String userName;	// 后台管理用户名
+	private String password;	// 后台管理用户名
 	private String contacts;		// 联系人
 	private String contactsPhone;		// 联系人电话
 	private String contractPeriod;		// 合同期
@@ -42,12 +46,12 @@ public class HotelChannel extends DataEntity<HotelChannel> {
 	}
 	
 	@ExcelField(title="所属酒店", fieldType=String.class, value="", align=2, sort=8)
-	public String getHotelId() {
-		return hotelId;
+	public Hotel getHotel() {
+		return hotel;
 	}
 
-	public void setHotelId(String hotelId) {
-		this.hotelId = hotelId;
+	public void setHotel(Hotel hotel) {
+		this.hotel = hotel;
 	}
 	
 	@ExcelField(title="联系人", align=2, sort=9)
@@ -101,5 +105,20 @@ public class HotelChannel extends DataEntity<HotelChannel> {
 	public void setEndContractPeriod(String endContractPeriod) {
 		this.endContractPeriod = endContractPeriod;
 	}
-		
+
+	public String getAdminUrl() {
+		return adminUrl;
+	}
+
+	public void setAdminUrl(String adminUrl) {
+		this.adminUrl = adminUrl;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 }

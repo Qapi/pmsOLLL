@@ -1,7 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jeeplus.pmsol.hotelchannel.dao.HotelChannelDao">
-    
+
+	<resultMap id="orderMap" type="Order">
+		<id property="id" column="id"/>
+		<result property="name" column="name"/>
+		<result property="adminUrl" column="admin_url"/>
+		<result property="userName" column="user_name"/>
+		<result property="password" column="password"/>
+		<result property="contacts" column="contacts"/>
+		<result property="contactsPhone" column="contacts_phone"/>
+		<result property="contractPeriod" column="contract_period"/>
+		<result property="status" column="status"/>
+		<association property="hotel" column="{id=hotel.id}"
+					 javaType="com.jeeplus.pmsol.hotel.entity.Hotel"
+					 select="com.jeeplus.pmsol.hotel.dao.HotelDao.get">
+		</association>
+	</resultMap>
+
 	<sql id="hotelChannelColumns">
 		a.id AS "id",
 		a.create_by AS "createBy.id",
@@ -11,7 +27,10 @@
 		a.remarks AS "remarks",
 		a.del_flag AS "delFlag",
 		a.name AS "name",
-		a.hotel_id AS "hotel",
+		a.admin_url AS "adminUrl",
+		a.userName AS "user_name",
+		a.password AS "password",
+		a.hotel_id AS "hotel.id",
 		a.contacts AS "contacts",
 		a.contacts_phone AS "contactsPhone",
 		a.contract_period AS "contractPeriod",
@@ -49,8 +68,8 @@
 					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
 					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
 			</if>
-			<if test="hotel != null and hotel != ''">
-				AND a.hotel_id = #{hotel}
+			<if test="hotel != null and hotel.id != ''">
+				AND a.hotel_id = #{hotel.id}
 			</if>
 			<if test="contacts != null and contacts != ''">
 				AND a.contacts LIKE 
@@ -109,6 +128,9 @@
 			remarks,
 			del_flag,
 			name,
+			admin_url,
+			user_name,
+			password,
 			hotel_id,
 			contacts,
 			contacts_phone,
@@ -123,7 +145,10 @@
 			#{remarks},
 			#{delFlag},
 			#{name},
-			#{hotel},
+			#{userName},
+			#{password},
+			#{adminUrl},
+			#{hotel.id},
 			#{contacts},
 			#{contactsPhone},
 			#{contractPeriod},
@@ -137,7 +162,10 @@
 			update_date = #{updateDate},
 			remarks = #{remarks},
 			name = #{name},
-			hotel_id = #{hotel},
+			admin_url = #{adminUrl},
+			user_name = #{userName},
+			password = #{password},
+			hotel_id = #{hotel.id},
 			contacts = #{contacts},
 			contacts_phone = #{contactsPhone},
 			contract_period = #{contractPeriod},

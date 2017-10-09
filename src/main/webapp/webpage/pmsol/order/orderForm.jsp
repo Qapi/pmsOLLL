@@ -117,7 +117,7 @@
                         </select>
                     </td>
                 </tr>
-                <tr v-show="!leaseModes[1].value"  <%--若为钟点房，则不用选择入住和离店日期--%>>
+                <tr>
                     <td class="width-15 active"><label class="pull-right"><font color="red">*</font>入住日期：</label></td>
                     <td class="width-35">
                         <input id="checkInDate" name="checkInDate" type="text" maxlength="20"
