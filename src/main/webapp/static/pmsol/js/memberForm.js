@@ -61,14 +61,28 @@ window.vm = new Vue({
         }
         ,
         /** 自动提取身份证号里的生日信息 **/
+        // TODO 应对身份证信息做校验
         calBirth: function () {
-            let birth = $(this).val();
-            if(idNum.length == 18){
-                birth = birth.slice(6,14);
-                birth = birth.slice(0,3)+"-"+birth.slice(4,5)+"-"+birth.slice(6,7);
+            let birth = $('#idNum').val();
+            if (birth.length == 18) {
+                birth = birth.slice(6, 14);
+                if (this.checkBirth(birth)) {
+                    birth = birth.slice(0, 4) + "-" + birth.slice(4, 6) + "-" + birth.slice(6, 8);
+                    $('#birthday').val(birth);
+                }
             }
-            this.birthday =  birth;
         }
+        ,
+        /** 校验生日信息 **/
+        // TODO 校验方式不够精准
+        checkBirth: function (birth) {
+            const currentDate = new Date();
+            if (+birth.slice(0, 4) < currentDate.getFullYear() + 1 && +birth.slice(4, 6) < currentDate.getMonth() + 2 && +birth.slice(6, 8) < currentDate.getDate() + 1) {
+                return true;
+            }
+            return false;
+        }
+        ,
     }
 })
 
