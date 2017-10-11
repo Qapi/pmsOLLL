@@ -35,22 +35,20 @@ window.vm = new Vue({
         rooms: [],
         channels: [],
         leaseModes: [
-            {flag: false, value: '0', name: '日租'},
-            {flag: false, value: '1', name: '时租'},
-            {flag: false, value: '2', name: '月租'}
+            {name: '日租', value: '0'},
+            {name: '时租', value: '1'},
+            {name: '月租', value: '2'}
         ],
     },
     mounted: function () {
         this.$nextTick(function () {
             this.getModel();
-            this.initMode();
         })
     },
     computed: {
         /** 自动计算订单总额 **/
         calTotalAmount: function () {
-            const mode = $('#leaseMode option:selected').val();
-            switch (mode) {
+            switch (this.order.leaseMode) {
                 case '0':
                     this.order.totalAmount = this.order.liveDays * this.order.dailyPrice;
                     break;
@@ -93,10 +91,8 @@ window.vm = new Vue({
                     const res = response.data;
                     if (res && response.status == "200") {
                         this.roomTypes = res;
-                        // 因为是新订单，使用默认房型设定单价
-                        this.order.dailyPrice = res[0].dailyPrice;
-                        this.order.hourPrice = res[0].hourPrice;
-                        this.order.monthlyRent = res[0].monthlyRent;
+                        // // 因为是新订单，使用默认房型设定单价
+                        // this.updatePrice(res[0]);
                     }
                 });
                 axios.get(ctx + "/room/room/getList").then(response => {
@@ -114,43 +110,28 @@ window.vm = new Vue({
             }
         }
         ,
-        /** 初始化租赁类型 **/
-        initMode: function () {
-            const mode = $('#leaseMode').data('id');
-            if (mode != null) {
-                this.leaseModes.forEach((ele, index) => {
-                    if (+mode == index) {
-                        ele.flag = true;
-                    } else {
-                        ele.flag = false;
-                    }
-                })
-            }
-        }
-        ,
-        /** 根据租赁类型更改可输入入住时长和订单金额 **/
-        selectLeaseMode: function (ele) {
-            alert(this.order.leaseMode);
-            // const mode = ele.target.value;
-            // this.leaseModes.forEach(function (ele, index) {
-            //     if (+mode == index) {
-            //         ele.flag = true;
-            //     } else {
-            //         ele.flag = false;
-            //     }
-            // })
-        }
-        ,
-        /** 根据房型过滤可选房间 **/
+        /** 根据房型过滤可选房间并更新订单显示价格 **/
         selectRoomType: function (ele) {
-            axios.get(ctx + "/room/room/getList", {params: {roomTypeId: ele.target.value}}).then(response => {
+            const roomTypeId = ele.target.value;
+            axios.get(ctx + "/room/room/getList", {params: {roomTypeId: roomTypeId}}).then(response => {
                 const res = response.data;
                 if (res && response.status == "200") {
                     this.rooms = res;
                 }
             });
+            this.roomTypes.forEach((roomType,index) => {
+                if(roomType.id == roomTypeId){
+                    this.updatePrice(roomType);
+                }
+            })
         }
-
+        ,
+        /** 根据房型更新订单显示价格 **/
+        updatePrice: function (roomType) {
+            this.order.dailyPrice = roomType.dailyPrice;
+            this.order.hourPrice = roomType.hourPrice;
+            this.order.monthlyRent = roomType.monthlyRent;
+        }
     }
 });
 
