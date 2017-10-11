@@ -4,51 +4,6 @@
 <head>
     <title>订单管理</title>
     <meta name="decorator" content="default"/>
-    <script type="text/javascript">
-        var validateForm;
-
-        function doSubmit() {//回调函数，在编辑和保存动作时，供openDialog调用提交表单。
-            if (validateForm.form()) {
-                $("#inputForm").submit();
-                return true;
-            }
-
-            return false;
-        }
-
-        $(document).ready(function () {
-            validateForm = $("#inputForm").validate({
-                submitHandler: function (form) {
-                    loading('正在提交，请稍等...');
-                    form.submit();
-                },
-                errorContainer: "#messageBox",
-                errorPlacement: function (error, element) {
-                    $("#messageBox").text("输入有误，请先更正。");
-                    if (element.is(":checkbox") || element.is(":radio") || element.parent().is(".input-append")) {
-                        error.appendTo(element.parent().parent());
-                    } else {
-                        error.insertAfter(element);
-                    }
-                }
-            });
-
-            laydate.render({
-                elem: '#checkInDate',
-                event: 'focus',
-                min: 0,
-                theme: 'molv',
-                done: function (value, date, endDate) {
-                    laydate.render({
-                        elem: '#checkOutDate',
-                        event: 'focus',
-                        min: value,
-                        theme: 'molv'
-                    });
-                }
-            });
-        });
-    </script>
 </head>
 <body class="hideScroll">
 <div id="modelDiv">
@@ -118,7 +73,7 @@
                 </td>
                 <td class="width-15 active"><label class="pull-right"><font color="red">*</font>租赁类型：</label></td>
                 <td class="width-35">
-                    <select id="leaseMode" name="leaseMode" v-model="order.leaseMode"
+                    <select id="leaseMode" name="leaseMode" v-model="order.leaseMode" @change="selectLeaseMode"
                             htmlEscape="false" class="form-control required">
                         <option v-for="mode in leaseModes" :label="mode.name" v-model="mode.value"
                                 v-if="order.leaseMode != null && mode.value == order.leaseMode.id" selected></option>
@@ -126,7 +81,7 @@
                     </select>
                 </td>
             </tr>
-            <tr>
+            <tr id="selectDate">
                 <td class="width-15 active"><label class="pull-right"><font color="red">*</font>入住日期：</label></td>
                 <td class="width-35">
                     <input id="checkInDate" name="checkInDate" type="text" maxlength="20"
@@ -143,7 +98,8 @@
             <tr id="liveForDay" v-show="order.leaseMode == 0">
                 <td class="width-15 active"><label class="pull-right">入住天数：</label></td>
                 <td class="width-35">
-                    <input name="livedays" v-model="order.liveDays" htmlEscape="false" class="form-control  number"/>
+                    <input id="liveDays" name="liveDays" v-model="order.liveDays" @change="calCheckOutDate" htmlEscape="false"
+                           class="form-control  number"/>
                 </td>
                 <td class="width-15 active"><label class="pull-right">每天租金：</label></td>
                 <td class="width-35">
@@ -154,7 +110,8 @@
             <tr id="liveForHour" v-show="order.leaseMode == 1">
                 <td class="width-15 active"><label class="pull-right">入住小时数：</label></td>
                 <td class="width-35">
-                    <input name="livehours" v-model="order.liveHours" htmlEscape="false" class="form-control  number"/>
+                    <input id="liveHours" name="liveHours" v-model="order.liveHours" htmlEscape="false"
+                           class="form-control  number"/>
                 </td>
                 <td class="width-15 active"><label class="pull-right">每小时租金：</label></td>
                 <td class="width-35">
@@ -164,7 +121,7 @@
             <tr id="liveForMonth" v-show="order.leaseMode == 2">
                 <td class="width-15 active"><label class="pull-right">长租月数：</label></td>
                 <td class="width-35">
-                    <input name="rentMonths" v-model="order.rentMonths" htmlEscape="false"
+                    <input id="rentMonths" name="rentMonths" v-model="order.rentMonths" @blur="calCheckOutDate" htmlEscape="false"
                            class="form-control  number"/>
                 </td>
                 <td class="width-15 active"><label class="pull-right">每月租金：</label></td>
