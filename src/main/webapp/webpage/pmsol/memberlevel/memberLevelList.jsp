@@ -9,14 +9,14 @@
 	        laydate.render({
 	            elem: '#beginValidityTerm',
 	            event: 'focus' ,
-                max: 0 ,
                 theme: 'molv',
-                done: function(value, date, endDate){
+                done: function(minVal, date, endDate){
+                    $('#endValidityTerm').replaceWith($('#endValidityTerm').clone());
                     laydate.render({
-                        elem: '#endValidityTerm',  
-                        event: 'focus' ,
-                        min: value,
-                        theme: 'molv'
+                        elem: '#endValidityTerm',
+                        event: 'focus',
+                        min: minVal,
+                        theme: 'molv',
                     });
                 }
 
