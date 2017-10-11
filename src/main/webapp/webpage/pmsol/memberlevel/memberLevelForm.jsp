@@ -50,11 +50,11 @@
                 <tr>
                     <td class="width-15 active"><label class="pull-right">名称：</label></td>
                     <td class="width-35">
-                        <input name="name" :value="memberLevel.name" htmlEscape="false" class="form-control "/>
+                        <input name="name" v-model="memberLevel.name" htmlEscape="false" class="form-control "/>
                     </td>
                     <td class="width-15 active"><label class="pull-right">等级标识：</label></td>
                     <td class="width-35">
-                        <select name="flag" :value="memberLevel.flag" class="form-control">
+                        <select name="flag" v-model="memberLevel.flag" class="form-control">
                             <c:forEach items="${fns:getDictList('member_grade')}" var="grade">
                                 <option  label="${grade.label}" value="${grade.value}" htmlEscape="false"/>
                             </c:forEach>
@@ -66,13 +66,13 @@
                     <td class="width-35">
                         <select name="hotel.id" htmlEscape="false"    class="form-control required">
                             <option value=""></option>
-                            <option v-for="hotel in hotels" :label="hotel.office.name" :value="hotel.id" v-if="hotel.id == memberLevel.hotel.id" selected></option>
-                            <option :label="hotel.office.name" :value="hotel.id" v-else></option>
+                            <option v-for="hotel in hotels" :label="hotel.office.name" v-model="hotel.id" v-if="hotel.id == memberLevel.hotel.id" selected></option>
+                            <option :label="hotel.office.name" v-model="hotel.id" v-else></option>
                         </select>
                     </td>
                     <td class="width-15 active"><label class="pull-right">折扣优惠：</label></td>
                     <td class="width-35">
-                        <input name="salePercent" :value="memberLevel.salePercent" htmlEscape="false" class="form-control" placeholder="格式：0.9"/>
+                        <input name="salePercent" v-model="memberLevel.salePercent" htmlEscape="false" class="form-control" placeholder="格式：0.9"/>
                     </td>
                 </tr>
                 <tr>
@@ -84,7 +84,7 @@
                     </td>
                     <td class="width-15 active"><label class="pull-right">状态：</label></td>
                     <td class="width-35">
-                        <select name="status" :value="memberLevel.status" class="form-control">
+                        <select name="status" v-model="memberLevel.status" class="form-control">
                             <option value=""></option>
                             <c:forEach items="${fns:getDictList('general_status')}" var="status">
                                 <option  label="${status.label}" value="${status.value}" htmlEscape="false"/>

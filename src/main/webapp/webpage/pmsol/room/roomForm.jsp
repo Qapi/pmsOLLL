@@ -45,11 +45,11 @@
 
                     <td class="width-15 active"><label class="pull-right">房间号：</label></td>
                     <td class="width-35">
-                        <input name="roomNum" :value="room.roomNum" htmlEscape="false" class="form-control  digits"/>
+                        <input name="roomNum" v-model="room.roomNum" htmlEscape="false" class="form-control  digits"/>
                     </td>
                     <td class="width-15 active"><label class="pull-right">房间名：</label></td>
                     <td class="width-35">
-                        <input name="topicName" :value="room.topicName" htmlEscape="false" class="form-control "/>
+                        <input name="topicName" v-model="room.topicName" htmlEscape="false" class="form-control "/>
                     </td>
                 </tr>
                 <tr>
@@ -57,33 +57,33 @@
                     <td class="width-35">
                         <select name="hotel.id" htmlEscape="false"    class="form-control required">
                             <option value=""></option>
-                            <option v-for="hotel in hotels" :label="hotel.office.name" :value="hotel.id" v-if="room.hotel != null && hotel.id == room.hotel.id" selected></option>
-                            <option :label="hotel.office.name" :value="hotel.id" v-else></option>
+                            <option v-for="hotel in hotels" :label="hotel.office.name" v-model="hotel.id" v-if="room.hotel != null && hotel.id == room.hotel.id" selected></option>
+                            <option :label="hotel.office.name" v-model="hotel.id" v-else></option>
                         </select>
                     </td>
                     <td class="width-15 active"><label class="pull-right">楼层：</label></td>
                     <td class="width-35">
-                        <input name="floorNum" :value="room.floorNum" htmlEscape="false" class="form-control  digits"/>
+                        <input name="floorNum" v-model="room.floorNum" htmlEscape="false" class="form-control  digits"/>
                     </td>
                 </tr>
                 <tr>
                     <td class="width-15 active"><label class="pull-right">户型：</label></td>
                     <td class="width-35">
-                        <input name="layout" :value="room.layout" htmlEscape="false" class="form-control "/>
+                        <input name="layout" v-model="room.layout" htmlEscape="false" class="form-control "/>
                     </td>
                     <td class="width-15 active"><label class="pull-right">房型：</label></td>
                     <td class="width-35">
                         <select name="roomType.id" htmlEscape="false"    class="form-control required">
                             <option value=""></option>
-                            <option v-for="roomType in roomTypes" :label="roomType.name" :value="roomType.id" v-if="room.roomType != null && roomType.id == room.roomType.id" selected></option>
-                            <option :label="roomType.name" :value="roomType.id" v-else></option>
+                            <option v-for="roomType in roomTypes" :label="roomType.name" v-model="roomType.id" v-if="room.roomType != null && roomType.id == room.roomType.id" selected></option>
+                            <option :label="roomType.name" v-model="roomType.id" v-else></option>
                         </select>
                     </td>
                 </tr>
                 <tr>
                     <td class="width-15 active"><label class="pull-right">说明：</label></td>
                     <td class="width-35">
-                        <textarea name="remarks" :value="room.remarks" htmlEscape="false" rows="4" class="form-control "></textarea>
+                        <textarea name="remarks" v-model="room.remarks" htmlEscape="false" rows="4" class="form-control "></textarea>
                     </td>
                     <td class="width-15 active"></td>
                     <td class="width-35"></td>

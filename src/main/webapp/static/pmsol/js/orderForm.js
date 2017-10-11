@@ -11,16 +11,16 @@ window.vm = new Vue({
             channel: '',
             hotel: '',
             roomType: '',
-            leaseMode: '',
+            leaseMode: '0',
             checkInDate: '',
             checkOutDate: '',
-            liveDays: '',
-            liveHours: '',
-            rentMonths: '',
-            hourPrice: '',
-            dailyPrice: '',
-            monthlyRent: '',
-            totalAmount: '',
+            liveDays: 0,
+            liveHours: 0,
+            rentMonths: 0,
+            hourPrice: 0,
+            dailyPrice: 0,
+            monthlyRent: 0,
+            totalAmount: 0,
             contacts: '',
             contactsPhone: '',
             booker: '',
@@ -35,9 +35,9 @@ window.vm = new Vue({
         rooms: [],
         channels: [],
         leaseModes: [
-            {value: false, multiplier1: this.order.liveDays, multiplier2: this.order.dailyPrice},
-            {value: false, multiplier1: this.order.liveHours, multiplier2: this.order.hourPrice},
-            {value: false, multiplier1: this.order.rentMonths, multiplier2: this.order.monthlyRent}
+            {flag: false, value: '0', name: '日租'},
+            {flag: false, value: '1', name: '时租'},
+            {flag: false, value: '2', name: '月租'}
         ],
     },
     mounted: function () {
@@ -49,10 +49,19 @@ window.vm = new Vue({
     computed: {
         /** 自动计算订单总额 **/
         calTotalAmount: function () {
-            this.order.totalAmount =
-                this.leaseModes[+this.order.leaseMode].multiplier1
-                *
-                this.leaseModes[+this.order.leaseMode].multiplier2
+            const mode = $('#leaseMode option:selected').val();
+            switch (mode) {
+                case '0':
+                    this.order.totalAmount = this.order.liveDays * this.order.dailyPrice;
+                    break;
+                case '1':
+                    this.order.totalAmount = this.order.liveHours * this.order.hourPrice;
+                    break;
+                case '2':
+                    this.order.totalAmount = this.order.rentMonths * this.order.monthlyRent;
+                    break;
+            }
+            return this.order.totalAmount;
         }
     },
     filters: {},
@@ -105,6 +114,33 @@ window.vm = new Vue({
             }
         }
         ,
+        /** 初始化租赁类型 **/
+        initMode: function () {
+            const mode = $('#leaseMode').data('id');
+            if (mode != null) {
+                this.leaseModes.forEach((ele, index) => {
+                    if (+mode == index) {
+                        ele.flag = true;
+                    } else {
+                        ele.flag = false;
+                    }
+                })
+            }
+        }
+        ,
+        /** 根据租赁类型更改可输入入住时长和订单金额 **/
+        selectLeaseMode: function (ele) {
+            alert(this.order.leaseMode);
+            // const mode = ele.target.value;
+            // this.leaseModes.forEach(function (ele, index) {
+            //     if (+mode == index) {
+            //         ele.flag = true;
+            //     } else {
+            //         ele.flag = false;
+            //     }
+            // })
+        }
+        ,
         /** 根据房型过滤可选房间 **/
         selectRoomType: function (ele) {
             axios.get(ctx + "/room/room/getList", {params: {roomTypeId: ele.target.value}}).then(response => {
@@ -114,33 +150,7 @@ window.vm = new Vue({
                 }
             });
         }
-        ,
-        /** 初始化租赁类型 **/
-        initMode: function () {
-            // TODO 考虑转为监测order.leaseMode的数值状态
-            const mode = $('#leaseMode').data('id');
-            if (mode != null) {
-                this.leaseModes.forEach(function (ele, index) {
-                    if (+mode == index) {
-                        ele.value = true;
-                    } else {
-                        ele.value = false;
-                    }
-                })
-            }
-        }
-        ,
-        /** 根据租赁类型更改可输入入住时长和订单金额 **/
-        selectLeaseMode: function (ele) {
-            const mode = ele.target.value;
-            this.leaseModes.forEach(function (ele, index) {
-                if (+mode == index) {
-                    ele.value = true;
-                } else {
-                    ele.value = false;
-                }
-            })
-        }
+
     }
 });
 
