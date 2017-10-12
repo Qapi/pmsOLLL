@@ -26,7 +26,7 @@ public class HotelChannel extends DataEntity<HotelChannel> {
 	private String contacts;		// 联系人
 	private String contactsPhone;		// 联系人电话
 	private Date contractPeriod;		// 合同期
-	private String status;		// 状态
+	private String status = "0";		// 状态
 	private Date beginContractPeriod;		// 开始 合同期
 	private Date endContractPeriod;		// 结束 合同期
 	
