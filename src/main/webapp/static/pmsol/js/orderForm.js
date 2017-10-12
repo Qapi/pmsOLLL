@@ -273,7 +273,7 @@ $(document).ready(function () {
                     $('#rentMonths').val(1); // 入住月数重置为1
                     break;
             }
-            $('#checkOutDate').replaceWith($('#checkOutDate').clone()); // 替换元素以重置日期插件效果
+            $('#checkOutDate').replaceWith($('#checkOutDate').clone()); // 元素换新以重置日期插件效果
             laydate.render({
                 elem: '#checkOutDate',
                 event: 'focus',
