@@ -155,9 +155,9 @@ window.vm = new Vue({
             // 清除入住日期和离店日期及入住时长
             $('#checkInDate').val('');
             $('#checkOutDate').val('');
-            this.order.liveHours = 0;
-            this.order.liveDays = 0;
-            this.order.rentMonths = 0;
+            // this.order.liveHours = 0;
+            // this.order.liveDays = 0;
+            // this.order.rentMonths = 0;
         }
         ,
         /** 根据输入入住时长反向计算离店日期 **/
