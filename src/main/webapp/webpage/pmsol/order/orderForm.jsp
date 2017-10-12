@@ -20,9 +20,9 @@
                 <td class="width-35">
                     <select name="hotel.id" htmlEscape="false" class="form-control required">
                         <option value=""></option>
-                        <option v-for="hotel in hotels" :label="hotel.office.name" v-model="hotel.id"
+                        <option v-for="hotel in hotels" :label="hotel.office.name" :value="hotel.id"
                                 v-if="hotel.id == order.hotel.id" selected></option>
-                        <option :label="hotel.office.name" v-model="hotel.id" v-else></option>
+                        <option :label="hotel.office.name" :value="hotel.id" v-else></option>
                     </select>
                 </td>
             </tr>
@@ -30,9 +30,9 @@
                 <td class="width-15 active"><label class="pull-right">渠道：</label></td>
                 <td class="width-35">
                     <select name="channel.id" htmlEscape="false" class="form-control ">
-                        <option v-for="hotel in channels" :label="channel.name" v-model="channel.id"
+                        <option v-for="hotel in channels" :label="channel.name" :value="channel.id"
                                 v-if="channel.id == order.channel.id" selected></option>
-                        <option :label="channel.name" v-model="channel.id" v-else></option>
+                        <option :label="channel.name" :value="channel.id" v-else></option>
                     </select>
                 </td>
                 <td class="width-15 active"><label class="pull-right">渠道订单号：</label></td>
@@ -55,9 +55,9 @@
                 <td class="width-35">
                     <select name="bookRoom.id" htmlEscape="false" class="form-control">
                         <option value=""></option>
-                        <option v-for="room in rooms" :label="room.roomNum" v-model="room.id"
+                        <option v-for="room in rooms" :label="room.roomNum" :value="room.id"
                                 v-if="order.bookRoom != null && room.id == order.bookRoom.id" selected></option>
-                        <option :label="room.roomNum" v-model="room.id" v-else></option>
+                        <option :label="room.roomNum" :value="room.id" v-else></option>
                     </select>
                 </td>
             </tr>
@@ -66,18 +66,18 @@
                 <td class="width-35">
                     <select name="booker.id" htmlEscape="false" class="form-control">
                         <option value=""></option>
-                        <option v-for="member in members" :label="member.name" v-model="member.id"
-                                v-if="order.member != null && member.id == order.booker.id" selected></option>
-                        <option :label="member.name" v-model="member.id" v-else></option>
+                        <option v-for="member in members" :label="member.name" :value="member.id"
+                                v-if="order.booker != null && member.id == order.booker.id" selected></option>
+                        <option :label="member.name" :value="member.id" v-else></option>
                     </select>
                 </td>
                 <td class="width-15 active"><label class="pull-right"><font color="red">*</font>租赁类型：</label></td>
                 <td class="width-35">
                     <select id="leaseMode" name="leaseMode" v-model="order.leaseMode" @change="selectLeaseMode"
                             htmlEscape="false" class="form-control required">
-                        <option v-for="mode in leaseModes" :label="mode.name" v-model="mode.value"
+                        <option v-for="mode in leaseModes" :label="mode.name" :value="mode.value"
                                 v-if="order.leaseMode != null && mode.value == order.leaseMode.id" selected></option>
-                        <option :label="mode.name" v-model="mode.value" v-else></option>
+                        <option :label="mode.name" :value="mode.value" v-else></option>
                     </select>
                 </td>
             </tr>
