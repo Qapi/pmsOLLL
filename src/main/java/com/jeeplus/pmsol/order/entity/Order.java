@@ -44,7 +44,7 @@ public class Order extends DataEntity<Order> {
 	private String contactsPhone;        // 入住人电话
 	private Member booker;        // 预订人id
 	private Room bookRoom;        // 预约房间
-	private String status;        // 状态
+	private String status = "0";        // 状态,默认预约中
 	private Date beginCheckInDate;        // 开始 入住日期
 	private Date endCheckInDate;        // 结束 入住日期
 	private Date beginCheckOutDate;        // 开始 预离日期
@@ -159,14 +159,14 @@ public class Order extends DataEntity<Order> {
 
 	@ExcelField(title = "状态", align = 2, sort = 19)
 	public String getStatus() {
-		// 防止有扫描器罢工或者设计纰漏所造成的漏网之鱼,过滤预约日期次日6点前的预约中订单
-		if (StringUtils.isNotBlank(status) && "0".equals(status)) {
-			Long bookTime = this.checkInDate.getTime() + 30 * 60 * 60 * 1000;
-			Long checkTime = new Date().getTime();
-			if (bookTime.compareTo(checkTime) < 0) {
-				setStatus("1");
-			}
-		}
+//		// 防止有扫描器罢工或者设计纰漏所造成的漏网之鱼,过滤预约日期次日6点前的预约中订单
+//		if (StringUtils.isNotBlank(status) && "0".equals(status)) {
+//			Long bookTime = this.checkInDate.getTime() + 30 * 60 * 60 * 1000;
+//			Long checkTime = new Date().getTime();
+//			if (bookTime.compareTo(checkTime) < 0) {
+//				setStatus("1");
+//			}
+//		}
 		return status;
 	}
 
