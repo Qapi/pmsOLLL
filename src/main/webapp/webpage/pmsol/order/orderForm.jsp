@@ -29,7 +29,7 @@
             <tr>
                 <td class="width-15 active"><label class="pull-right">渠道：</label></td>
                 <td class="width-35">
-                    <select name="order.channel.id" htmlEscape="false" class="form-control ">
+                    <select name="channel.id" htmlEscape="false" class="form-control ">
                         <option v-for="channel in channels" :label="channel.name" :value="channel.id"
                                 v-if="order.channel != null && channel.id == order.channel.id" selected></option>
                         <option :label="channel.name" :value="channel.id" v-else></option>
