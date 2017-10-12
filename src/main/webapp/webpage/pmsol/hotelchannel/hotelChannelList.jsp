@@ -67,12 +67,12 @@
                                 <form:options items="${hotels}" itemLabel="office.name" itemValue="id"
                                               htmlEscape="false"/>
                             </form:select>
-                            <%--<span>联系人：</span>--%>
-                            <%--<form:input path="contacts" htmlEscape="false" maxlength="64"--%>
-                                        <%--class=" form-control input-sm"/>--%>
-                            <%--<span>联系人电话：</span>--%>
-                            <%--<form:input path="contactsPhone" htmlEscape="false" maxlength="32"--%>
-                                        <%--class=" form-control input-sm"/>--%>
+                                <%--<span>联系人：</span>--%>
+                                <%--<form:input path="contacts" htmlEscape="false" maxlength="64"--%>
+                                <%--class=" form-control input-sm"/>--%>
+                                <%--<span>联系人电话：</span>--%>
+                                <%--<form:input path="contactsPhone" htmlEscape="false" maxlength="32"--%>
+                                <%--class=" form-control input-sm"/>--%>
                             <span>合同期：</span>
                             <input id="beginContractPeriod" name="beginContractPeriod" type="text" maxlength="20"
                                    class="form-control layer-date input-sm"
@@ -140,12 +140,12 @@
                 <tr>
                     <th><input type="checkbox" class="i-checks"></th>
                     <th class="sort-column name">名称</th>
-                    <th class="sort-column ">所属酒店</th>
+                    <th class="sort-column hotel">所属酒店</th>
                     <th class="sort-column contacts">联系人</th>
                     <th class="sort-column contactsPhone">联系人电话</th>
                     <th class="sort-column contractPeriod">合同期</th>
                     <th class="sort-column status">状态</th>
-                    <th class="sort-column remarks">备注信息</th>
+                    <th class="sort-column adminUrl">管理地址</th>
                     <th>操作</th>
                 </tr>
                 </thead>
@@ -157,9 +157,6 @@
                                onclick="openDialogView('查看酒店销售渠道', '${ctx}/hotelchannel/hotelChannel/form?id=${hotelChannel.id}','800px', '500px')">
                                 ${hotelChannel.name}
                         </a></td>
-                        <td>
-                                ${hotelChannel.name}
-                        </td>
                         <td>
                                 ${hotelChannel.hotel.office.name}
                         </td>
@@ -173,10 +170,20 @@
                                 ${fns:formatDate(hotelChannel.contractPeriod)}
                         </td>
                         <td>
-                                ${hotelChannel.status}
+                                ${fns:getDictLabel(hotelChannel.status,'general_status','')}
                         </td>
                         <td>
-                                ${hotelChannel.remarks}
+                            <c:choose>
+                               <c:when test="${not empty hotelChannel.adminUrl}" >
+                                   <a href="${hotelChannel.adminUrl}" target="_blank">
+                                       点击进入
+                                   </a>
+                               </c:when>
+                                <c:otherwise>
+                                    暂无
+                                </c:otherwise>
+                            </c:choose>
+
                         </td>
                         <td>
                             <shiro:hasPermission name="hotelchannel:hotelChannel:view">
