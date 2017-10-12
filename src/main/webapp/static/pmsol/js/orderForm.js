@@ -75,7 +75,7 @@ window.vm = new Vue({
                         // 若为时租类型，则禁止修改离店日期，默认为入住日期
                         // 若为月租类型，则禁止修改离店日期，默认为入住日期下月或增加租赁月数倍数月份的的同日
                         if (this.order.leaseMode != 0) {
-                            $('#checkOutDate').attr('disabled', true);
+                            $('#checkOutDate').attr('readonly', true);
                         }
                     }
                 });
@@ -148,9 +148,9 @@ window.vm = new Vue({
             // 若为时租类型，则禁止修改离店日期，默认为入住日期
             // 若为月租类型，则禁止修改离店日期，默认为入住日期下月或增加租赁月数倍数月份的的同日
             if (this.order.leaseMode != 0) {
-                $('#checkOutDate').attr('disabled', true);
+                $('#checkOutDate').attr('readonly', true);
             } else {
-                $('#checkOutDate').attr('disabled', false);
+                $('#checkOutDate').attr('readonly', false);
             }
             // 清除入住日期和离店日期及入住时长
             $('#checkInDate').val('');
@@ -241,7 +241,7 @@ $(document).ready(function () {
         done: (value1, date1, endDate1) => {
             // 设定离店日期，1：日租方式则设定为入住日期后一天  2：时租方式则设定为入住日期  3：月租方式则设定为入住日期下月同日
             let dateModel, year = date1.year, month = date1.month, day = date1.date;
-            const mode = $('#leaseMode option:selected').val();
+            const mode = window.vm.order.leaseMode;
             switch (+mode) {
                 case 0:
                     if (day == laydate.getEndDate(year, month)) {

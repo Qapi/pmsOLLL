@@ -134,7 +134,7 @@
                 <td class="width-15 active"><label class="pull-right">订单总额：</label></td>
                 <td class="width-35">
                     <input name="totalAmount" v-model="calTotalAmount" htmlEscape="false" class="form-control  number"
-                           disabled/>
+                           readonly/>
                 </td>
                 <td class="width-15 active"><label class="pull-right">状态：</label></td>
                 <td class="width-35">
