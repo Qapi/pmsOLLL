@@ -167,24 +167,34 @@ window.vm = new Vue({
             let newDate;
             if (diff != '' && checkInDate != '') {
                 if (this.order.leaseMode == '0') {
-                    newDate = new Date(checkInDate.replace(/-/g, "/"));
-                    const newTime = newDate.getTime() + (diff * 1000 * 60 * 60 * 24); // 增加相应天数的毫秒差
-                    newDate = new Date(newTime);
-                    const newYear = newDate.getFullYear();
-                    const newMonth = +newDate.getMonth() + 1 < 10 ? '0' + (+newDate.getMonth() + 1) : +newDate.getMonth() + 1;
-                    const newDay = newDate.getDate() < 10 ? '0' + newDate.getDate() : +newDate.getDate();
-                    newDate = newYear + '-' + newMonth + '-' + newDay;
-                } else if (this.order.leaseMode == '2') {
-                    let newYear = checkInDate.slice(0, 4);
-                    let newMonth = +checkInDate.slice(5, 7) + diff;
-                    let newDay = checkInDate.slice(8, 11) - 1;
-                    if (newMonth > 12) {
-                        newYear++;
-                        newMonth = newMonth - 12;
+                    if(diff > 365){
+                        layer.msg('输入有误,最多只能连续预订365天!');
+                        ele.target.value = '';
+                    }else{
+                        newDate = new Date(checkInDate.replace(/-/g, "/"));
+                        const newTime = newDate.getTime() + (diff * 1000 * 60 * 60 * 24); // 增加相应天数的毫秒差
+                        newDate = new Date(newTime);
+                        const newYear = newDate.getFullYear();
+                        const newMonth = +newDate.getMonth() + 1 < 10 ? '0' + (+newDate.getMonth() + 1) : +newDate.getMonth() + 1;
+                        const newDay = newDate.getDate() < 10 ? '0' + newDate.getDate() : +newDate.getDate();
+                        newDate = newYear + '-' + newMonth + '-' + newDay;
                     }
-                    newMonth = newMonth < 12 ? '0' + newMonth : newMonth;
-                    newDay = newDay < 12 ? '0' + newDay : newDay;
-                    newDate = newYear + '-' + newMonth + '-' + newDay;
+                } else if (this.order.leaseMode == '2') {
+                    if(diff > 12){
+                        layer.msg('输入有误,最多只能连续预订12个月!');
+                        ele.target.value = '';
+                    }else {
+                        let newYear = checkInDate.slice(0, 4);
+                        let newMonth = +checkInDate.slice(5, 7) + diff;
+                        let newDay = checkInDate.slice(8, 11);
+                        if (newMonth > 12) {
+                            newYear++;
+                            newMonth = newMonth - 12;
+                        }
+                        newMonth = newMonth < 10 ? '0' + newMonth : newMonth;
+                        newDay = newDay < 10 ? '0' + newDay : newDay;
+                        newDate = newYear + '-' + newMonth + '-' + newDay;
+                    }
                 }
                 $('#checkOutDate').val(newDate);
             }
@@ -273,7 +283,7 @@ $(document).ready(function () {
                 theme: 'molv',
                 done: (value2, date2, endDate2) => {
                     if (+mode == 0) {
-                        $('#liveDays').val(calDiffForDate(new Date(value1.replace(/-/g, "/")), new Date(value2.replace(/-/g, "/"))));
+                        window.vm.order.liveDays = calDiffForDate(new Date(value1.replace(/-/g, "/")), new Date(value2.replace(/-/g, "/")));
                     }
                 }
             });

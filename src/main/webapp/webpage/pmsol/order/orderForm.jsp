@@ -98,7 +98,7 @@
             <tr id="liveForDay" v-show="order.leaseMode == 0">
                 <td class="width-15 active"><label class="pull-right">入住天数：</label></td>
                 <td class="width-35">
-                    <input id="liveDays" name="liveDays" v-model="order.liveDays" @change="calCheckOutDate" htmlEscape="false"
+                    <input id="liveDays" name="liveDays" v-model="order.liveDays" @keyup="calCheckOutDate" htmlEscape="false"
                            class="form-control  number"/>
                 </td>
                 <td class="width-15 active"><label class="pull-right">每天租金：</label></td>
@@ -121,7 +121,7 @@
             <tr id="liveForMonth" v-show="order.leaseMode == 2">
                 <td class="width-15 active"><label class="pull-right">长租月数：</label></td>
                 <td class="width-35">
-                    <input id="rentMonths" name="rentMonths" v-model="order.rentMonths" @blur="calCheckOutDate" htmlEscape="false"
+                    <input id="rentMonths" name="rentMonths" v-model="order.rentMonths" @keyup="calCheckOutDate" htmlEscape="false"
                            class="form-control  number"/>
                 </td>
                 <td class="width-15 active"><label class="pull-right">每月租金：</label></td>
