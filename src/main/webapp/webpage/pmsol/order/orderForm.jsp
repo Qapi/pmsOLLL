@@ -29,9 +29,9 @@
             <tr>
                 <td class="width-15 active"><label class="pull-right">渠道：</label></td>
                 <td class="width-35">
-                    <select name="channel.id" htmlEscape="false" class="form-control ">
-                        <option v-for="hotel in channels" :label="channel.name" :value="channel.id"
-                                v-if="channel.id == order.channel.id" selected></option>
+                    <select name="order.channel.id" htmlEscape="false" class="form-control ">
+                        <option v-for="channel in channels" :label="channel.name" :value="channel.id"
+                                v-if="order.channel != null && channel.id == order.channel.id" selected></option>
                         <option :label="channel.name" :value="channel.id" v-else></option>
                     </select>
                 </td>
@@ -47,7 +47,7 @@
                             class="form-control required">
                         <option value=""></option>
                         <option v-for="roomType in roomTypes" :label="roomType.name" v-model="roomType.id"
-                                v-if="roomType.id == order.roomType.id" selected></option>
+                                v-if="order.roomType !=null && roomType.id == order.roomType.id" selected></option>
                         <option :label="roomType.name" v-model="roomType.id" v-else></option>
                     </select>
                 </td>
