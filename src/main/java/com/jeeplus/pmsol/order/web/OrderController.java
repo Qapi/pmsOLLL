@@ -95,10 +95,6 @@ public class OrderController extends BaseController {
     @RequiresPermissions(value = {"order:order:view", "order:order:add", "order:order:edit"}, logical = Logical.OR)
     @RequestMapping(value = "form")
     public String form(Order order, Model model) {
-//        // 设定默认酒店选择为用户所在酒店
-//        Office company = UserUtils.getUser().getCompany();
-//        Hotel hotel = hotelService.findUniqueByProperty("office_id",company.getId());
-//        order.setHotel(hotel);
         model.addAttribute("order", order);
         return "pmsol/order/orderForm";
     }
@@ -130,6 +126,7 @@ public class OrderController extends BaseController {
         if (!beanValidator(model, order)) {
             return form(order, model);
         }
+        // TODO 需要对订单金额作校验，防止前台数据被强行破坏
         if (!order.getIsNewRecord()) {//编辑表单保存
             Order t = orderService.get(order.getId());//从数据库取出记录的值
             MyBeanUtils.copyBeanNotNull2Bean(order, t);//将编辑表单中的非NULL值覆盖数据库记录中的值
