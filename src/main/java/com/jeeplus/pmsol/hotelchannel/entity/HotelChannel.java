@@ -8,6 +8,8 @@ import com.jeeplus.common.persistence.DataEntity;
 import com.jeeplus.common.utils.excel.annotation.ExcelField;
 import com.jeeplus.pmsol.hotel.entity.Hotel;
 
+import java.util.Date;
+
 /**
  * 酒店销售渠道配置Entity
  * @author wangp
@@ -20,13 +22,13 @@ public class HotelChannel extends DataEntity<HotelChannel> {
 	private Hotel hotel;		// 所属酒店
 	private String adminUrl;	// 后台管理网址
 	private String userName;	// 后台管理用户名
-	private String password;	// 后台管理用户名
+	private String password;	// 后台管理密码
 	private String contacts;		// 联系人
 	private String contactsPhone;		// 联系人电话
-	private String contractPeriod;		// 合同期
+	private Date contractPeriod;		// 合同期
 	private String status;		// 状态
-	private String beginContractPeriod;		// 开始 合同期
-	private String endContractPeriod;		// 结束 合同期
+	private Date beginContractPeriod;		// 开始 合同期
+	private Date endContractPeriod;		// 结束 合同期
 	
 	public HotelChannel() {
 		super();
@@ -73,11 +75,11 @@ public class HotelChannel extends DataEntity<HotelChannel> {
 	}
 	
 	@ExcelField(title="合同期", align=2, sort=11)
-	public String getContractPeriod() {
+	public Date getContractPeriod() {
 		return contractPeriod;
 	}
 
-	public void setContractPeriod(String contractPeriod) {
+	public void setContractPeriod(Date contractPeriod) {
 		this.contractPeriod = contractPeriod;
 	}
 	
@@ -90,19 +92,19 @@ public class HotelChannel extends DataEntity<HotelChannel> {
 		this.status = status;
 	}
 	
-	public String getBeginContractPeriod() {
+	public Date getBeginContractPeriod() {
 		return beginContractPeriod;
 	}
 
-	public void setBeginContractPeriod(String beginContractPeriod) {
+	public void setBeginContractPeriod(Date beginContractPeriod) {
 		this.beginContractPeriod = beginContractPeriod;
 	}
 	
-	public String getEndContractPeriod() {
+	public Date getEndContractPeriod() {
 		return endContractPeriod;
 	}
 
-	public void setEndContractPeriod(String endContractPeriod) {
+	public void setEndContractPeriod(Date endContractPeriod) {
 		this.endContractPeriod = endContractPeriod;
 	}
 
@@ -120,5 +122,13 @@ public class HotelChannel extends DataEntity<HotelChannel> {
 
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 }

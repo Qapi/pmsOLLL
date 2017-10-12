@@ -121,17 +121,17 @@
                         <div class="form-group">
                             <span>入住日期：</span>
                             <input id="beginCheckInDate" name="beginCheckInDate" type="text" maxlength="20"
-                                   class="laydate-icon form-control layer-date input-sm"
+                                   class=" form-control layer-date input-sm"
                                    value="<fmt:formatDate value="${order.beginCheckInDate}" pattern="yyyy-MM-dd"/>"/> -
                             <input id="endCheckInDate" name="endCheckInDate" type="text" maxlength="20"
-                                   class="laydate-icon form-control layer-date input-sm"
+                                   class=" form-control layer-date input-sm"
                                    value="<fmt:formatDate value="${order.endCheckInDate}" pattern="yyyy-MM-dd"/>"/>
                             <span>预离日期：</span>
                             <input id="beginCheckOutDate" name="beginCheckOutDate" type="text" maxlength="20"
-                                   class="laydate-icon form-control layer-date input-sm"
+                                   class=" form-control layer-date input-sm"
                                    value="<fmt:formatDate value="${order.beginCheckOutDate}" pattern="yyyy-MM-dd"/>"/> -
                             <input id="endCheckOutDate" name="endCheckOutDate" type="text" maxlength="20"
-                                   class="laydate-icon form-control layer-date input-sm"
+                                   class=" form-control layer-date input-sm"
                                    value="<fmt:formatDate value="${order.endCheckOutDate}" pattern="yyyy-MM-dd"/>"/>
                         </div>
                     </form:form>

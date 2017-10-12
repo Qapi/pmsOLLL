@@ -28,7 +28,7 @@
 		a.del_flag AS "delFlag",
 		a.name AS "name",
 		a.admin_url AS "adminUrl",
-		a.userName AS "user_name",
+		a.user_name AS "userName",
 		a.password AS "password",
 		a.hotel_id AS "hotel.id",
 		a.contacts AS "contacts",

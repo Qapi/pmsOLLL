@@ -72,9 +72,9 @@
 					<form:options items="${hotels}" itemLabel="office.name" itemValue="id" htmlEscape="false"/>
 				</form:select>
 			<span>有效期：</span>
-				<input id="beginValidityTerm" name="beginValidityTerm" type="text" maxlength="20" class="laydate-icon form-control layer-date input-sm"
+				<input id="beginValidityTerm" name="beginValidityTerm" type="text" maxlength="20" class=" form-control layer-date input-sm"
 					value="<fmt:formatDate value="${memberLevel.beginValidityTerm}" pattern="yyyy-MM-dd"/>"/> -
-				<input id="endValidityTerm" name="endValidityTerm" type="text" maxlength="20" class="laydate-icon form-control layer-date input-sm"
+				<input id="endValidityTerm" name="endValidityTerm" type="text" maxlength="20" class=" form-control layer-date input-sm"
 					value="<fmt:formatDate value="${memberLevel.endValidityTerm}" pattern="yyyy-MM-dd"/>"/>
 		</div>
 		<div class="form-group">
