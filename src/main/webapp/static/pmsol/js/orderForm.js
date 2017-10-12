@@ -257,7 +257,7 @@ $(document).ready(function () {
                         day++;
                     }
                     dateModel = year + '-' + month + '-' + day;
-                    $('#liveDays').val(1); // 入住天数重置为1
+                    window.vm.order.liveDays = 1; // 入住天数重置为1
                     break;
                 case 1:
                     dateModel = year + '-' + month + '-' + day;
@@ -270,7 +270,7 @@ $(document).ready(function () {
                         month++;
                     }
                     dateModel = year + '-' + month + '-' + day;
-                    $('#rentMonths').val(1); // 入住月数重置为1
+                    window.vm.order.rentMonths = 1; // 入住月数重置为1
                     break;
             }
             $('#checkOutDate').replaceWith($('#checkOutDate').clone()); // 元素换新以重置日期插件效果
