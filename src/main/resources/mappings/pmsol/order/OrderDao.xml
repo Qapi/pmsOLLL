@@ -36,7 +36,7 @@
 					 javaType="com.jeeplus.pmsol.member.entity.Member"
 					 select="com.jeeplus.pmsol.member.dao.MemberDao.get">
 		</association>
-		<association property="bookRoom" column="{id=hotel.id}"
+		<association property="bookRoom" column="{id=bookRoom.id}"
 					 javaType="com.jeeplus.pmsol.room.entity.Room"
 					 select="com.jeeplus.pmsol.room.dao.RoomDao.get">
 		</association>
@@ -103,7 +103,7 @@
                 <if test="dbName == 'mssql'">'%'+#{orderNum}+'%'</if>
                 <if test="dbName == 'mysql'">concat('%',#{orderNum},'%')</if>
             </if>
-			<if test="orderNum != null and orderNum != ''">
+			<if test="chlOrderNum != null and chlOrderNum != ''">
 				AND a.chl_order_num LIKE
 				<if test="dbName == 'oracle'">'%'||#{chlOrderNum}||'%'</if>
 				<if test="dbName == 'mssql'">'%'+#{chlOrderNum}+'%'</if>
@@ -112,10 +112,10 @@
             <if test="channel != null and channel.id != ''">
                 AND a.channel_id = #{channel.id}
             </if>
-            <if test="hotel != null and hotel != ''">
+            <if test="hotel != null and hotel.id != ''">
                 AND a.hotel_id = #{hotel.id}
             </if>
-            <if test="roomType != null and roomType != ''">
+            <if test="roomType != null and roomType.id != ''">
                 AND a.roomtype_id = #{roomType.id}
             </if>
             <if test="leaseMode != null and leaseMode != ''">
@@ -127,7 +127,7 @@
             <if test="beginCheckInDate != null and endCheckInDate != null and beginCheckInDate != '' and endCheckInDate != ''">
                 AND a.checkin_date BETWEEN #{beginCheckInDate} AND #{endCheckInDate}
             </if>
-			<if test="beginCheckInDate != null and endCheckInDate != null and beginCheckInDate != '' and endCheckInDate != ''">
+			<if test="beginCheckOutDate != null and endCheckOutDate != null and beginCheckOutDate != '' and endCheckOutDate != ''">
 				AND a.checkout_date BETWEEN #{beginCheckOutDate} AND #{endCheckOutDate}
 			</if>
             <if test="contacts != null and contacts != ''">
@@ -142,8 +142,8 @@
                 <if test="dbName == 'mssql'">'%'+#{contactsPhone}+'%'</if>
                 <if test="dbName == 'mysql'">concat('%',#{contactsPhone},'%')</if>
             </if>
-            <if test="bookRoom != null and bookRoom != ''">
-                AND a.book_room_id = #{bookRoom}
+            <if test="bookRoom != null and bookRoom.id != ''">
+                AND a.book_room_id = #{bookRoom.id}
             </if>
             <if test="status != null and status != ''">
                 AND a.status = #{status}
