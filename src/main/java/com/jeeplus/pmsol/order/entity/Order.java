@@ -137,7 +137,7 @@ public class Order extends DataEntity<Order> {
 		this.contactsPhone = contactsPhone;
 	}
 	
-	@ExcelField(title="预订人id", align=2, sort=17)
+	@ExcelField(title="预订人", align=2, sort=17)
 	public Member getBooker() {
 		return booker;
 	}
