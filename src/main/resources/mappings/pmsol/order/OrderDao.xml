@@ -67,7 +67,7 @@
 		a.total_amount AS "totalAmount",
 		a.contacts AS "contacts",
 		a.contacts_phone AS "contactsPhone",
-		a.member_id AS "booker.id",
+		a.booker_id AS "booker.id",
 		a.book_room_id AS "bookRoom.id",
 		a.status AS "status"
 	</sql>
@@ -203,7 +203,7 @@
 		    total_amount,
 			contacts,
 			contacts_phone,
-			member_id,
+			booker_id,
 			book_room_id,
 			status
 		) VALUES (
@@ -259,7 +259,7 @@
 			total_amount = #{totalAmount},
 			contacts = #{contacts},
 			contacts_phone = #{contactsPhone},
-			member_id = #{booker.id},
+			booker_id = #{booker.id},
 			book_room_id = #{bookRoom.id},
 			status = #{status}
 		WHERE id = #{id}

@@ -42,7 +42,7 @@ public class Order extends DataEntity<Order> {
 	private BigDecimal totalAmount;        // 订单总额
 	private String contacts;        // 入住人
 	private String contactsPhone;        // 入住人电话
-	private Member booker;        // 预订人id
+	private Member booker;        // 预订人
 	private Room bookRoom;        // 预约房间
 	private String status = "0";        // 状态,默认预约中
 	private Date beginCheckInDate;        // 开始 入住日期

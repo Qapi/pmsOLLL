@@ -6,6 +6,15 @@ package com.jeeplus.pmsol.roombill.entity;
 
 import com.jeeplus.common.persistence.DataEntity;
 import com.jeeplus.common.utils.excel.annotation.ExcelField;
+import com.jeeplus.pmsol.hotel.entity.Hotel;
+import com.jeeplus.pmsol.member.entity.Member;
+import com.jeeplus.pmsol.order.entity.Order;
+import com.jeeplus.pmsol.payment.entity.Payment;
+import com.jeeplus.pmsol.resident.entity.Resident;
+import com.jeeplus.pmsol.room.entity.Room;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * 房单Entity
@@ -15,9 +24,10 @@ import com.jeeplus.common.utils.excel.annotation.ExcelField;
 public class RoomBill extends DataEntity<RoomBill> {
 	
 	private static final long serialVersionUID = 1L;
-	private String order;		// 订单id
-	private String actualResident;		// 实际入住人（集合）
-	private String room;		// 入住房间
+	private Order order;		// 订单
+	private Member booker;        // 预订人（可以是入住人）
+	private List<Resident> actualResident;		// 实际入住人（集合）
+	private Room room;		// 入住房间
 	private String waterPrice;		// 水费单价（每吨）
 	private String electricityPrice;		// 电费单价（每度）
 	private String waterFirstReading;		// 水初始读数
@@ -25,15 +35,15 @@ public class RoomBill extends DataEntity<RoomBill> {
 	private String waterLastReading;		// 水最终读数
 	private String electricityLastReading;		// 电最终读数
 	private String managementFee;		// 物业管理费（每月）
-	private String checkInTime;		// 入住时间
-	private String checkOutTime;		// 离店时间
-	private String paymentRecord;		// 支付记录（集合）
+	private Date checkInTime;		// 入住时间
+	private Date checkOutTime;		// 离店时间
+	private List<Payment> paymentRecord;		// 支付记录（集合）
 	private String depositAmount;		// 押金金额
 	private String receivableAmount;		// 应收金额
 	private String netreceiptsAmount;		// 实收金额
 	private String unreceivedAmount;		// 未收金额
 	private String returnAmount;		// 退还金额
-	private String hotel;		// 所属酒店
+	private Hotel hotel;		// 所属酒店
 	private String beginCheckInTime;		// 开始 入住时间
 	private String endCheckInTime;		// 结束 入住时间
 	private String beginCheckOutTime;		// 开始 离店时间
@@ -48,29 +58,20 @@ public class RoomBill extends DataEntity<RoomBill> {
 	}
 
 	@ExcelField(title="订单id", align=2, sort=7)
-	public String getOrder() {
+	public Order getOrder() {
 		return order;
 	}
 
-	public void setOrder(String order) {
+	public void setOrder(Order order) {
 		this.order = order;
 	}
-	
-	@ExcelField(title="实际入住人（集合）", align=2, sort=8)
-	public String getActualResident() {
-		return actualResident;
-	}
 
-	public void setActualResident(String actualResident) {
-		this.actualResident = actualResident;
-	}
-	
 	@ExcelField(title="入住房间", align=2, sort=9)
-	public String getRoom() {
+	public Room getRoom() {
 		return room;
 	}
 
-	public void setRoom(String room) {
+	public void setRoom(Room room) {
 		this.room = room;
 	}
 	
@@ -138,30 +139,21 @@ public class RoomBill extends DataEntity<RoomBill> {
 	}
 	
 	@ExcelField(title="入住时间", align=2, sort=17)
-	public String getCheckInTime() {
+	public Date getCheckInTime() {
 		return checkInTime;
 	}
 
-	public void setCheckInTime(String checkInTime) {
+	public void setCheckInTime(Date checkInTime) {
 		this.checkInTime = checkInTime;
 	}
 	
 	@ExcelField(title="离店时间", align=2, sort=18)
-	public String getCheckOutTime() {
+	public Date getCheckOutTime() {
 		return checkOutTime;
 	}
 
-	public void setCheckOutTime(String checkOutTime) {
+	public void setCheckOutTime(Date checkOutTime) {
 		this.checkOutTime = checkOutTime;
-	}
-	
-	@ExcelField(title="支付记录（集合）", align=2, sort=19)
-	public String getPaymentRecord() {
-		return paymentRecord;
-	}
-
-	public void setPaymentRecord(String paymentRecord) {
-		this.paymentRecord = paymentRecord;
 	}
 	
 	@ExcelField(title="押金金额", align=2, sort=20)
@@ -210,11 +202,11 @@ public class RoomBill extends DataEntity<RoomBill> {
 	}
 	
 	@ExcelField(title="所属酒店", align=2, sort=25)
-	public String getHotel() {
+	public Hotel getHotel() {
 		return hotel;
 	}
 
-	public void setHotel(String hotel) {
+	public void setHotel(Hotel hotel) {
 		this.hotel = hotel;
 	}
 	
@@ -249,5 +241,28 @@ public class RoomBill extends DataEntity<RoomBill> {
 	public void setEndCheckOutTime(String endCheckOutTime) {
 		this.endCheckOutTime = endCheckOutTime;
 	}
-		
+
+	public List<Resident> getActualResident() {
+		return actualResident;
+	}
+
+	public void setActualResident(List<Resident> actualResident) {
+		this.actualResident = actualResident;
+	}
+
+	public List<Payment> getPaymentRecord() {
+		return paymentRecord;
+	}
+
+	public void setPaymentRecord(List<Payment> paymentRecord) {
+		this.paymentRecord = paymentRecord;
+	}
+
+	public Member getBooker() {
+		return booker;
+	}
+
+	public void setBooker(Member booker) {
+		this.booker = booker;
+	}
 }
