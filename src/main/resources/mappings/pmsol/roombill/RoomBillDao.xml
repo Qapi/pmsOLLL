@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeeplus.pmsol.roombill.dao.RoomBillDao">
+    
+	<sql id="roomBillColumns">
+		a.id AS "id",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		a.order_id AS "order",
+		a.actual_resident AS "actualResident",
+		a.room_id AS "room",
+		a.water_price AS "waterPrice",
+		a.electricity_price AS "electricityPrice",
+		a.water_first_reading AS "waterFirstReading",
+		a.electricity_first_reading AS "electricityFirstReading",
+		a.water_last_reading AS "waterLastReading",
+		a.electricity_last_reading AS "electricityLastReading",
+		a.management_fee AS "managementFee",
+		a.check_in_time AS "checkInTime",
+		a.check_out_time AS "checkOutTime",
+		a.payment_record AS "paymentRecord",
+		a.deposit_amount AS "depositAmount",
+		a.receivable_amount AS "receivableAmount",
+		a.netreceipts_amount AS "netreceiptsAmount",
+		a.unreceived_amount AS "unreceivedAmount",
+		a.return_amount AS "returnAmount",
+		a.hotel_id AS "hotel"
+	</sql>
+	
+	<sql id="roomBillJoins">
+	</sql>
+	
+    
+	<select id="get" resultType="RoomBill" >
+		SELECT 
+			<include refid="roomBillColumns"/>
+		FROM room_bill a
+		<include refid="roomBillJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="RoomBill" >
+		SELECT 
+			<include refid="roomBillColumns"/>
+		FROM room_bill a
+		<include refid="roomBillJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="order != null and order != ''">
+				AND a.order_id LIKE 
+					<if test="dbName == 'oracle'">'%'||#{order}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{order}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{order},'%')</if>
+			</if>
+			<if test="room != null and room != ''">
+				AND a.room_id = #{room}
+			</if>
+			<if test="beginCheckInTime != null and endCheckInTime != null and beginCheckInTime != '' and endCheckInTime != ''">
+				AND a.check_in_time BETWEEN #{beginCheckInTime} AND #{endCheckInTime}
+			</if>
+			<if test="beginCheckOutTime != null and endCheckOutTime != null and beginCheckOutTime != '' and endCheckOutTime != ''">
+				AND a.check_out_time BETWEEN #{beginCheckOutTime} AND #{endCheckOutTime}
+			</if>
+			<if test="hotel != null and hotel != ''">
+				AND a.hotel_id = #{hotel}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="RoomBill" >
+		SELECT 
+			<include refid="roomBillColumns"/>
+		FROM room_bill a
+		<include refid="roomBillJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO room_bill(
+			id,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag,
+			order_id,
+			actual_resident,
+			room_id,
+			water_price,
+			electricity_price,
+			water_first_reading,
+			electricity_first_reading,
+			water_last_reading,
+			electricity_last_reading,
+			management_fee,
+			check_in_time,
+			check_out_time,
+			payment_record,
+			deposit_amount,
+			receivable_amount,
+			netreceipts_amount,
+			unreceived_amount,
+			return_amount,
+			hotel_id
+		) VALUES (
+			#{id},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag},
+			#{order},
+			#{actualResident},
+			#{room},
+			#{waterPrice},
+			#{electricityPrice},
+			#{waterFirstReading},
+			#{electricityFirstReading},
+			#{waterLastReading},
+			#{electricityLastReading},
+			#{managementFee},
+			#{checkInTime},
+			#{checkOutTime},
+			#{paymentRecord},
+			#{depositAmount},
+			#{receivableAmount},
+			#{netreceiptsAmount},
+			#{unreceivedAmount},
+			#{returnAmount},
+			#{hotel}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE room_bill SET 	
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks},
+			order_id = #{order},
+			actual_resident = #{actualResident},
+			room_id = #{room},
+			water_price = #{waterPrice},
+			electricity_price = #{electricityPrice},
+			water_first_reading = #{waterFirstReading},
+			electricity_first_reading = #{electricityFirstReading},
+			water_last_reading = #{waterLastReading},
+			electricity_last_reading = #{electricityLastReading},
+			management_fee = #{managementFee},
+			check_in_time = #{checkInTime},
+			check_out_time = #{checkOutTime},
+			payment_record = #{paymentRecord},
+			deposit_amount = #{depositAmount},
+			receivable_amount = #{receivableAmount},
+			netreceipts_amount = #{netreceiptsAmount},
+			unreceived_amount = #{unreceivedAmount},
+			return_amount = #{returnAmount},
+			hotel_id = #{hotel}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!--物理删除-->
+	<update id="delete">
+		DELETE FROM room_bill
+		WHERE id = #{id}
+	</update>
+	
+	<!--逻辑删除-->
+	<update id="deleteByLogic">
+		UPDATE room_bill SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
+	<select id="findUniqueByProperty" resultType="RoomBill" statementType="STATEMENT">
+		select * FROM room_bill  where ${propertyName} = '${value}'
+	</select>
+	
+</mapper>

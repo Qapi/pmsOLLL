@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeeplus.pmsol.resident.dao.ResidentDao">
+    
+	<sql id="residentColumns">
+		a.id AS "id",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		a.name AS "name",
+		a.id_num AS "idNum",
+		a.phone AS "phone",
+		a.gender AS "gender",
+		a.home_address AS "homeAddress",
+		a.emergency_contact AS "emergencyContact",
+		a.emergency_contactphone AS "emergencyContactPhone",
+		a.resident_type AS "residentType",
+		a.leave_time AS "leaveTime",
+		a.hotel_id AS "hotel"
+	</sql>
+	
+	<sql id="residentJoins">
+	</sql>
+	
+    
+	<select id="get" resultType="Resident" >
+		SELECT 
+			<include refid="residentColumns"/>
+		FROM resident a
+		<include refid="residentJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="Resident" >
+		SELECT 
+			<include refid="residentColumns"/>
+		FROM resident a
+		<include refid="residentJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="name != null and name != ''">
+				AND a.name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+			</if>
+			<if test="idNum != null and idNum != ''">
+				AND a.id_num LIKE 
+					<if test="dbName == 'oracle'">'%'||#{idNum}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{idNum}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{idNum},'%')</if>
+			</if>
+			<if test="phone != null and phone != ''">
+				AND a.phone LIKE 
+					<if test="dbName == 'oracle'">'%'||#{phone}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{phone}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{phone},'%')</if>
+			</if>
+			<if test="gender != null and gender != ''">
+				AND a.gender = #{gender}
+			</if>
+			<if test="residentType != null and residentType != ''">
+				AND a.resident_type = #{residentType}
+			</if>
+			<if test="hotel != null and hotel != ''">
+				AND a.hotel_id = #{hotel}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="Resident" >
+		SELECT 
+			<include refid="residentColumns"/>
+		FROM resident a
+		<include refid="residentJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO resident(
+			id,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag,
+			name,
+			id_num,
+			phone,
+			gender,
+			home_address,
+			emergency_contact,
+			emergency_contactphone,
+			resident_type,
+			leave_time,
+			hotel_id
+		) VALUES (
+			#{id},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag},
+			#{name},
+			#{idNum},
+			#{phone},
+			#{gender},
+			#{homeAddress},
+			#{emergencyContact},
+			#{emergencyContactPhone},
+			#{residentType},
+			#{leaveTime},
+			#{hotel}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE resident SET 	
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks},
+			name = #{name},
+			id_num = #{idNum},
+			phone = #{phone},
+			gender = #{gender},
+			home_address = #{homeAddress},
+			emergency_contact = #{emergencyContact},
+			emergency_contactphone = #{emergencyContactPhone},
+			resident_type = #{residentType},
+			leave_time = #{leaveTime},
+			hotel_id = #{hotel}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!--物理删除-->
+	<update id="delete">
+		DELETE FROM resident
+		WHERE id = #{id}
+	</update>
+	
+	<!--逻辑删除-->
+	<update id="deleteByLogic">
+		UPDATE resident SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
+	<select id="findUniqueByProperty" resultType="Resident" statementType="STATEMENT">
+		select * FROM resident  where ${propertyName} = '${value}'
+	</select>
+	
+</mapper>
