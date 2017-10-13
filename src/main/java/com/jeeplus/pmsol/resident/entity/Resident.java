@@ -16,7 +16,8 @@ public class Resident extends DataEntity<Resident> {
 	
 	private static final long serialVersionUID = 1L;
 	private String name;		// 姓名
-	private String idNum;		// 身份证号
+	private String credentialType; //证件类型
+	private String idNum;		// 证件号码
 	private String phone;		// 手机号
 	private String gender;		// 性别
 	private String homeAddress;		// 家庭地址/居住地址
@@ -123,5 +124,12 @@ public class Resident extends DataEntity<Resident> {
 	public void setHotel(String hotel) {
 		this.hotel = hotel;
 	}
-	
+
+	public String getCredentialType() {
+		return credentialType;
+	}
+
+	public void setCredentialType(String credentialType) {
+		this.credentialType = credentialType;
+	}
 }
