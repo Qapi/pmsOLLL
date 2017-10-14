@@ -96,7 +96,7 @@ public class OrderController extends BaseController {
     @RequiresPermissions("order:order:view")
     @RequestMapping(value = "arriveAtToday")
     public String arriveAtToday(Order order, Hotel hotel, RoomType roomType, HttpServletRequest request, HttpServletResponse response, Model model) {
-        // 默认取入住当天数据
+        // 默认取当天入住数据
         if (order.getCheckInDate() == null) {
             order.setCheckInDate(new Date());
         }
