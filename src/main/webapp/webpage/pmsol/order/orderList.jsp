@@ -183,17 +183,17 @@
                 <tr>
                     <th><input type="checkbox" class="i-checks"></th>
                     <th class="sort-column orderNum">订单号</th>
-                    <th class="sort-column hotel">所属酒店</th>
-                    <th class="sort-column channel">渠道</th>
-                    <th class="sort-column roomType">房型</th>
+                    <th class="sort-column hotel_id">所属酒店</th>
+                    <th class="sort-column channel_id">渠道</th>
+                    <th class="sort-column roomType_id">房型</th>
                     <th class="sort-column leaseMode">租赁方式</th>
                     <th class="sort-column rentMonths">长租月数</th>
                     <th class="sort-column checkInDate">入住日期</th>
                     <th class="sort-column checkOutDate">离店日期</th>
                     <th class="sort-column contacts">入住人</th>
                     <th class="sort-column contactsPhone">入住人电话</th>
-                    <th class="sort-column booker">预订人</th>
-                    <th class="sort-column bookRoom">预约房间</th>
+                    <th class="sort-column booker_id">预订人</th>
+                    <th class="sort-column bookRoom_id">预约房间</th>
                     <th class="sort-column status">状态</th>
                     <th>操作</th>
                 </tr>
