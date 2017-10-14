@@ -9,8 +9,8 @@
 		a.update_by AS "updateBy.id",
 		a.update_date AS "updateDate",
 		a.del_flag AS "delFlag",
-		a.room_bill_id AS "roomBill",
-		a.hotel_id AS "hotel",
+		a.room_bill_id AS "roomBillId",
+		a.hotel_id AS "hotelId",
 		a.pay_method AS "payMethod",
 		a.pay_period AS "payPeriod",
 		a.pay_amount AS "payAmount",
@@ -41,11 +41,11 @@
 		<include refid="paymentJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
-			<if test="roomBill != null and roomBill != ''">
-				AND a.room_bill_id = #{roomBill}
+			<if test="roomBillId != null and roomBillId != ''">
+				AND a.room_bill_id = #{roomBillId}
 			</if>
-			<if test="hotel != null and hotel != ''">
-				AND a.hotel_id = #{hotel}
+			<if test="hotelId != null and hotelId != ''">
+				AND a.hotel_id = #{hotelId}
 			</if>
 			<if test="payMethod != null and payMethod != ''">
 				AND a.pay_method = #{payMethod}
@@ -108,8 +108,8 @@
 			#{updateBy.id},
 			#{updateDate},
 			#{delFlag},
-			#{roomBill},
-			#{hotel},
+			#{roomBillId},
+			#{hotelId},
 			#{payMethod},
 			#{payPeriod},
 			#{payAmount},
@@ -126,8 +126,8 @@
 		UPDATE payment_record SET 	
 			update_by = #{updateBy.id},
 			update_date = #{updateDate},
-			room_bill_id = #{roomBill},
-			hotel_id = #{hotel},
+			room_bill_id = #{roomBillId},
+			hotel_id = #{hotelId},
 			pay_method = #{payMethod},
 			pay_period = #{payPeriod},
 			pay_amount = #{payAmount},

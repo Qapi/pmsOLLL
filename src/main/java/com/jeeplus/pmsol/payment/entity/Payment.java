@@ -15,8 +15,8 @@ import com.jeeplus.common.utils.excel.annotation.ExcelField;
 public class Payment extends DataEntity<Payment> {
 	
 	private static final long serialVersionUID = 1L;
-	private String roomBill;		// 所属房单
-	private String hotel;		// 所属酒店
+	private String roomBillId;		// 所属房单
+	private String hotelId;		// 所属酒店
 	private String payMethod;		// 支付方式
 	private String payPeriod;		// 支付周期（单位为月或者日）
 	private String payAmount;		// 支付金额
@@ -35,21 +35,21 @@ public class Payment extends DataEntity<Payment> {
 	}
 
 	@ExcelField(title="所属房单", align=2, sort=6)
-	public String getRoomBill() {
-		return roomBill;
+	public String getRoomBillId() {
+		return roomBillId;
 	}
 
-	public void setRoomBill(String roomBill) {
-		this.roomBill = roomBill;
+	public void setRoomBillId(String roomBillId) {
+		this.roomBillId = roomBillId;
 	}
 	
 	@ExcelField(title="所属酒店", align=2, sort=7)
-	public String getHotel() {
-		return hotel;
+	public String getHotelId() {
+		return hotelId;
 	}
 
-	public void setHotel(String hotel) {
-		this.hotel = hotel;
+	public void setHotelId(String hotelId) {
+		this.hotelId = hotelId;
 	}
 	
 	@ExcelField(title="支付方式", align=2, sort=8)

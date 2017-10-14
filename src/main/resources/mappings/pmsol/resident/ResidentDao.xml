@@ -20,7 +20,8 @@
 		a.emergency_contactphone AS "emergencyContactPhone",
 		a.resident_type AS "residentType",
 		a.leave_time AS "leaveTime",
-		a.hotel_id AS "hotel"
+		a.hotel_id AS "hotel",
+		a.roomBill_id AS "roomBillId"
 	</sql>
 	
 	<sql id="residentJoins">
@@ -68,6 +69,9 @@
 			</if>
 			<if test="hotel != null and hotel != ''">
 				AND a.hotel_id = #{hotel}
+			</if>
+			<if test="roomBillId != null and roomBillId != ''">
+				AND a.roomBill_id = #{roomBillId}
 			</if>
 		</where>
 		<choose>
@@ -117,7 +121,8 @@
 			emergency_contactphone,
 			resident_type,
 			leave_time,
-			hotel_id
+			hotel_id,
+			roomBill_id
 		) VALUES (
 			#{id},
 			#{createBy.id},
@@ -136,7 +141,8 @@
 			#{emergencyContactPhone},
 			#{residentType},
 			#{leaveTime},
-			#{hotel}
+			#{hotel},
+			#{roomBillId}
 		)
 	</insert>
 	
@@ -155,7 +161,8 @@
 			emergency_contactphone = #{emergencyContactPhone},
 			resident_type = #{residentType},
 			leave_time = #{leaveTime},
-			hotel_id = #{hotel}
+			hotel_id = #{hotel},
+			roomBill_id = #{roomBillId}
 		WHERE id = #{id}
 	</update>
 	

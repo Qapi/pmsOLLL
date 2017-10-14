@@ -25,7 +25,8 @@ public class Resident extends DataEntity<Resident> {
 	private String emergencyContactPhone;		// 紧急联系人电话
 	private String residentType;		// 入住类型  1、入住  2、来访  3、长租
 	private String leaveTime;		// 来访离开时间
-	private String hotel;		// 入住酒店
+	private String hotelId;		// 入住酒店
+	private String roomBillId;   // 所属房单
 	
 	public Resident() {
 		super();
@@ -117,12 +118,12 @@ public class Resident extends DataEntity<Resident> {
 	}
 	
 	@ExcelField(title="入住酒店", align=2, sort=16)
-	public String getHotel() {
-		return hotel;
+	public String getHotelId() {
+		return hotelId;
 	}
 
-	public void setHotel(String hotel) {
-		this.hotel = hotel;
+	public void setHotelId(String hotelId) {
+		this.hotelId = hotelId;
 	}
 
 	public String getCredentialType() {
@@ -131,5 +132,13 @@ public class Resident extends DataEntity<Resident> {
 
 	public void setCredentialType(String credentialType) {
 		this.credentialType = credentialType;
+	}
+
+	public String getRoomBillId() {
+		return roomBillId;
+	}
+
+	public void setRoomBillId(String roomBillId) {
+		this.roomBillId = roomBillId;
 	}
 }
