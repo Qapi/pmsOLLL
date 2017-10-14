@@ -3,6 +3,7 @@
  */
 package com.jeeplus.pmsol.order.web;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -87,6 +88,31 @@ public class OrderController extends BaseController {
         model.addAttribute("rooms", roomList);
         model.addAttribute("roomTypes", roomTypeList);
         return "pmsol/order/orderList";
+    }
+
+    /**
+     * 获取本日预达
+     */
+    @RequiresPermissions("order:order:view")
+    @RequestMapping(value = "arriveAtToday")
+    public String arriveAtToday(Order order, Hotel hotel, RoomType roomType, HttpServletRequest request, HttpServletResponse response, Model model) {
+        // 默认取入住当天数据
+        if (order.getCheckInDate() == null) {
+            order.setCheckInDate(new Date());
+        }
+        // 默认取所在酒店数据
+        if(order.getHotel() == null && !UserUtils.getUser().isAdmin()){
+            Hotel hotel2 = hotelService.findUniqueByProperty("office_id",UserUtils.getUser().getCompany().getId());
+            order.setHotel(hotel2);
+        }
+        order.setStatus("0");
+        Page<Order> page = orderService.findPage(new Page<Order>(request, response), order);
+        List<Hotel> hotelList = hotelService.findList(hotel);
+        List<RoomType> roomTypeList = roomTypeService.findList(roomType);
+        model.addAttribute("page", page);
+        model.addAttribute("hotels", hotelList);
+        model.addAttribute("roomTypes", roomTypeList);
+        return "pmsol/order/arriveAtToday";
     }
 
     /**

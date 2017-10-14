@@ -124,6 +124,12 @@
             <if test="rentMonths != null and rentMonths != ''">
                 AND a.rent_months = #{rentMonths}
             </if>
+			<if test="checkInDate != null and checkInDate != ''">
+				AND a.checkin_date = #{checkInDate}
+			</if>
+			<if test="checkOutDate != null and checkOutDate != ''">
+				AND a.checkOutDate = #{checkOutDate}
+			</if>
             <if test="beginCheckInDate != null and endCheckInDate != null and beginCheckInDate != '' and endCheckInDate != ''">
                 AND a.checkin_date BETWEEN #{beginCheckInDate} AND #{endCheckInDate}
             </if>
