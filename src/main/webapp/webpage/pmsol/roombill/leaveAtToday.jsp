@@ -49,21 +49,14 @@
 		<table:sortColumn id="orderBy" name="orderBy" value="${page.orderBy}" callback="sortOrRefresh();"/><!-- 支持排序 -->
 		<div class="form-group">
 			<span>订单id：</span>
-				<form:input path="order" htmlEscape="false" maxlength="64"  class=" form-control input-sm"/>
+				<form:input path="order.id" htmlEscape="false" maxlength="64"  class=" form-control input-sm"/>
 			<span>入住房间：</span>
-				<form:input path="room" htmlEscape="false" maxlength="64"  class=" form-control input-sm"/>
-			<span>入住时间：</span>
-				<input id="beginCheckInTime" name="beginCheckInTime" type="text" maxlength="20" class="laydate-icon form-control layer-date input-sm"
-					value="<fmt:formatDate value="${roomBill.beginCheckInTime}" pattern="yyyy-MM-dd HH:mm:ss"/>"/> - 
-				<input id="endCheckInTime" name="endCheckInTime" type="text" maxlength="20" class="laydate-icon form-control layer-date input-sm"
-					value="<fmt:formatDate value="${roomBill.endCheckInTime}" pattern="yyyy-MM-dd HH:mm:ss"/>"/>
+				<form:input path="room.id" htmlEscape="false" maxlength="64"  class=" form-control input-sm"/>
 			<span>离店时间：</span>
-				<input id="beginCheckOutTime" name="beginCheckOutTime" type="text" maxlength="20" class="laydate-icon form-control layer-date input-sm"
-					value="<fmt:formatDate value="${roomBill.beginCheckOutTime}" pattern="yyyy-MM-dd HH:mm:ss"/>"/> - 
-				<input id="endCheckOutTime" name="endCheckOutTime" type="text" maxlength="20" class="laydate-icon form-control layer-date input-sm"
-					value="<fmt:formatDate value="${roomBill.endCheckOutTime}" pattern="yyyy-MM-dd HH:mm:ss"/>"/>
+				<input id="order.checkOutTime" name="order.checkOutDate" type="text" maxlength="20" class="laydate-icon form-control layer-date input-sm"
+					value="<fmt:formatDate value="${roomBill.order.checkOutDate}" pattern="yyyy-MM-dd"/>"/>
 			<span>所属酒店：</span>
-				<form:input path="hotel" htmlEscape="false" maxlength="64"  class=" form-control input-sm"/>
+				<form:input path="hotel.id" htmlEscape="false" maxlength="64"  class=" form-control input-sm"/>
 		 </div>	
 	</form:form>
 	<br/>
@@ -104,26 +97,15 @@
 		<thead>
 			<tr>
 				<th> <input type="checkbox" class="i-checks"></th>
-				<th  class="sort-column remarks">备注信息</th>
-				<th  class="sort-column order">订单id</th>
-				<th  class="sort-column actualResident">实际入住人（集合）</th>
-				<th  class="sort-column room">入住房间</th>
-				<th  class="sort-column waterPrice">水费单价（每吨）</th>
-				<th  class="sort-column electricityPrice">电费单价（每度）</th>
-				<th  class="sort-column waterFirstReading">水初始读数</th>
-				<th  class="sort-column electricityFirstReading">电初始读数</th>
-				<th  class="sort-column waterLastReading">水最终读数</th>
-				<th  class="sort-column electricityLastReading">电最终读数</th>
-				<th  class="sort-column managementFee">物业管理费（每月）</th>
+                <th  class="sort-column room_id">入住房间</th>
+                <th  class="sort-column order_id">订单id</th>
 				<th  class="sort-column checkInTime">入住时间</th>
-				<th  class="sort-column checkOutTime">离店时间</th>
-				<th  class="sort-column paymentRecord">支付记录（集合）</th>
+				<th  class="sort-column checkOutTime">预离时间</th>
 				<th  class="sort-column depositAmount">押金金额</th>
 				<th  class="sort-column receivableAmount">应收金额</th>
 				<th  class="sort-column netreceiptsAmount">实收金额</th>
 				<th  class="sort-column unreceivedAmount">未收金额</th>
-				<th  class="sort-column returnAmount">退还金额</th>
-				<th  class="sort-column hotel">所属酒店</th>
+				<th  class="sort-column hotel_id">所属酒店</th>
 				<th>操作</th>
 			</tr>
 		</thead>
@@ -132,46 +114,16 @@
 			<tr>
 				<td> <input type="checkbox" id="${roomBill.id}" class="i-checks"></td>
 				<td><a  href="#" onclick="openDialogView('查看房单', '${ctx}/roombill/roomBill/form?id=${roomBill.id}','800px', '500px')">
-					${roomBill.remarks}
+					${roomBill.room.roomNum}
 				</a></td>
 				<td>
-					${roomBill.order}
-				</td>
-				<td>
-					${roomBill.actualResident}
-				</td>
-				<td>
-					${roomBill.room}
-				</td>
-				<td>
-					${roomBill.waterPrice}
-				</td>
-				<td>
-					${roomBill.electricityPrice}
-				</td>
-				<td>
-					${roomBill.waterFirstReading}
-				</td>
-				<td>
-					${roomBill.electricityFirstReading}
-				</td>
-				<td>
-					${roomBill.waterLastReading}
-				</td>
-				<td>
-					${roomBill.electricityLastReading}
-				</td>
-				<td>
-					${roomBill.managementFee}
+					${roomBill.order.orderNum}
 				</td>
 				<td>
 					${roomBill.checkInTime}
 				</td>
 				<td>
-					${roomBill.checkOutTime}
-				</td>
-				<td>
-					${roomBill.paymentRecord}
+					${roomBill.order.checkOutDate}
 				</td>
 				<td>
 					${roomBill.depositAmount}
@@ -186,10 +138,7 @@
 					${roomBill.unreceivedAmount}
 				</td>
 				<td>
-					${roomBill.returnAmount}
-				</td>
-				<td>
-					${roomBill.hotel}
+					${roomBill.hotel.office.name}
 				</td>
 				<td>
 					<shiro:hasPermission name="roombill:roomBill:view">

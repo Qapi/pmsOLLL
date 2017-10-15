@@ -19,7 +19,7 @@
         <result property="netreceiptsAmount" column="netreceipts_amount"/>
         <result property="unreceivedAmount" column="unreceived_amount"/>
         <result property="return_amount" column="returnAmount"/>
-        <association property="Order" column="{id=order.id}"
+        <association property="order" column="{id=order.id}"
                      javaType="com.jeeplus.pmsol.order.entity.Order"
                      select="com.jeeplus.pmsol.order.dao.OrderDao.get">
         </association>
@@ -39,10 +39,10 @@
                     ofType="com.jeeplus.pmsol.resident.entity.Resident"
                     select="com.jeeplus.pmsol.resident.dao.ResidentDao.get">
         </collection>
-		<collection property="paymentRecord" column="id"
-					ofType="ccom.jeeplus.pmsol.payment.entity.Payment"
-					select="com.jeeplus.pmsol.payment.dao.get">
-		</collection >
+        <collection property="paymentRecord" column="id"
+                    ofType="ccom.jeeplus.pmsol.payment.entity.Payment"
+                    select="com.jeeplus.pmsol.payment.dao.get">
+        </collection>
     </resultMap>
 
     <sql id="roomBillColumns">
@@ -54,7 +54,7 @@
 		a.remarks AS "remarks",
 		a.del_flag AS "delFlag",
 		a.order_id AS "order.id",
-		a.booker AS "booker_id",
+		a.booker_id AS "booker.id",
 		a.actual_resident AS "actualResident",
 		a.room_id AS "room.id",
 		a.water_price AS "waterPrice",
@@ -75,13 +75,46 @@
 		a.hotel_id AS "hotel.id"
 	</sql>
 
+	<sql id="unionColumns">
+		a.id AS "id",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		a.order_id AS "order.id",
+		a.booker_id AS "booker.id",
+		a.actual_resident AS "actualResident",
+		a.room_id AS "room.id",
+		a.water_price AS "waterPrice",
+		a.electricity_price AS "electricityPrice",
+		a.water_first_reading AS "waterFirstReading",
+		a.electricity_first_reading AS "electricityFirstReading",
+		a.water_last_reading AS "waterLastReading",
+		a.electricity_last_reading AS "electricityLastReading",
+		a.management_fee AS "managementFee",
+		a.check_in_time AS "checkInTime",
+		a.check_out_time AS "checkOutTime",
+		a.payment_record AS "paymentRecord",
+		a.deposit_amount AS "depositAmount",
+		a.receivable_amount AS "receivableAmount",
+		a.netreceipts_amount AS "netreceiptsAmount",
+		a.unreceived_amount AS "unreceivedAmount",
+		a.return_amount AS "returnAmount",
+		a.hotel_id AS "hotel.id",
+		b.checkout_date AS "checkOutDate"
+	</sql>
+
     <sql id="roomBillJoins">
+		LEFT JOIN book_order b
+		ON a.order_id = b.id
     </sql>
 
 
     <select id="get" resultMap="roomBillMap">
         SELECT
-        <include refid="roomBillColumns"/>
+        <include refid="unionColumns"/>
         FROM room_bill a
         <include refid="roomBillJoins"/>
         WHERE a.id = #{id}
@@ -89,19 +122,22 @@
 
     <select id="findList" resultMap="roomBillMap">
         SELECT
-        <include refid="roomBillColumns"/>
+        <include refid="unionColumns"/>
         FROM room_bill a
         <include refid="roomBillJoins"/>
         <where>
             a.del_flag = #{DEL_FLAG_NORMAL}
-            <if test="order != null and order.id != ''">
+            <if test="order != null and order.id != null">
                 AND a.order_id LIKE
                 <if test="dbName == 'oracle'">'%'||#{order.id}||'%'</if>
                 <if test="dbName == 'mssql'">'%'+#{order.id}+'%'</if>
                 <if test="dbName == 'mysql'">concat('%',#{order.id},'%')</if>
             </if>
-            <if test="room != null and room.id != ''">
+            <if test="room != null and room.id != null">
                 AND a.room_id = #{room.id}
+            </if>
+            <if test="order != null and order.checkOutDate != null">
+                AND b.checkout_date = #{order.checkOutDate}
             </if>
             <if test="beginCheckInTime != null and endCheckInTime != null and beginCheckInTime != '' and endCheckInTime != ''">
                 AND a.check_in_time BETWEEN #{beginCheckInTime} AND #{endCheckInTime}
@@ -109,7 +145,7 @@
             <if test="beginCheckOutTime != null and endCheckOutTime != null and beginCheckOutTime != '' and endCheckOutTime != ''">
                 AND a.check_out_time BETWEEN #{beginCheckOutTime} AND #{endCheckOutTime}
             </if>
-            <if test="hotel != null and hotel.id != ''">
+            <if test="hotel != null and hotel.id != null">
                 AND a.hotel_id = #{hotel.id}
             </if>
         </where>
@@ -125,7 +161,7 @@
 
     <select id="findAllList" resultMap="roomBillMap">
         SELECT
-        <include refid="roomBillColumns"/>
+        <include refid="unionColumns"/>
         FROM room_bill a
         <include refid="roomBillJoins"/>
         <where>

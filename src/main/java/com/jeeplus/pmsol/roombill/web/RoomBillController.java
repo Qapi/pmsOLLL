@@ -13,6 +13,7 @@ import javax.validation.ConstraintViolationException;
 import com.jeeplus.modules.sys.utils.UserUtils;
 import com.jeeplus.pmsol.hotel.entity.Hotel;
 import com.jeeplus.pmsol.hotel.service.HotelService;
+import com.jeeplus.pmsol.order.entity.Order;
 import com.jeeplus.pmsol.roomtype.entity.RoomType;
 import com.jeeplus.pmsol.roomtype.service.RoomTypeService;
 import org.apache.shiro.authz.annotation.Logical;
@@ -84,10 +85,11 @@ public class RoomBillController extends BaseController {
      */
     @RequiresPermissions("roombill:roomBill:leaveAtToday")
     @RequestMapping(value = "leaveAtToday")
-    public String leaveAtToday(RoomBill roomBill, Hotel hotel, RoomType roomType, HttpServletRequest request, HttpServletResponse response, Model model) {
+    public String leaveAtToday(RoomBill roomBill, Hotel hotel, Order order, RoomType roomType, HttpServletRequest request, HttpServletResponse response, Model model) {
         // 默认取当天离店数据
-        if (roomBill.getOrder().getCheckOutDate() == null) {
-            roomBill.getOrder().setCheckOutDate(new Date());
+        if (roomBill.getOrder() == null) {
+            order.setCheckOutDate(new Date());
+            roomBill.setOrder(order);
         }
         // 默认取所在酒店数据
         if (roomBill.getHotel() == null && !UserUtils.getUser().isAdmin()) {
