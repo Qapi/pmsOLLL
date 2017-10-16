@@ -65,7 +65,7 @@
             <tr>
                 <td class="width-15 active"><label class="pull-right">预订人：</label></td>
                 <td class="width-35">
-                    <input id="booker" v-model="orderBooker" @dblclick="resetSearch" autofocus autocomplete="off" data-provide="typeahead" placeholder="输入手机号查询"
+                    <input id="booker" v-model="orderBooker" @dblclick="resetSearch" autofocus autocomplete="off" data-provide="typeahead" title="双击清空" placeholder="输入手机号查询"
                            class="form-control js-typeahead"/>
                     <input name="booker.id" :value="order.booker.id" v-if="order.booker" type="hidden">
                 </td>
@@ -77,6 +77,17 @@
                                 v-if="order.leaseMode != null && mode.value == order.leaseMode.id" selected></option>
                         <option :label="mode.name" :value="mode.value" v-else></option>
                     </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="width-15 active"><label class="pull-right"><font color="red">*</font>联系人：</label></td>
+                <td class="width-35">
+                    <input name="contacts" v-model="order.contacts" placeholder="双击设置预订人为联系人" @dblclick="takeBookerInfo" htmlEscape="false" class="form-control required"/>
+                </td>
+                <td class="width-15 active"><label class="pull-right"><font color="red">*</font>联系人电话：</label></td>
+                <td class="width-35">
+                    <input name="contactsPhone" v-model="order.contactsPhone" htmlEscape="false"
+                           class="form-control required"/>
                 </td>
             </tr>
             <tr v-show="memberLevel">
@@ -154,17 +165,6 @@
                                     <c:if test="${order.status == status.value}">selected</c:if>/>
                         </c:forEach>
                     </select>
-                </td>
-            </tr>
-            <tr>
-                <td class="width-15 active"><label class="pull-right"><font color="red">*</font>联系人：</label></td>
-                <td class="width-35">
-                    <input name="contacts" v-model="order.contacts" placeholder="双击设置预订人为联系人" @dblclick="takeBookerInfo" htmlEscape="false" class="form-control required"/>
-                </td>
-                <td class="width-15 active"><label class="pull-right"><font color="red">*</font>联系人电话：</label></td>
-                <td class="width-35">
-                    <input name="contactsPhone" v-model="order.contactsPhone" htmlEscape="false"
-                           class="form-control required"/>
                 </td>
             </tr>
             <tr>
