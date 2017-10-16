@@ -4,6 +4,7 @@
 <head>
     <title>订单管理</title>
     <meta name="decorator" content="default"/>
+    <link rel="stylesheet" href="${ctxStatic}/typeahead/css/jquery.typeahead.css">
 </head>
 <body class="hideScroll">
 <div id="modelDiv">
@@ -64,12 +65,9 @@
             <tr>
                 <td class="width-15 active"><label class="pull-right">预订人：</label></td>
                 <td class="width-35">
-                    <select name="booker.id" htmlEscape="false" class="form-control">
-                        <option value=""></option>
-                        <option v-for="member in members" :label="member.name" :value="member.id"
-                                v-if="order.booker != null && member.id == order.booker.id" selected></option>
-                        <option :label="member.name" :value="member.id" v-else></option>
-                    </select>
+                    <input id="booker" :value="orderBooker" autofocus autocomplete="off" data-provide="typeahead" placeholder="输入手机号查询"
+                           class="form-control js-typeahead"/>
+                    <input name="booker.id" v-model="order.booker.id" type="hidden">
                 </td>
                 <td class="width-15 active"><label class="pull-right"><font color="red">*</font>租赁类型：</label></td>
                 <td class="width-35">
@@ -79,6 +77,16 @@
                                 v-if="order.leaseMode != null && mode.value == order.leaseMode.id" selected></option>
                         <option :label="mode.name" :value="mode.value" v-else></option>
                     </select>
+                </td>
+            </tr>
+            <tr v-show="memberLevel">
+                <td class="width-15 active"><label class="pull-right">所属会员：</label></td>
+                <td class="width-35">
+                    <input v-model="memberLevel.name" htmlEscape="false" class="form-control"/>
+                </td>
+                <td class="width-15 active"><label class="pull-right">会员折扣：</label></td>
+                <td class="width-35">
+                    <input v-model="memberLevel.salePercent" htmlEscape="false" class="form-control"/>
                 </td>
             </tr>
             <tr id="selectDate">
@@ -98,7 +106,8 @@
             <tr id="liveForDay" v-show="order.leaseMode == 0">
                 <td class="width-15 active"><label class="pull-right">入住天数：</label></td>
                 <td class="width-35">
-                    <input id="liveDays" name="liveDays" v-model="order.liveDays" @keyup="calCheckOutDate" htmlEscape="false"
+                    <input id="liveDays" name="liveDays" v-model="order.liveDays" @keyup="calCheckOutDate"
+                           htmlEscape="false"
                            class="form-control  number"/>
                 </td>
                 <td class="width-15 active"><label class="pull-right">每天租金：</label></td>
@@ -121,7 +130,8 @@
             <tr id="liveForMonth" v-show="order.leaseMode == 2">
                 <td class="width-15 active"><label class="pull-right">长租月数：</label></td>
                 <td class="width-35">
-                    <input id="rentMonths" name="rentMonths" v-model="order.rentMonths" @keyup="calCheckOutDate" htmlEscape="false"
+                    <input id="rentMonths" name="rentMonths" v-model="order.rentMonths" @keyup="calCheckOutDate"
+                           htmlEscape="false"
                            class="form-control  number"/>
                 </td>
                 <td class="width-15 active"><label class="pull-right">每月租金：</label></td>
@@ -133,7 +143,7 @@
             <tr>
                 <td class="width-15 active"><label class="pull-right">订单总额：</label></td>
                 <td class="width-35">
-                    <input name="totalAmount" v-model="calTotalAmount" htmlEscape="false" class="form-control  number"
+                    <input name="totalAmount" :value="calTotalAmount" htmlEscape="false" class="form-control  number"
                            readonly/>
                 </td>
                 <td class="width-15 active"><label class="pull-right">状态：</label></td>
@@ -169,6 +179,7 @@
             </tbody>
         </table>
     </form>
+    <script src="${ctxStatic}/typeahead/js/bootstrap-typeahead.js"></script>
     <script src="${ctxStatic}/pmsol/js/orderForm.js"></script>
 </div>
 </body>

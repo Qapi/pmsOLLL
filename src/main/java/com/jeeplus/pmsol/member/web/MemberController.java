@@ -113,10 +113,22 @@ public class MemberController extends BaseController {
     /**
      * 获取所有会员——ajax
      */
-    @RequiresPermissions(value="member:member:view")
+    @RequiresPermissions(value = "member:member:view")
     @RequestMapping(value = "getList")
     @ResponseBody
-    public ResponseEntity<List<Member>> getList(Member member) throws Exception{
+    public ResponseEntity<List<Member>> getList(Member member) throws Exception {
+        List<Member> list = memberService.findList(member);
+        return new ResponseEntity(list, HttpStatus.OK);
+    }
+
+    /**
+     * 动态加载会员——ajax
+     */
+    @RequiresPermissions(value = "member:member:view")
+    @RequestMapping(value = "dynamicSearch/{phone}")
+    @ResponseBody
+    public ResponseEntity<List<Member>> dynamicSearch(Member member, @PathVariable String phone) throws Exception {
+        member.setPhone(phone);
         List<Member> list = memberService.findList(member);
         return new ResponseEntity(list, HttpStatus.OK);
     }

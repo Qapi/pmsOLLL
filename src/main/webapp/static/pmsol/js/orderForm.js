@@ -30,6 +30,7 @@ window.vm = new Vue({
             remarks: '',
         },
         hotels: [],
+        memberLevel: '',
         members: [],
         roomTypes: [],
         rooms: [],
@@ -59,7 +60,17 @@ window.vm = new Vue({
                     this.order.totalAmount = this.order.rentMonths * this.order.monthlyRent;
                     break;
             }
+            // 是否有会员折扣
+            if (this.memberLevel) {
+                this.order.totalAmount = this.order.totalAmount * this.memberLevel.salePercent;
+            }
             return this.order.totalAmount;
+        },
+        /** 自动填充会员信息 **/
+        orderBooker: function () {
+            if(this.order.booker){
+                return this.order.booker.name + "(" + this.order.booker.phone + ")"
+            }
         }
     },
     filters: {},
@@ -72,6 +83,7 @@ window.vm = new Vue({
                     const res = response.data;
                     if (res && response.status == "200") {
                         this.order = res;
+                        this.memberLevel = res.booker.memberLevel;
                         // 若为时租类型，则禁止修改离店日期，默认为入住日期
                         // 若为月租类型，则禁止修改离店日期，默认为入住日期下月或增加租赁月数倍数月份的的同日
                         if (this.order.leaseMode != 0) {
@@ -167,10 +179,10 @@ window.vm = new Vue({
             let newDate;
             if (diff != '' && checkInDate != '') {
                 if (this.order.leaseMode == '0') {
-                    if(diff > 365){
+                    if (diff > 365) {
                         layer.msg('输入有误,最多只能连续预订365天!');
                         ele.target.value = '';
-                    }else{
+                    } else {
                         newDate = new Date(checkInDate.replace(/-/g, "/"));
                         const newTime = newDate.getTime() + (diff * 1000 * 60 * 60 * 24); // 增加相应天数的毫秒差
                         newDate = new Date(newTime);
@@ -180,10 +192,10 @@ window.vm = new Vue({
                         newDate = newYear + '-' + newMonth + '-' + newDay;
                     }
                 } else if (this.order.leaseMode == '2') {
-                    if(diff > 12){
+                    if (diff > 12) {
                         layer.msg('输入有误,最多只能连续预订12个月!');
                         ele.target.value = '';
-                    }else {
+                    } else {
                         let newYear = checkInDate.slice(0, 4);
                         let newMonth = +checkInDate.slice(5, 7) + diff;
                         let newDay = checkInDate.slice(8, 11);
@@ -202,7 +214,7 @@ window.vm = new Vue({
     }
 });
 
-var validateForm;
+let validateForm;
 
 function doSubmit() {//回调函数，在编辑和保存动作时，供openDialog调用提交表单。
     if (validateForm.form()) {
@@ -297,3 +309,31 @@ $(document).ready(function () {
         return diff;
     }
 });
+
+/** 动态搜索会员 **/
+$('#booker').typeahead({
+    // 根据输入字符搜索符合条件的会员（目前只匹配手机号）
+    source: (query, process) => {
+        return axios.get(ctx + "/member/member/dynamicSearch/" + query).then(response => {
+            const res = response.data;
+            if (res && response.status == "200") {
+                window.vm.members = res;
+                let resultList = res.map((item) => {
+                    let aItem = item.name + "(" + item.phone + ")";
+                    return aItem;
+                });
+                return process(resultList);
+            }
+        });
+    },
+    // 自动更新订单中该会员的相关信息
+    afterSelect: (item) => {
+        const phone = item.slice(item.indexOf('(') + 1, item.indexOf(')'));
+        window.vm.members.map(item => {
+            if (item.phone == phone) {
+                window.vm.order.booker = item;
+                window.vm.memberLevel = item.memberLevel;
+            }
+        })
+    }
+})
