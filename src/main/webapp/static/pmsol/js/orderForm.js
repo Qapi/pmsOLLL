@@ -68,7 +68,7 @@ window.vm = new Vue({
         },
         /** 自动填充会员信息 **/
         orderBooker: function () {
-            if(this.order.booker){
+            if (this.order.booker) {
                 return this.order.booker.name + "(" + this.order.booker.phone + ")"
             }
         }
@@ -83,7 +83,10 @@ window.vm = new Vue({
                     const res = response.data;
                     if (res && response.status == "200") {
                         this.order = res;
-                        this.memberLevel = res.booker.memberLevel;
+                        // 若预订人不为空，则填充相关信息
+                        if (this.order.booker) {
+                            this.memberLevel = res.booker.memberLevel;
+                        }
                         // 若为时租类型，则禁止修改离店日期，默认为入住日期
                         // 若为月租类型，则禁止修改离店日期，默认为入住日期下月或增加租赁月数倍数月份的的同日
                         if (this.order.leaseMode != 0) {
@@ -167,9 +170,6 @@ window.vm = new Vue({
             // 清除入住日期和离店日期及入住时长
             $('#checkInDate').val('');
             $('#checkOutDate').val('');
-            // this.order.liveHours = 0;
-            // this.order.liveDays = 0;
-            // this.order.rentMonths = 0;
         }
         ,
         /** 根据输入入住时长反向计算离店日期 **/
@@ -211,8 +211,25 @@ window.vm = new Vue({
                 $('#checkOutDate').val(newDate);
             }
         }
+        ,
+        /** 根据输入入住时长反向计算离店日期 **/
+        takeBookerInfo: function () {
+            if (this.order.booker) {
+                this.order.contacts = this.order.booker.name;
+                this.order.contactsPhone = this.order.booker.phone;
+            }
+        }
+        ,
+        /** 根据输入入住时长反向计算离店日期 **/
+        resetSearch: function () {
+            this.order.booker = '';
+            this.order.contacts = '';
+            this.order.contactsPhone = '';
+            this.memberLevel = ''
+            $('#booker').attr('readonly', false);
+        }
     }
-});
+})
 
 let validateForm;
 
@@ -333,6 +350,7 @@ $('#booker').typeahead({
             if (item.phone == phone) {
                 window.vm.order.booker = item;
                 window.vm.memberLevel = item.memberLevel;
+                $('#booker').attr('readonly', true);
             }
         })
     }
