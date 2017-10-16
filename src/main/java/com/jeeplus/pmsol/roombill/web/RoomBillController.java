@@ -102,7 +102,7 @@ public class RoomBillController extends BaseController {
         model.addAttribute("page", page);
         model.addAttribute("hotels", hotelList);
         model.addAttribute("roomTypes", roomTypeList);
-        return "pmsol/order/arriveAtToday";
+        return "pmsol/roombill/leaveAtToday";
     }
 
     /**
