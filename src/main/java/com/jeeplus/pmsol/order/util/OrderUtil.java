@@ -24,7 +24,6 @@ public class OrderUtil {
 	// 生成固定格式：OxMMddHHmmssxxxx（x代表随机字符）的订单号
 	public static String createOrderNum() {
 		return "O" + StringUtils.upperCase(IdGen.randomBase62(1)) + DateUtils.getDate("MMddHHmmss") + StringUtils.upperCase(IdGen.randomBase62(2));
-
 	}
 
 	// 扫描预约中的订单，将已超时的订单设为已过期(过期时间暂时设为次日六时)
