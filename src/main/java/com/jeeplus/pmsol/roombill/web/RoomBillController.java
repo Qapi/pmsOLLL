@@ -88,7 +88,7 @@ public class RoomBillController extends BaseController {
     public String leaveAtToday(RoomBill roomBill, Hotel hotel, Order order, RoomType roomType, HttpServletRequest request, HttpServletResponse response, Model model) {
         // 默认取当天离店数据
         if (roomBill.getOrder() == null) {
-            order.setCheckOutDate(new Date());
+            order.setCheckOutDate(DateUtils.parseDate(DateUtils.formatDate(new Date())));
             roomBill.setOrder(order);
         }
         // 默认取所在酒店数据
