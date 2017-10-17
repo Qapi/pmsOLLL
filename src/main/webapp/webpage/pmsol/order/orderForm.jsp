@@ -65,7 +65,9 @@
             <tr>
                 <td class="width-15 active"><label class="pull-right">预订人：</label></td>
                 <td class="width-35">
-                    <input id="booker" v-model="orderBooker" @dblclick="resetSearch" autofocus autocomplete="off" data-provide="typeahead" title="双击清空" placeholder="输入手机号查询"
+                    <input id="booker" :value="orderBooker" @dblclick="resetSearch" autofocus autocomplete="off"
+                           data-provide="typeahead" title="双击清空" placeholder="输入手机号查询"
+                            <c:if test="${not empty order.booker}">readonly</c:if>
                            class="form-control js-typeahead"/>
                     <input name="booker.id" :value="order.booker.id" v-if="order.booker" type="hidden">
                 </td>
@@ -82,7 +84,8 @@
             <tr>
                 <td class="width-15 active"><label class="pull-right"><font color="red">*</font>联系人：</label></td>
                 <td class="width-35">
-                    <input name="contacts" v-model="order.contacts" placeholder="双击设置预订人为联系人" @dblclick="takeBookerInfo" htmlEscape="false" class="form-control required"/>
+                    <input name="contacts" v-model="order.contacts" placeholder="双击设置预订人为联系人" @dblclick="takeBookerInfo"
+                           htmlEscape="false" class="form-control required"/>
                 </td>
                 <td class="width-15 active"><label class="pull-right"><font color="red">*</font>联系人电话：</label></td>
                 <td class="width-35">
