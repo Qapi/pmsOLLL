@@ -177,7 +177,20 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 		long afterTime = after.getTime();
 		return (afterTime - beforeTime) / (1000 * 60 * 60 * 24);
 	}
-	
+
+	/**
+	 * 获取两个时间之间的毫秒数
+	 *
+	 * @param before
+	 * @param after
+	 * @return
+	 */
+	public static double getDistanceOfTwoTime(Date before, Date after) {
+		long beforeTime = before.getTime();
+		long afterTime = after.getTime();
+		return (afterTime - beforeTime);
+	}
+
 	/**
 	 * @param args
 	 * @throws ParseException
