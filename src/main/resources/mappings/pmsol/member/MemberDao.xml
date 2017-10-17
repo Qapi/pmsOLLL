@@ -121,6 +121,9 @@
 				<if test="dbName == 'mssql'">'%'+#{memberNum}+'%'</if>
 				<if test="dbName == 'mysql'">concat('%',#{memberNum},'%')</if>
 			</if>
+			<if test="validityTerm != null and validityTerm != ''">
+				AND a.validity_term &gt; #{validityTerm}
+			</if>
 			<if test="memberLevel != null and memberLevel.id != ''">
 				AND a.menber_level_id = #{memberLevel.id}
 			</if>

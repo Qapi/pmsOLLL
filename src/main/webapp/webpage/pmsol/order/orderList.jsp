@@ -102,13 +102,19 @@
                                 <form:options items="${fns:getDictList('lease_mode')}" itemLabel="label"
                                               itemValue="value" htmlEscape="false"/>
                             </form:select>
-                            <span>长租月数：</span>
-                            <form:input path="rentMonths" htmlEscape="false" maxlength="16"
-                                        class=" form-control number input-sm"/>
-                            <span>入住人：</span>
+                            <%--<span>入住天数：</span>--%>
+                            <%--<form:input path="liveDays" htmlEscape="false" maxlength="16"--%>
+                                        <%--class=" form-control number input-sm"/>--%>
+                            <%--<span>入住小时数：</span>--%>
+                            <%--<form:input path="liveHours" htmlEscape="false" maxlength="16"--%>
+                                        <%--class=" form-control number input-sm"/>--%>
+                            <%--<span>长租月数：</span>--%>
+                            <%--<form:input path="rentMonths" htmlEscape="false" maxlength="16"--%>
+                                        <%--class=" form-control number input-sm"/>--%>
+                            <span>联系人：</span>
                             <form:input path="contacts" htmlEscape="false" maxlength="64"
                                         class=" form-control input-sm"/>
-                            <span>入住人电话：</span>
+                            <span>联系人电话：</span>
                             <form:input path="contactsPhone" htmlEscape="false" maxlength="32"
                                         class=" form-control input-sm"/>
                             <span>状态：</span>
@@ -187,11 +193,11 @@
                     <th class="sort-column channel_id">渠道</th>
                     <th class="sort-column roomType_id">房型</th>
                     <th class="sort-column leaseMode">租赁方式</th>
-                    <th class="sort-column rentMonths">长租月数</th>
+                    <%--<th class="sort-column rentMonths">长租月数</th>--%>
                     <th class="sort-column checkInDate">入住日期</th>
                     <th class="sort-column checkOutDate">离店日期</th>
-                    <th class="sort-column contacts">入住人</th>
-                    <th class="sort-column contactsPhone">入住人电话</th>
+                    <th class="sort-column contacts">联系人yuda</th>
+                    <th class="sort-column contactsPhone">联系人电话</th>
                     <th class="sort-column booker_id">预订人</th>
                     <th class="sort-column bookRoom_id">预约房间</th>
                     <th class="sort-column status">状态</th>
@@ -218,9 +224,9 @@
                         <td>
                                 ${fns:getDictLabel(order.leaseMode,'lease_mode','')}
                         </td>
-                        <td>
-                                ${order.rentMonths}
-                        </td>
+                        <%--<td>--%>
+                                <%--${order.rentMonths}--%>
+                        <%--</td>--%>
                         <td>
                                 ${fns:formatDate(order.checkInDate)}
                         </td>

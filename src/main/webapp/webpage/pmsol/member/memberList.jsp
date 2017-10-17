@@ -36,10 +36,10 @@
 			</a>
 		</div>
 	</div>
-    
+
     <div class="ibox-content">
 	<sys:message content="${message}"/>
-	
+
 	<!--查询条件-->
 	<div class="row">
 	<div class="col-sm-12">
@@ -48,10 +48,10 @@
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<table:sortColumn id="orderBy" name="orderBy" value="${page.orderBy}" callback="sortOrRefresh();"/><!-- 支持排序 -->
 		<div class="form-group">
+			<span>会员号：</span>
+			    <form:input path="memberNum" htmlEscape="false" maxlength="64"  class=" form-control input-sm"/>
 			<span>姓名：</span>
 				<form:input path="name" htmlEscape="false" maxlength="64"  class=" form-control input-sm"/>
-			<span>会员号：</span>
-				<form:input path="memberNum" htmlEscape="false" maxlength="64"  class=" form-control input-sm"/>
 			<span>身份证号：</span>
 				<form:input path="idNum" htmlEscape="false" maxlength="64"  class=" form-control input-sm"/>
 			<span>手机号：</span>
@@ -73,12 +73,12 @@
 					<form:option value=""></form:option>
 					<form:options items="${fns:getDictList('general_status')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 				</form:select>
-		 </div>	
+		 </div>
 	</form:form>
 	<br/>
 	</div>
 	</div>
-	
+
 	<!-- 工具栏 -->
 	<div class="row">
 	<div class="col-sm-12">
@@ -99,7 +99,7 @@
 	       		<table:exportExcel url="${ctx}/member/member/export"></table:exportExcel><!-- 导出按钮 -->
 	       	</shiro:hasPermission>
 	       <button class="btn btn-white btn-sm " data-toggle="tooltip" data-placement="left" onclick="sortOrRefresh()" title="刷新"><i class="glyphicon glyphicon-repeat"></i> 刷新</button>
-		
+
 			</div>
 		<div class="pull-right">
 			<button  class="btn btn-primary btn-rounded btn-outline btn-sm " onclick="search()" ><i class="fa fa-search"></i> 查询</button>
@@ -107,14 +107,14 @@
 		</div>
 	</div>
 	</div>
-	
+
 	<!-- 表格 -->
 	<table id="contentTable" class="table table-striped table-bordered table-hover table-condensed dataTables-example dataTable">
 		<thead>
 			<tr>
 				<th> <input type="checkbox" class="i-checks"></th>
-				<th  class="sort-column name">姓名</th>
-				<th  class="sort-column memberNum">会员号</th>
+                <th  class="sort-column memberNum">会员号</th>
+                <th  class="sort-column name">姓名</th>
 				<th  class="sort-column hotel">所属酒店</th>
 				<th  class="sort-column idNum">身份证号</th>
 				<th  class="sort-column phone">手机号</th>
@@ -129,10 +129,10 @@
 			<tr>
 				<td> <input type="checkbox" id="${member.id}" class="i-checks"></td>
 				<td><a  href="#" onclick="openDialogView('查看会员', '${ctx}/member/member/form?id=${member.id}','800px', '500px')">
-					${member.name}
+					${member.memberNum}
 				</a></td>
 				<td>
-					${member.memberNum}
+					${member.name}
 				</td>
 				<td>
 					${member.hotel.office.name}
@@ -167,7 +167,7 @@
 		</c:forEach>
 		</tbody>
 	</table>
-	
+
 		<!-- 分页代码 -->
 	<table:page page="${page}"></table:page>
 	<br/>

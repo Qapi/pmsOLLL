@@ -3,6 +3,7 @@
  */
 package com.jeeplus.pmsol.member.web;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -129,6 +130,8 @@ public class MemberController extends BaseController {
     @ResponseBody
     public ResponseEntity<List<Member>> dynamicSearch(Member member, @PathVariable String phone) throws Exception {
         member.setPhone(phone);
+        member.setStatus("0");
+        member.setValidityTerm(DateUtils.parseDate(DateUtils.formatDate(new Date())));
         List<Member> list = memberService.findList(member);
         return new ResponseEntity(list, HttpStatus.OK);
     }

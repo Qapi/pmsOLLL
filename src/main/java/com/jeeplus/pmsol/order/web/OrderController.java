@@ -98,7 +98,7 @@ public class OrderController extends BaseController {
     public String arriveAtToday(Order order, Hotel hotel, RoomType roomType, HttpServletRequest request, HttpServletResponse response, Model model) {
         // 默认取当天入住数据
         if (order.getCheckInDate() == null) {
-            order.setCheckInDate(new Date());
+            order.setCheckInDate(DateUtils.parseDate(DateUtils.formatDate(new Date())));
         }
         // 默认取所在酒店数据
         if(order.getHotel() == null && !UserUtils.getUser().isAdmin()){
