@@ -17,6 +17,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
+import com.jeeplus.pmsol.order.util.OrderUtil;
 import org.java_websocket.WebSocketImpl;
 
 import com.jeeplus.common.websocket.onchat.ChatServer;
@@ -33,6 +34,7 @@ public class WebSockertFilter implements Filter{
 	 */
 	public void init(FilterConfig fc) throws ServletException {
 		this.startWebsocketChatServer();
+		OrderUtil.checkOrderStatus(); // 启动订单定时扫描器
 	//	this.startWebsocketOnline();
 	}
 	

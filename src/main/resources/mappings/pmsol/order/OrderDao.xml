@@ -2,45 +2,45 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jeeplus.pmsol.order.dao.OrderDao">
 
-	<!-- 自定义resultMap,主要用于复杂关联查询 -->
-	<resultMap id="orderMap" type="Order">
-		<id property="id" column="id"/>
-		<result property="orderNum" column="order_num"/>
-		<result property="chlOrderNum" column="chl_order_num"/>
-		<result property="leaseMode" column="lease_mode"/>
-		<result property="rentMonths" column="rent_months"/>
-		<result property="checkInDate" column="checkin_date"/>
-		<result property="checkInDate" column="checkin_date"/>
-		<result property="liveHours" column="live_hours"/>
-		<result property="liveDays" column="live_days"/>
-		<result property="dailyPrice" column="daily_price"/>
-		<result property="monthlyRent" column="monthly_rent"/>
-		<result property="hourPrice" column="hour_price"/>
-		<result property="totalAmount" column="total_amount"/>
-		<result property="contacts" column="contacts"/>
-		<result property="contactsPhone" column="contacts_phone"/>
-		<result property="status" column="status"/>
-		<association property="channel" column="{id=channel.id}"
-					 javaType="com.jeeplus.pmsol.hotelchannel.entity.HotelChannel"
-					 select="com.jeeplus.pmsol.hotelchannel.dao.HotelChannelDao.get">
-		</association>
-		<association property="hotel" column="{id=hotel.id}"
-					 javaType="com.jeeplus.pmsol.hotel.entity.Hotel"
-					 select="com.jeeplus.pmsol.hotel.dao.HotelDao.get">
-		</association>
-		<association property="roomType" column="{id=roomType.id}"
-					 javaType="com.jeeplus.pmsol.roomtype.entity.RoomType"
-					 select="com.jeeplus.pmsol.roomtype.dao.RoomTypeDao.get">
-		</association>
-		<association property="booker" column="{id=booker.id}"
-					 javaType="com.jeeplus.pmsol.member.entity.Member"
-					 select="com.jeeplus.pmsol.member.dao.MemberDao.get">
-		</association>
-		<association property="bookRoom" column="{id=bookRoom.id}"
-					 javaType="com.jeeplus.pmsol.room.entity.Room"
-					 select="com.jeeplus.pmsol.room.dao.RoomDao.get">
-		</association>
-	</resultMap>
+    <!-- 自定义resultMap,主要用于复杂关联查询 -->
+    <resultMap id="orderMap" type="Order">
+        <id property="id" column="id"/>
+        <result property="orderNum" column="order_num"/>
+        <result property="chlOrderNum" column="chl_order_num"/>
+        <result property="leaseMode" column="lease_mode"/>
+        <result property="rentMonths" column="rent_months"/>
+        <result property="checkInDate" column="checkin_date"/>
+        <result property="checkInDate" column="checkin_date"/>
+        <result property="liveHours" column="live_hours"/>
+        <result property="liveDays" column="live_days"/>
+        <result property="dailyPrice" column="daily_price"/>
+        <result property="monthlyRent" column="monthly_rent"/>
+        <result property="hourPrice" column="hour_price"/>
+        <result property="totalAmount" column="total_amount"/>
+        <result property="contacts" column="contacts"/>
+        <result property="contactsPhone" column="contacts_phone"/>
+        <result property="status" column="status"/>
+        <association property="channel" column="{id=channel.id}"
+                     javaType="com.jeeplus.pmsol.hotelchannel.entity.HotelChannel"
+                     select="com.jeeplus.pmsol.hotelchannel.dao.HotelChannelDao.get">
+        </association>
+        <association property="hotel" column="{id=hotel.id}"
+                     javaType="com.jeeplus.pmsol.hotel.entity.Hotel"
+                     select="com.jeeplus.pmsol.hotel.dao.HotelDao.get">
+        </association>
+        <association property="roomType" column="{id=roomType.id}"
+                     javaType="com.jeeplus.pmsol.roomtype.entity.RoomType"
+                     select="com.jeeplus.pmsol.roomtype.dao.RoomTypeDao.get">
+        </association>
+        <association property="booker" column="{id=booker.id}"
+                     javaType="com.jeeplus.pmsol.member.entity.Member"
+                     select="com.jeeplus.pmsol.member.dao.MemberDao.get">
+        </association>
+        <association property="bookRoom" column="{id=bookRoom.id}"
+                     javaType="com.jeeplus.pmsol.room.entity.Room"
+                     select="com.jeeplus.pmsol.room.dao.RoomDao.get">
+        </association>
+    </resultMap>
 
     <sql id="orderColumns">
 		a.id AS "id",
@@ -103,12 +103,12 @@
                 <if test="dbName == 'mssql'">'%'+#{orderNum}+'%'</if>
                 <if test="dbName == 'mysql'">concat('%',#{orderNum},'%')</if>
             </if>
-			<if test="chlOrderNum != null and chlOrderNum != ''">
-				AND a.chl_order_num LIKE
-				<if test="dbName == 'oracle'">'%'||#{chlOrderNum}||'%'</if>
-				<if test="dbName == 'mssql'">'%'+#{chlOrderNum}+'%'</if>
-				<if test="dbName == 'mysql'">concat('%',#{chlOrderNum},'%')</if>
-			</if>
+            <if test="chlOrderNum != null and chlOrderNum != ''">
+                AND a.chl_order_num LIKE
+                <if test="dbName == 'oracle'">'%'||#{chlOrderNum}||'%'</if>
+                <if test="dbName == 'mssql'">'%'+#{chlOrderNum}+'%'</if>
+                <if test="dbName == 'mysql'">concat('%',#{chlOrderNum},'%')</if>
+            </if>
             <if test="channel != null and channel.id != ''">
                 AND a.channel_id = #{channel.id}
             </if>
@@ -124,18 +124,18 @@
             <if test="rentMonths != null and rentMonths != ''">
                 AND a.rent_months = #{rentMonths}
             </if>
-			<if test="checkInDate != null and checkInDate != ''">
-				AND a.checkin_date = #{checkInDate}
-			</if>
-			<if test="checkOutDate != null and checkOutDate != ''">
-				AND a.checkOutDate = #{checkOutDate}
-			</if>
+            <if test="checkInDate != null and checkInDate != ''">
+                AND a.checkin_date = #{checkInDate}
+            </if>
+            <if test="checkOutDate != null and checkOutDate != ''">
+                AND a.checkOutDate = #{checkOutDate}
+            </if>
             <if test="beginCheckInDate != null and endCheckInDate != null and beginCheckInDate != '' and endCheckInDate != ''">
                 AND a.checkin_date BETWEEN #{beginCheckInDate} AND #{endCheckInDate}
             </if>
-			<if test="beginCheckOutDate != null and endCheckOutDate != null and beginCheckOutDate != '' and endCheckOutDate != ''">
-				AND a.checkout_date BETWEEN #{beginCheckOutDate} AND #{endCheckOutDate}
-			</if>
+            <if test="beginCheckOutDate != null and endCheckOutDate != null and beginCheckOutDate != '' and endCheckOutDate != ''">
+                AND a.checkout_date BETWEEN #{beginCheckOutDate} AND #{endCheckOutDate}
+            </if>
             <if test="contacts != null and contacts != ''">
                 AND a.contacts LIKE
                 <if test="dbName == 'oracle'">'%'||#{contacts}||'%'</if>
@@ -154,6 +154,28 @@
             <if test="status != null and status != ''">
                 AND a.status = #{status}
             </if>
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findExpiredList" resultMap="orderMap">
+        SELECT
+        <include refid="orderColumns"/>
+        FROM book_order a
+        <include refid="orderJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+            <if test="checkInDate != null and checkInDate != ''">
+                AND a.checkin_date &lt; #{checkInDate}
+            </if>
+                AND a.status = "0"
         </where>
         <choose>
             <when test="page !=null and page.orderBy != null and page.orderBy != ''">

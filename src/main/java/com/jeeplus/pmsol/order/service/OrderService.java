@@ -15,6 +15,7 @@ import com.jeeplus.pmsol.order.dao.OrderDao;
 
 /**
  * 订单配置Service
+ *
  * @author wangp
  * @version 2017-09-29
  */
@@ -25,26 +26,29 @@ public class OrderService extends CrudService<OrderDao, Order> {
 	public Order get(String id) {
 		return super.get(id);
 	}
-	
+
 	public List<Order> findList(Order order) {
 		return super.findList(order);
 	}
-	
+
 	public Page<Order> findPage(Page<Order> page, Order order) {
 		return super.findPage(page, order);
 	}
-	
+
 	@Transactional(readOnly = false)
 	public void save(Order order) {
 		super.save(order);
 	}
-	
+
 	@Transactional(readOnly = false)
 	public void delete(Order order) {
 		super.delete(order);
 	}
-	
-	
-	
-	
+
+	/**
+	 * 获取已过时订单
+	 **/
+	public List<Order> findExpiredList(Order o) {
+		return dao.findExpiredList(o);
+	}
 }
