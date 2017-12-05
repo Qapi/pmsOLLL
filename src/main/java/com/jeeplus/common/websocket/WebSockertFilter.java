@@ -17,7 +17,6 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
-import com.jeeplus.pmsol.order.util.OrderUtil;
 import org.java_websocket.WebSocketImpl;
 
 import com.jeeplus.common.websocket.onchat.ChatServer;
@@ -26,18 +25,17 @@ import com.jeeplus.common.websocket.onchat.ChatServer;
 
 public class WebSockertFilter implements Filter{
 
-	
-	
-	
+
+
+
 	/**
 	 * 初始化
 	 */
 	public void init(FilterConfig fc) throws ServletException {
 		this.startWebsocketChatServer();
-		OrderUtil.checkOrderStatus(); // 启动订单定时扫描器
-	//	this.startWebsocketOnline();
+		//	this.startWebsocketOnline();
 	}
-	
+
 	/**
 	 * 启动即时聊天服务
 	 */
@@ -52,9 +50,9 @@ public class WebSockertFilter implements Filter{
 			e.printStackTrace();
 		}
 	}
-	
-	
-	
+
+
+
 	//计时器
 	public void timer() {
 		Calendar calendar = Calendar.getInstance();
@@ -67,10 +65,10 @@ public class WebSockertFilter implements Filter{
 		Timer timer = new Timer();
 		timer.scheduleAtFixedRate(new TimerTask() {
 			public void run() {
-				
+
 				//PersonService personService = (PersonService)ApplicationContext.getBean("personService");
 
-				
+
 				//System.out.println("-------设定要指定任务--------");
 			}
 		}, time, 1000*60*60*24);// 这里设定将延时每天固定执行
@@ -79,14 +77,14 @@ public class WebSockertFilter implements Filter{
 
 	public void destroy() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 
 	public void doFilter(ServletRequest arg0, ServletResponse arg1,
-			FilterChain arg2) throws IOException, ServletException {
-		
+						 FilterChain arg2) throws IOException, ServletException {
+
 	}
-	
-	
+
+
 }

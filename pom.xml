@@ -788,6 +788,7 @@
 						<contextPath>/${project.artifactId}</contextPath>
 					</webAppConfig>
 					<stopKey/>
+					<stopPort/>
 				</configuration>
 			</plugin>
 		</plugins>
