@@ -27,7 +27,10 @@
                         </div>
                     </div>
                     <div class="ibox-content">
-                        <div v-for="room in rooms" class="room-block"></div>
+                        <div v-for="room in rooms" class="room-block">
+                            <p>{{room.roomNum}}</p>
+                            <p>{{room.roomType.name}}</p>
+                        </div>
                     </div>
                 </div>
 
