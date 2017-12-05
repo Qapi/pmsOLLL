@@ -6,19 +6,18 @@ import com.jeeplus.common.utils.SpringContextHolder;
 import com.jeeplus.common.utils.StringUtils;
 import com.jeeplus.pmsol.order.entity.Order;
 import com.jeeplus.pmsol.order.service.OrderService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.Scheduled;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by tingting on 2017/10/7.
  */
 public class OrderUtil {
-
+	private Logger logger = LoggerFactory.getLogger(getClass());
 	private static OrderService orderService = SpringContextHolder.getBean(OrderService.class);
 
 	// 生成固定格式：OxMMddHHmmssxxxx（x代表随机字符）的订单号
@@ -26,19 +25,7 @@ public class OrderUtil {
 		return "O" + StringUtils.upperCase(IdGen.randomBase62(1)) + DateUtils.getDate("MMddHHmmss") + StringUtils.upperCase(IdGen.randomBase62(2));
 	}
 
-	// 扫描预约中的订单，将已超时的订单设为已过期(过期时间暂时设为次日六时)
-	public static int checkExpiredOrder() {
-		Order o1 = new Order();
-		o1.setCheckInDate(DateUtils.parseDate(DateUtils.formatDate(new Date())));
-		List<Order> orderList = orderService.findExpiredList(o1);
-		for (Order o2 : orderList) {
-			o2.setStatus("1");
-			orderService.save(o2);
-		}
-		return orderList.size();
-	}
-
-	// 执行定时器扫描过期订单
+	/*// 执行定时器扫描过期订单（每天六点）
 	public static void checkOrderStatus() {
 		Runnable command = new Runnable() {
 			public void run() {
@@ -60,6 +47,6 @@ public class OrderUtil {
 		service.scheduleAtFixedRate(command, initDelay, oneDay, TimeUnit.MILLISECONDS);
 		System.out.println("订单定时扫描系统已启动！");
 
-	}
+	}*/
 
 }
