@@ -278,13 +278,14 @@ $(document).ready(function () {
                         if (month == 12) {
                             year++;
                             month = '01';
-                            day = '01';
                         } else {
                             month++;
-                            day = '01';
                         }
+                        day = '01';
                     } else {
-                        day++;
+                        if (++day < 10) {
+                            day = "0" + day;
+                        }
                     }
                     dateModel = year + '-' + month + '-' + day;
                     window.vm.order.liveDays = 1; // 入住天数重置为1
