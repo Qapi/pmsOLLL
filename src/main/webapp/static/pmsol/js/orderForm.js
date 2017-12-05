@@ -64,7 +64,8 @@ window.vm = new Vue({
             if (this.memberLevel) {
                 this.order.totalAmount = this.order.totalAmount * this.memberLevel.salePercent;
             }
-            return this.order.totalAmount;
+            // 向下取整
+            return Math.floor(this.order.totalAmount);
         },
         /** 自动填充会员信息 **/
         orderBooker: function () {
