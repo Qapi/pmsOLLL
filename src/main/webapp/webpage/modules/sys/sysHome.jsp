@@ -9,33 +9,31 @@
             WinMove();
         });
     </script>
+    <link rel="stylesheet" type="text/css" href="${ctxStatic}/pmsol/css/home.css">
 </head>
 <body class="gray-bg">
-<div class="wrapper wrapper-content">
-    <div class="row">
-        <div class="col-sm-20">
+    <sys:message content="${message}"/>
+    <div id="modelDiv" class="wrapper wrapper-content">
+        <div class="row">
+            <div class="col-sm-20">
 
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <h5>实时房态</h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>实时房态</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <div v-for="room in rooms" class="room-block"></div>
                     </div>
                 </div>
-                <div class="ibox-content">
-                    <div class="background" style="top: 100px; left: 0px;"></div>
-                </div>
-            </div>
 
+            </div>
         </div>
     </div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
+    <script src="${ctxStatic}/pmsol/js/home.js"></script>
 </body>
 </html>

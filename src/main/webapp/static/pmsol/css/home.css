@@ -1,0 +1,8 @@
+.room-block {
+    display: inline-block;
+    width: 150px;
+    height: 150px;
+    margin: 15px;
+    background-color: rgba(192, 221, 211, 0.77);
+    cursor: Pointer;
+}
