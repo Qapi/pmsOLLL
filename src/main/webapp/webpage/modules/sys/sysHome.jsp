@@ -16,7 +16,6 @@
     <div id="modelDiv" class="wrapper wrapper-content">
         <div class="row">
             <div class="col-sm-20">
-
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
                         <h5>实时房态</h5>
@@ -43,7 +42,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>

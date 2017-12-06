@@ -1,12 +1,13 @@
 .room-block {
     display: inline-block;
-    width: 150px;
-    height: 150px;
+    width: 115px;
+    height: 115px;
     padding: 5px;
-    margin: 15px;
+    margin: 10px;
     background-color: rgba(192, 221, 211, 0.77);
     cursor: Pointer;
 }
+.room-block:hover{border:1px #341106 solid;}
 
 .r_info ul{margin:10px;  padding:10px; overflow:hidden;}
 .r_info ul li{ float:left; height: 30px; line-height: 30px; width:100px; list-style-type:none; }

@@ -32,6 +32,7 @@ public class OrderTask {
 		o1.setCheckInDate(DateUtils.parseDate(DateUtils.formatDate(new Date())));
 		List<Order> orderList = orderService.findExpiredList(o1);
 		orderList.forEach(o2->{
+			// TODO 若订单所锁定的房间无入住，应释放并重置
 			o2.setStatus("1");
 			orderService.save(o2);
 		});
