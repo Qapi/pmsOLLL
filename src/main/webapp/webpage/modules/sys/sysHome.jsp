@@ -31,6 +31,16 @@
                             <p>{{room.roomNum}}</p>
                             <p>{{room.roomType.name}}</p>
                         </div>
+                        <hr>
+                        <div class="r_info">
+                            <ul>
+                                <c:forEach items="${fns:getDictList('room_status')}" var="rs">
+                                    <li>
+                                        <s class="i-r0${rs.value}"></s>${rs.label}
+                                    </li>
+                                </c:forEach>
+                            </ul>
+                        </div>
                     </div>
                 </div>
 
