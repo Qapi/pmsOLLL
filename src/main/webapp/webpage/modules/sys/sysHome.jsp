@@ -29,6 +29,7 @@
                         <div v-for="room in rooms" class="room-block">
                             <p>{{room.roomNum}}</p>
                             <p>{{room.roomType.name}}</p>
+                            <%--<s :class="room.status"></s>--%>
                         </div>
                         <hr>
                         <div class="r_info">
